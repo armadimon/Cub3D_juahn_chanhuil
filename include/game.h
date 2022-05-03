@@ -9,6 +9,7 @@
 # include "../gnl/get_next_line_bonus.h"
 # include "../mlx/mlx.h"
 # include "../libft/libft.h"
+# include "./vector.h"
 
 #define X_EVENT_KEY_PRESS		2
 #define X_EVENT_KEY_EXIT		17 //Exit program key code
