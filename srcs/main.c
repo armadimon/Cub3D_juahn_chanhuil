@@ -4,10 +4,12 @@ void	reset_data(t_game *game)
 {
 	game->str_score = "0";
 	game->score = 0;
-	game->map_data.str_C = "0";
-	game->map_data.cnt_C = 0;
-	game->map_data.cnt_E = 0;
-	game->map_data.cnt_P = 0;
+	game->map_data.C_blue = 0;
+	game->map_data.C_red = 0;
+	game->map_data.C_green = 0;
+	game->map_data.F_red = 0;
+	game->map_data.F_green = 0;
+	game->map_data.F_blue = 0;
 	game->player.pos_left = 0;
 	game->enemy.enemy_cnt = 0;
 	game->enemy.enemy_xy = 0;
