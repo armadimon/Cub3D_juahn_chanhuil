@@ -6,7 +6,7 @@
 /*   By: chanhuil <chanhuil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 14:23:36 by chanhuil          #+#    #+#             */
-/*   Updated: 2022/05/04 16:00:33 by chanhuil         ###   ########.fr       */
+/*   Updated: 2022/05/04 16:43:15 by chanhuil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ double	vec_len(t_vec v);
 double	vec_dot(t_vec v1, t_vec v2);
 int		vec_equal(t_vec v1, t_vec v2);
 
-double	approx(double n);
 double	vec_angle(t_vec v);
 t_vec	vec_rot(t_vec v, int degree);
 
