@@ -48,12 +48,9 @@ typedef struct s_map_data
 
 typedef struct s_player
 {
-	int		player_x;
-	int		player_y;
-	int		pos_left;
-	int		size_l;
-	int		bpp;
-	int		endian;
+	t_vec		pos;
+	t_vec		dir;
+	t_vec		plane;
 }				t_player;
 
 typedef struct s_enemy
@@ -75,21 +72,20 @@ typedef struct s_game
 {
 	void		*mlx;
 	void		*win;
-	int			score;
-	char		*str_score;
+	t_player	p;
 	t_map_data	map_data;
-	t_img		img;
-	t_player	player;
-	t_enemy		enemy;
 	int			map_width;
 	int			map_height;
 	char		**map;
-
+	t_img		img;
 	int			**texture;
 }				t_game;
 
+/* PARSE & CHECK */
 int		read_and_parse_map(t_game *game, t_list *map_buffer, char *argv);
 int		parse_map(t_game *game, t_list *map_list);
+int		check_map(t_game *game);
+
 
 /* INIT */
 void	init_game(t_game *game);

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   vector3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chanhuil <chanhuil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 14:23:21 by chanhuil          #+#    #+#             */
-/*   Updated: 2022/05/03 16:58:14 by chanhuil         ###   ########.fr       */
+/*   Updated: 2022/05/04 15:11:46 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "vector.h"
+#include "../../include/vector.h"
 
 double	facos(t_vec v)
 {

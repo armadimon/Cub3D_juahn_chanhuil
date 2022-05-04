@@ -1,5 +1,4 @@
 #include "../include/game.h"
-#include <errno.h>
 
 t_list	*get_map_list(t_list *map_buffer, int fd)
 {
@@ -58,6 +57,9 @@ void	print_map(t_game *game, t_list *map_buffer)
 		printf("map : [%s]\n", game->map[i]);
 	printf("width : %d\n", game->map_width);
 	printf("height : %d\n", game->map_height);
+	vec_print(game->p.dir);
+	vec_print(game->p.pos);
+	vec_print(game->p.plane);
 }
 
 int	read_and_parse_map(t_game *game, t_list *map_buffer, char *argv)
@@ -65,7 +67,8 @@ int	read_and_parse_map(t_game *game, t_list *map_buffer, char *argv)
 	map_buffer = read_map(map_buffer, argv);
 	if (!map_buffer)
 		return (0);
-	if (!parse_map(game, map_buffer))
+	if (!parse_map(game, map_buffer) ||
+		!check_map(game))
 	{
 		ft_lstclear(&map_buffer, free);
 		return (0);

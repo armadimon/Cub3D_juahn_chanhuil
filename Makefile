@@ -4,6 +4,10 @@ SRCS			=	srcs/main.c \
 					srcs/loop.c \
 					srcs/init_game.c \
 					srcs/draw_2D_map.c \
+					srcs/check_map.c \
+					srcs/vectors/vector.c \
+					srcs/vectors/vector2.c \
+					srcs/vectors/vector3.c \
 					gnl/get_next_line_bonus.c \
 
 BONUS			=	main.c \
