@@ -83,7 +83,7 @@ typedef struct s_game
 	t_enemy		enemy;
 	int			map_width;
 	int			map_height;
-	char		*map;
+	char		**map;
 
 	int			**texture;
 }				t_game;
