@@ -3,6 +3,7 @@ SRCS			=	srcs/main.c \
 					srcs/map_parser_2.c \
 					srcs/loop.c \
 					srcs/init_game.c \
+					srcs/draw_2D_map.c \
 					gnl/get_next_line_bonus.c \
 
 BONUS			=	main.c \

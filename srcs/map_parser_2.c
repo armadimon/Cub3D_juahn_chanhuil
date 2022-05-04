@@ -171,6 +171,8 @@ int	get_map_arr(t_game *game, t_list *map_list)
 			col = ft_strlen((char *)temp->content);
 		temp = temp->next;
 	}
+	game->map_width = col;
+	game->map_height = row;
 	game->map = (char **)malloc(sizeof(char *) * (row + 1));
 	cpy_map(game, map_list, row, col);
 	return (1);

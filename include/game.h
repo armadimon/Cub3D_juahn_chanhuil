@@ -19,7 +19,7 @@
 
 # define texWidth 64
 # define texHeight 64
-# define TILE_SIZE 64
+# define TILE_SIZE 32
 # define ROWS 11
 # define COLS 15
 # define WIDTH COLS * TILE_SIZE
@@ -96,7 +96,7 @@ void	init_game(t_game *game);
 void	init_window(t_game *game);
 void	init_img(t_game *game);
 int		init_texture(t_game *game);
-
+void	draw_2D_map(t_game *game);
 int		main_loop(t_game *game);
 
 #endif

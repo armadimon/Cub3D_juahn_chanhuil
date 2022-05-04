@@ -56,6 +56,8 @@ void	print_map(t_game *game, t_list *map_buffer)
 	i = -1;
 	while (game->map[++i])
 		printf("map : [%s]\n", game->map[i]);
+	printf("width : %d\n", game->map_width);
+	printf("height : %d\n", game->map_height);
 }
 
 int	read_and_parse_map(t_game *game, t_list *map_buffer, char *argv)
