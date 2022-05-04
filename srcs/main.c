@@ -10,7 +10,35 @@ void	reset_data(t_game *game)
 	game->map_data.F_blue = -1;
 }
 
+int	key_press_exit(t_game *game)
+{
+	if (game->win && game->mlx)
+		mlx_destroy_window(game->mlx, game->win);
+	exit (0);
+}
 
+int user_move(int key, t_game *game)
+{
+	if (key == K_A)
+		game->p.pos = vec_add(game->p.pos, vec_mul(vec_rot(game->p.dir, 90), 0.25));
+	else if (key == K_D)
+		game->p.pos = vec_add(game->p.pos, vec_mul(vec_rot(game->p.dir, 270), 0.25));
+	else if (key == K_W)
+		game->p.pos = vec_add(game->p.pos, vec_mul(vec_rot(game->p.dir, 0), 0.25));
+	else if (key == K_S)
+		game->p.pos = vec_add(game->p.pos, vec_mul(vec_rot(game->p.dir, 180), 0.25));
+	else if (key == K_Q)
+	{
+		game->p.dir = vec_rot(game->p.dir, 5);
+		game->p.plane = vec_rot(game->p.plane, 5);
+	}
+	else if (key == K_E)
+	{
+		game->p.dir = vec_rot(game->p.dir, -5);
+		game->p.plane = vec_rot(game->p.plane, -5);
+	}
+	return (0);
+}
 
 int	main(int argc, char **argv)
 {
@@ -35,8 +63,8 @@ int	main(int argc, char **argv)
 	init_window(&game);
 	init_img(&game);
 	mlx_loop_hook(game.mlx, &main_loop, &game);
-	// mlx_key_hook(game.win, user_move, &game);
-	// mlx_hook(game.win, 17, 0, &key_press_exit, &game);
+	mlx_key_hook(game.win, user_move, &game);
+	mlx_hook(game.win, 17, 0, &key_press_exit, &game);
 	mlx_loop(game.mlx);
 	return (0);
 }

@@ -16,12 +16,12 @@ int		init_texture(t_game *game)
 
 	if (!(game->texture = (int **)malloc(sizeof(int *) * 8)))
 		return (-1);
-	for (int i = 0; i < 8; i++)
+	for (int i = 0; i < 6; i++)
 	{
 		if (!(game->texture[i] = (int *)malloc(sizeof(int) * (texHeight * texWidth))))
 			return (-1);
 	}
-	for (int i = 0; i < 8; i++)
+	for (int i = 0; i < 6; i++)
 	{
 		for (int j = 0; j < texHeight * texWidth; j++)
 		{

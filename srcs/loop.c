@@ -19,6 +19,7 @@ int		draw_texture(t_game *game)
 
 int		main_loop(t_game *game)
 {
+	init_img(game);
 	// draw_texture(game);
 	draw_2D_map(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->img.img, 0, 0);
