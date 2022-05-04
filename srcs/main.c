@@ -8,6 +8,7 @@ void	reset_data(t_game *game)
 	game->map_data.F_red = -1;
 	game->map_data.F_green = -1;
 	game->map_data.F_blue = -1;
+	game->map_flag = 0;
 }
 
 int	key_press_exit(t_game *game)
@@ -19,6 +20,12 @@ int	key_press_exit(t_game *game)
 
 int user_move(int key, t_game *game)
 {
+	if (key == K_ESC)
+		key_press_exit(game);
+	if (key == K_M && game->map_flag == 0)
+		game->map_flag = 1;
+	else if (key == K_M && game->map_flag == 1)
+		game->map_flag = 0;
 	if (key == K_A)
 		game->p.pos = vec_add(game->p.pos, vec_mul(vec_rot(game->p.dir, 90), 0.25));
 	else if (key == K_D)

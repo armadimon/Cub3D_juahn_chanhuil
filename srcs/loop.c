@@ -45,6 +45,8 @@ double	get_hitpoint(t_game *game, t_vec ray)
 	int		count[2];
 	double	len;
 
+	count[0] = (int)game->p.pos.x;
+	count[1] = (int)game->p.pos.y;
 	delta = vec_new(1 / cos(vec_angle(ray)), 1 / sin(vec_angle(ray)));
 	side = vec_new(game->p.pos.x - (int)(game->p.pos.x),
 			game->p.pos.y - (int)(game->p.pos.y));
@@ -53,13 +55,13 @@ double	get_hitpoint(t_game *game, t_vec ray)
 	{
 		if (side.x < side.y)
 		{
-			len = side.x;
+			len = fabs(side.x);
 			side.x += delta.x;
 			count[0] += step.x;
 		}
 		else
 		{
-			len = side.y;
+			len = fabs(side.y);
 			side.y += delta.y;
 			count[1] += step.y;
 		}
@@ -72,18 +74,24 @@ void	draw_one_column(t_game *game, int x, double len)
 {
 	int	wall_start;
 	int	wall_end;
+	int length;
 
-	wall_start = 480 / 2 - 2 / len;
-	wall_end = 480 / 2 + 2 / len;
+	length = (int)((game->map_height * TILE_SIZE) / len);
+	wall_start = (game->map_height * TILE_SIZE) / 2 + (int)(-length / 2);
+	// if (wall_start < 0)
+	// 	wall_start = 0;
+	wall_end = (game->map_height * TILE_SIZE) / 2 + (int)(length / 2);
+	// if (wall_end >= len)
+	// 	wall_end = len - 1;
 
-	for (int i=0;i<480;i++)
+	for (int i=0;i<(game->map_height * TILE_SIZE);i++)
 	{
 		if (i < wall_start)
-			game->img.data[i * 480 + x] = 0xaaaaff;
+			game->img.data[i * (game->map_width * TILE_SIZE) + x] = 0xaaaaff;
 		else if (i < wall_end)
-			game->img.data[i * 480 + x] = 0x00ff00;
+			game->img.data[i * (game->map_width * TILE_SIZE) + x] = 0x00ff00;
 		else
-			game->img.data[i * 480 + x] = 0x000000;
+			game->img.data[i * (game->map_width * TILE_SIZE) + x] = 0x000000;
 	}
 }
 
@@ -95,9 +103,9 @@ void	draw_3D_map(t_game *game)
 	double	len;
 
 	i = -1;
-	while (++i < 640)
+	while (++i < (game->map_width * TILE_SIZE))
 	{
-		ray = vec_add(game->p.dir, vec_mul(game->p.plane, 2.0 * i / 640 - 1));
+		ray = vec_add(game->p.dir, vec_mul(game->p.plane, 2.0 * i / (game->map_width * TILE_SIZE) - 1));
 		hp = vec_mul(vec_norm(ray), get_hitpoint(game, ray));
 		len = vec_len(hp) / vec_len(ray) - 1;
 		draw_one_column(game, i, len);
@@ -108,8 +116,9 @@ int		main_loop(t_game *game)
 {
 	init_img(game);
 	// draw_texture(game);
-	// draw_2D_map(game);
 	draw_3D_map(game);
+	if (game->map_flag)
+		draw_2D_map(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->img.img, 0, 0);
 	return (0);
 }

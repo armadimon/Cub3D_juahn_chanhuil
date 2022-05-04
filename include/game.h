@@ -80,6 +80,7 @@ typedef struct s_game
 	char		**map;
 	t_img		img;
 	int			**texture;
+	int			map_flag;
 }				t_game;
 
 /* PARSE & CHECK */

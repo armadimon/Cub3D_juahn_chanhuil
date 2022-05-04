@@ -42,26 +42,63 @@ void	draw_rectangles(t_game *game)
 void	draw_ray(t_game *game, int x)
 {
 
-	double cameraX = 2 * x / (double)(20) - 1;
+	double cameraX = 2 * x / (double)(game->map_width * TILE_SIZE) - 1;
 	t_vec rayDir = vec_add(game->p.dir, vec_mul(game->p.plane, cameraX));
 
 	float fTempY = game->p.pos.y * TILE_SIZE;
-	// float fTempX = game->p.pos.x;
+	float fTempX = game->p.pos.x * TILE_SIZE;
+	// double fM = rayDirY / rayDirX;
+
 	double fM = tan(vec_angle(rayDir));
 	int iX = game->p.pos.x * TILE_SIZE;
-	while (1)
+	int iY = game->p.pos.y * TILE_SIZE;
+	if (fM <= 1.0f && fM >= -1.0f)
 	{
-		if (fTempY / TILE_SIZE < 0 || fTempY / TILE_SIZE > game->map_height)
-			return ;
-		if (iX / TILE_SIZE < 0 || iX / TILE_SIZE > game->map_width)
-			return ;
-		// printf("[%c] [%d] %d %d \n", game->map[(int)fTempY / TILE_SIZE][iX / TILE_SIZE], x, (int)fTempY, iX);
-		if (game->map[(int)fTempY / TILE_SIZE][iX / TILE_SIZE] == '1' ||
-			game->map[(int)fTempY / TILE_SIZE][iX / TILE_SIZE] == ' ')
-			break;
-		game->img.data[((int)(fTempY + 0.5f) * game->map_width * TILE_SIZE) + iX] = 0xFFDFFF;
-		fTempY += fM;   
-		iX++;
+		while (1)
+		{
+			if (fTempY / TILE_SIZE < 0 || fTempY / TILE_SIZE > game->map_height)
+				return ;
+			if (iX / TILE_SIZE < 0 || iX / TILE_SIZE > game->map_width)
+				return ;
+			if (game->map[(int)fTempY / TILE_SIZE][iX / TILE_SIZE] == '1' ||
+				game->map[(int)fTempY / TILE_SIZE][iX / TILE_SIZE] == ' ')
+				break;
+			game->img.data[((int)(fTempY) * game->map_width * TILE_SIZE) + iX] = 0xFFBFFF;
+			if (rayDir.x < 0)
+				iX--;
+			else
+				iX++;
+			if (rayDir.y < 0)
+				fTempY -= fabs(fM);
+			else
+				fTempY += fabs(fM);
+		}
+	}
+	else
+	{
+		fM = 1 / fM;
+		while (1)
+		{
+			if (fM < 1.0f)
+			{
+				if (fTempX / TILE_SIZE < 0 || fTempX / TILE_SIZE > game->map_width)
+					return ;
+				if (iY / TILE_SIZE < 0 || iY / TILE_SIZE > game->map_height)
+					return ;
+				if (game->map[iY / TILE_SIZE][(int)fTempX / TILE_SIZE] == '1' ||
+					game->map[iY / TILE_SIZE][(int)fTempX / TILE_SIZE] == ' ')
+					break;
+				game->img.data[(iY * game->map_width * TILE_SIZE) + (int)(fTempX)] = 0xFFBFFF;
+				if (rayDir.x < 0)
+					fTempX -= fabs(fM);
+				else
+					fTempX += fabs(fM);
+				if (rayDir.y < 0)
+					iY--;
+				else
+					iY++;
+			}
+		}
 	}
 	
 }
@@ -71,9 +108,10 @@ void	draw_2D_map(t_game *game)
 	int x;
 
 	draw_rectangles(game);
-	x = 20;
-	while (x--)
+	x = 0;
+	while (x < game->map_width * TILE_SIZE)
 	{
 		draw_ray(game, x);
+		x++;
 	}
 }
