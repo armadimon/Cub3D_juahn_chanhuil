@@ -8,6 +8,7 @@ void	reset_data(t_game *game)
 	game->map_data.F_red = -1;
 	game->map_data.F_green = -1;
 	game->map_data.F_blue = -1;
+	game->map = NULL;
 	game->map_flag = 0;
 	game->side = 0;
 	game->screen_height = 0;

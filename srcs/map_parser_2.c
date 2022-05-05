@@ -13,6 +13,26 @@ void	free_strs(char **strs)
 	}
 }
 
+int	ft_strcmp(char *s1, char *s2)
+{
+	int	len_s1;
+	int	len_s2;
+	int	i;
+
+	i = 0;
+	len_s1 = ft_strlen(s1);
+	len_s2 = ft_strlen(s2);
+	if (len_s1 != len_s2)
+		return (0);
+	while (i < len_s2)
+	{
+		if (s1[i] != s2[i])
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 int		load_image(t_game *game, int *texture, char *path, t_img *img)
 {
 	img->img = mlx_xpm_file_to_image(game->mlx, path, &(img->img_width), &(img->img_height));
@@ -58,62 +78,80 @@ int	set_F_C_color(t_game *game, char *str, int flag)
 	return (1);
 }
 
-void	check_id(t_valid *vaild, char *str)
+int	check_id(t_valid *vaild, char *str)
 {
-	if (ft_strstr(str, "NO"))
+	if (ft_strstr(str, "NO") && vaild->valid_no == 0)
 		vaild->valid_no = 1;
-	else if (ft_strstr(str, "SO"))
+	else if (ft_strstr(str, "SO") && vaild->valid_so == 0)
 		vaild->valid_so = 1;
-	else if (ft_strstr(str, "WE"))
+	else if (ft_strstr(str, "WE") && vaild->valid_we == 0)
 		vaild->valid_we = 1;
-	else if (ft_strstr(str, "EA"))
+	else if (ft_strstr(str, "EA") && vaild->valid_ea == 0)
 		vaild->valid_ea = 1;
+	else if (ft_strstr(str, "F"))
+		;
+	else if (ft_strstr(str, "C"))
+		;
+	else
+		return (0);
+	return (1);
 }
 
-int	get_map_contents(t_game *game, char **buf, t_valid *vaild)
+int	check_id_rule(char **buf)
+{
+	int i;
+
+	i = 0;
+	while (buf[i])
+		i++;
+	if (i == 2)
+		return (1);
+	return (0);
+}
+
+int	get_map_contents(t_game *game, char **buf, t_valid *valid)
 {
 	t_img	img;
+	int		ret;
 
-	check_id(vaild, buf[0]);
-	if (ft_strstr(buf[0], "NO"))
-		load_image(game, game->texture[0], buf[1], &img);
-	else if (ft_strstr(buf[0], "SO"))
-		load_image(game, game->texture[1], buf[1], &img);
-	else if (ft_strstr(buf[0], "WE"))
-		load_image(game, game->texture[2], buf[1], &img);
-	else if (ft_strstr(buf[0], "EA"))
-		load_image(game, game->texture[3], buf[1], &img);
-	else if (ft_strstr(buf[0], "F"))
-		set_F_C_color(game, buf[1], 0);
-	else if (ft_strstr(buf[0], "C"))
-		set_F_C_color(game, buf[1], 1);
-	return (1);
+	ret = 0;
+	if	(!check_id(valid, buf[0]))
+		return (ret);
+	if (ft_strstr(buf[0], "NO") && ft_strcmp(buf[0], "NO") && check_id_rule(buf))
+		ret = load_image(game, game->texture[0], buf[1], &img);
+	else if (ft_strstr(buf[0], "SO") && ft_strcmp(buf[0], "SO") && check_id_rule(buf))
+		ret = load_image(game, game->texture[1], buf[1], &img);
+	else if (ft_strstr(buf[0], "WE") && ft_strcmp(buf[0], "WE") && check_id_rule(buf))
+		ret = load_image(game, game->texture[2], buf[1], &img);
+	else if (ft_strstr(buf[0], "EA") && ft_strcmp(buf[0], "EA") && check_id_rule(buf))
+		ret = load_image(game, game->texture[3], buf[1], &img);
+	else if (ft_strstr(buf[0], "F") && ft_strcmp(buf[0], "F") && check_id_rule(buf))
+		ret = set_F_C_color(game, buf[1], 0);
+	else if (ft_strstr(buf[0], "C") && ft_strcmp(buf[0], "C") && check_id_rule(buf))
+		ret = set_F_C_color(game, buf[1], 1);
+	else
+		return (0);
+	return (ret);
 }
 
 int	check_map_contents(t_game *game, t_valid *valid)
 {
-	// printf("no  : %d\n", valid->valid_no);
-	// printf("ea  : %d\n", valid->valid_ea);
-	// printf("so  : %d\n", valid->valid_so);
-	// printf("we  : %d\n", valid->valid_we);
 	if (valid->valid_ea == 0 ||
 		valid->valid_no == 0 ||
 		valid->valid_so == 0 ||
 		valid->valid_we == 0)
 		return (0);
-	// printf ("check\n");
-	// printf("C_red  : %d\n", game->map_data.C_red);
-	// printf("C_red  : %d\n", game->map_data.C_green);
-	// printf("C_red  : %d\n", game->map_data.C_blue);
-	// printf("C_red  : %d\n", game->map_data.F_red);
-	// printf("C_red  : %d\n", game->map_data.F_green);
-	// printf("C_red  : %d\n", game->map_data.F_blue);
-	if (game->map_data.C_red == -1 ||
-		game->map_data.C_green == -1 ||
-		game->map_data.C_blue == -1 ||
-		game->map_data.F_red == -1 ||
-		game->map_data.F_green == -1 ||
-		game->map_data.F_blue == -1)
+	if (game->map_data.C_red < 0 || game->map_data.C_red > 255)
+		return (0);
+	if (game->map_data.C_green < 0 || game->map_data.C_green > 255)
+		return (0);
+	if (game->map_data.C_blue < 0 || game->map_data.C_blue > 255)
+		return (0);
+	if (game->map_data.F_red < 0 || game->map_data.F_red > 255)
+		return (0);
+	if (game->map_data.F_green < 0 || game->map_data.F_green > 255)
+		return (0);
+	if (game->map_data.F_blue < 0 || game->map_data.F_blue > 255)
 		return (0);
 	return (1);
 }
@@ -184,10 +222,12 @@ int	parse_map(t_game *game, t_list *map_list)
 	t_list	*temp;
 	t_valid	valid;
 	char	**buf;
+	int		ret;
 
+	ret = 1;
 	temp = map_list;
 	init_valid(&valid);
-	while (temp)
+	while (temp && ret)
 	{
 		if (temp->content == NULL)
 		{
@@ -198,11 +238,11 @@ int	parse_map(t_game *game, t_list *map_list)
 			return (get_map_arr(game, temp));
 		buf = ft_split((char *)temp->content, ' ');
 		if (buf)
-			get_map_contents(game, buf, &valid);
+			ret = get_map_contents(game, buf, &valid);
 		free_strs(buf);
 		temp = temp->next;
 	}
-	if (!check_map_contents(game, &valid))
+	if (!ret || !check_map_contents(game, &valid) || !game->map)
 		return (0);
 	return (1);
 }

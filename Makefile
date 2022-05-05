@@ -31,7 +31,7 @@ LIBS			=	-L$(LIBFTDIR) $(patsubst lib%,-l%,$(basename $(LIBFTNAME))) \
 					-L$(MLXDIR) $(patsubst lib%,-l%,$(basename $(MLXNAME))) -framework OpenGL -framework AppKit
 MLX				= libmlx.a
 
-NAME			= Cub3D
+NAME			= cub3D
 
 ifdef WITH_BONUS
 	OBJ_FILES = $(BONUS_OBJS)
