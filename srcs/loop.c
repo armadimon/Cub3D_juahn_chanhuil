@@ -19,20 +19,20 @@
 
 void	get_ray_value(t_vec *delta, t_vec *step, t_vec *side, t_vec ray)
 {
-	if (ray.x < 0)
+	if (ray.x >=0)
 	{
-		step->x = -1;
+		step->x = 1;
 		side->x = 1 - side->x;
 	}
 	else
-		step->x = 1;
-	if (ray.y < 0)
+		step->x = -1;
+	if (ray.y >= 0)
 	{
-		step->y = -1;
+		step->y = 1;
 		side->y = 1 - side->y;
 	}
 	else
-		step->y = 1;
+		step->y = -1;
 	side->x *= delta->x;
 	side->y *= delta->y;
 }
@@ -51,8 +51,11 @@ double	get_hitpoint(t_game *game, t_vec ray)
 	side = vec_new(game->p.pos.x - (int)(game->p.pos.x),
 			game->p.pos.y - (int)(game->p.pos.y));
 	get_ray_value(&delta, &step, &side, ray);
+	if (game->map[(int)(game->p.pos.y + ray.y)][(int)(game->p.pos.x + ray.x)] == '1')
+		return (vec_len(ray) * 2);
 	while (1)
 	{
+		
 		if (side.x < side.y)
 		{
 			len = fabs(side.x);
