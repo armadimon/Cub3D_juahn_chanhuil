@@ -13,6 +13,7 @@ void	reset_data(t_game *game)
 	game->side = 0;
 	game->screen_height = 0;
 	game->screen_width = 0;
+	game->key = 0;
 }
 
 int	key_press_exit(t_game *game)
@@ -30,24 +31,35 @@ int user_move(int key, t_game *game)
 		game->map_flag = 1;
 	else if (key == K_M && game->map_flag == 1)
 		game->map_flag = 0;
-	if (key == K_A)
-		game->p.pos = vec_add(game->p.pos, vec_mul(vec_rot(game->p.dir, 90), 0.25));
-	else if (key == K_D)
-		game->p.pos = vec_add(game->p.pos, vec_mul(vec_rot(game->p.dir, 270), 0.25));
-	else if (key == K_W)
-		game->p.pos = vec_add(game->p.pos, vec_mul(vec_rot(game->p.dir, 0), 0.25));
-	else if (key == K_S)
-		game->p.pos = vec_add(game->p.pos, vec_mul(vec_rot(game->p.dir, 180), 0.25));
-	else if (key == K_Q)
+	else
+		game->key = 1;
+	while (game->key)
 	{
-		game->p.dir = vec_rot(game->p.dir, 5);
-		game->p.plane = vec_rot(game->p.plane, 5);
+		if (key == K_A)
+			game->p.pos = vec_add(game->p.pos, vec_mul(vec_rot(game->p.dir, 90), 0.05));
+		else if (key == K_D)
+			game->p.pos = vec_add(game->p.pos, vec_mul(vec_rot(game->p.dir, 270), 0.05));
+		else if (key == K_W)
+			game->p.pos = vec_add(game->p.pos, vec_mul(vec_rot(game->p.dir, 0), 0.05));
+		else if (key == K_S)
+			game->p.pos = vec_add(game->p.pos, vec_mul(vec_rot(game->p.dir, 180), 0.05));
+		else if (key == K_AR_L)
+		{
+			game->p.dir = vec_rot(game->p.dir, 1);
+			game->p.plane = vec_rot(game->p.plane, 1);
+		}
+		else if (key == K_AR_R)
+		{
+			game->p.dir = vec_rot(game->p.dir, -1);
+			game->p.plane = vec_rot(game->p.plane, -1);
+		}
 	}
-	else if (key == K_E)
-	{
-		game->p.dir = vec_rot(game->p.dir, -5);
-		game->p.plane = vec_rot(game->p.plane, -5);
-	}
+	return (0);
+}
+
+int user_stop(int key, t_game *game)
+{
+	game->key = 0;
 	return (0);
 }
 
@@ -75,7 +87,8 @@ int	main(int argc, char **argv)
 	init_img(&game);
 	printf("%d, %d", game.screen_height, game.screen_width);
 	mlx_loop_hook(game.mlx, &main_loop, &game);
-	mlx_key_hook(game.win, user_move, &game);
+	mlx_hook(game.win, 2, 0, user_move, &game);
+	mlx_hook(game.win, 3, 0, user_stop, &game);
 	mlx_hook(game.win, 17, 0, &key_press_exit, &game);
 	mlx_loop(game.mlx);
 	return (0);

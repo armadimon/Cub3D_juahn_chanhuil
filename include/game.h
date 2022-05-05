@@ -82,6 +82,7 @@ typedef struct s_game
 	t_img		img;
 	int			**texture;
 	int			map_flag;
+	int			key;
 }				t_game;
 
 /* PARSE & CHECK */
