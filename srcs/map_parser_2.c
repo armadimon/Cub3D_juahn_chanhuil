@@ -146,6 +146,7 @@ int cpy_map(t_game *game, t_list *map_list, int row, int col)
 	i = -1;
 	while (++i < row)
 	{
+		printf("map : %s\n", (char *)map_list->content);
 		j = -1;
 		buf = map_list->content;
 		while ((++j < col) && buf[j])
@@ -188,6 +189,11 @@ int	parse_map(t_game *game, t_list *map_list)
 	init_valid(&valid);
 	while (temp)
 	{
+		if (temp->content == NULL)
+		{
+			temp = temp->next;
+			continue ;
+		}
 		if (check_map_contents(game, &valid))
 			return (get_map_arr(game, temp));
 		buf = ft_split((char *)temp->content, ' ');

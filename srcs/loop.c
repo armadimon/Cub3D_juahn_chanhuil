@@ -83,7 +83,6 @@ void	draw_one_column(t_game *game, int x, double len)
 	wall_end = (game->map_height * TILE_SIZE) / 2 + (int)(length / 2);
 	// if (wall_end >= len)
 	// 	wall_end = len - 1;
-
 	for (int i=0;i<(game->map_height * TILE_SIZE);i++)
 	{
 		if (i < wall_start)
@@ -93,6 +92,84 @@ void	draw_one_column(t_game *game, int x, double len)
 		else
 			game->img.data[i * (game->map_width * TILE_SIZE) + x] = 0x000000;
 	}
+}
+
+double temp(t_game *game, int i)
+{
+	char **temp_map = game->map;
+			double cameraX = 2 * i / (double)(game->map_width * TILE_SIZE) - 1;
+		double rayDirX = game->p.dir.x + game->p.plane.x * cameraX;
+		double rayDirY = game->p.dir.y + game->p.plane.y * cameraX;
+		
+		int mapX = (int)game->p.pos.x;
+		int mapY = (int)game->p.pos.y;
+
+		//length of ray from current position to next x or y-side
+		double sideDistX;
+		double sideDistY;
+		
+		 //length of ray from one x or y-side to next x or y-side
+		double deltaDistX = fabs(1 / rayDirX);
+		double deltaDistY = fabs(1 / rayDirY);
+		double perpWallDist;
+		
+		//what direction to step in x or y-direction (either +1 or -1)
+		int stepX;
+		int stepY;
+		
+		int hit = 0; //was there a wall hit?
+		int side; //was a NS or a EW wall hit?
+
+		if (rayDirX < 0)
+		{
+			stepX = -1;
+			sideDistX = (game->p.pos.x - mapX) * deltaDistX;
+		}
+		else
+		{
+			stepX = 1;
+			sideDistX = (mapX + 1.0 - game->p.pos.x) * deltaDistX;
+		}
+		if (rayDirY < 0)
+		{
+			stepY = -1;
+			sideDistY = (game->p.pos.y - mapY) * deltaDistY;
+		}
+		else
+		{
+			stepY = 1;
+			sideDistY = (mapY + 1.0 - game->p.pos.y) * deltaDistY;
+		}
+
+		while (hit == 0)
+		{
+			//jump to next map square, OR in x-direction, OR in y-direction
+			if (sideDistX < sideDistY)
+			{
+				sideDistX += deltaDistX;
+				mapX += stepX;
+				side = 0;
+			}
+			else
+			{
+				sideDistY += deltaDistY;
+				mapY += stepY;
+				side = 1;
+			}
+			//Check if ray has hit a wall
+			if (mapX < 0 || mapX > game->map_width ||
+				mapY < 0 || mapY > game->map_height)
+				return (0);
+			if (temp_map[mapY][mapX] == '1' || temp_map[mapY][mapX] == ' ')
+				hit = 1;
+		}
+		if (side == 0)
+			perpWallDist = (mapX - game->p.pos.x + (1 - stepX) / 2) / rayDirX;
+		else
+			perpWallDist = (mapY - game->p.pos.y + (1 - stepY) / 2) / rayDirY;
+
+		return (perpWallDist);
+
 }
 
 void	draw_3D_map(t_game *game)
@@ -108,13 +185,14 @@ void	draw_3D_map(t_game *game)
 		ray = vec_add(game->p.dir, vec_mul(game->p.plane, 2.0 * i / (game->map_width * TILE_SIZE) - 1));
 		hp = vec_mul(vec_norm(ray), get_hitpoint(game, ray));
 		len = vec_len(hp) / vec_len(ray) - 1;
+	// printf("perp : %f\n", len);
+		len = temp(game, i);
 		draw_one_column(game, i, len);
 	}
 }
 
 int		main_loop(t_game *game)
 {
-	init_img(game);
 	// draw_texture(game);
 	draw_3D_map(game);
 	if (game->map_flag)

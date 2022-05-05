@@ -1,5 +1,27 @@
 #include "../include/game.h"
 
+
+void	print_map(t_list *map_buffer)
+{
+	t_list	*temp;
+	int		i;
+
+	temp = map_buffer;
+	while (temp)
+	{
+		printf("%s\n", (char *)temp->content);
+		temp = temp->next;
+	}
+	i = -1;
+	// while (game->map[++i])
+	// 	printf("map : [%s]\n", game->map[i]);
+	// printf("width : %d\n", game->map_width);
+	// printf("height : %d\n", game->map_height);
+	// vec_print(game->p.dir);
+	// vec_print(game->p.pos);
+	// vec_print(game->p.plane);
+}
+
 t_list	*get_map_list(t_list *map_buffer, int fd)
 {
 	t_list	*new;
@@ -24,6 +46,7 @@ t_list	*get_map_list(t_list *map_buffer, int fd)
 		line = get_next_line(fd);
 		i++;
 	}
+	print_map(map_buffer);
 	return (map_buffer);
 }
 
@@ -41,27 +64,6 @@ t_list	*read_map(t_list *map_buffer, char *argv)
 	return (map_buffer);
 }
 
-void	print_map(t_game *game, t_list *map_buffer)
-{
-	t_list	*temp;
-	int		i;
-
-	temp = map_buffer;
-	while (temp)
-	{
-		printf("%s\n", (char *)temp->content);
-		temp = temp->next;
-	}
-	i = -1;
-	while (game->map[++i])
-		printf("map : [%s]\n", game->map[i]);
-	printf("width : %d\n", game->map_width);
-	printf("height : %d\n", game->map_height);
-	vec_print(game->p.dir);
-	vec_print(game->p.pos);
-	vec_print(game->p.plane);
-}
-
 int	read_and_parse_map(t_game *game, t_list *map_buffer, char *argv)
 {
 	map_buffer = read_map(map_buffer, argv);
@@ -73,7 +75,7 @@ int	read_and_parse_map(t_game *game, t_list *map_buffer, char *argv)
 		ft_lstclear(&map_buffer, free);
 		return (0);
 	}
-	print_map(game, map_buffer);
+	// print_map(game, map_buffer);
 	ft_lstclear(&map_buffer, free);
 	return (1);
 }

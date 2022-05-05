@@ -9,6 +9,8 @@ void	reset_data(t_game *game)
 	game->map_data.F_green = -1;
 	game->map_data.F_blue = -1;
 	game->map_flag = 0;
+	game->screen_height = 0;
+	game->screen_width = 0;
 }
 
 int	key_press_exit(t_game *game)
@@ -69,6 +71,7 @@ int	main(int argc, char **argv)
 	}
 	init_window(&game);
 	init_img(&game);
+	printf("%d, %d", game.screen_height, game.screen_width);
 	mlx_loop_hook(game.mlx, &main_loop, &game);
 	mlx_key_hook(game.win, user_move, &game);
 	mlx_hook(game.win, 17, 0, &key_press_exit, &game);

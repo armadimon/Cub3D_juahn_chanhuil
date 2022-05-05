@@ -77,6 +77,8 @@ typedef struct s_game
 	t_map_data	map_data;
 	int			map_width;
 	int			map_height;
+	int			screen_width;
+	int			screen_height;
 	char		**map;
 	t_img		img;
 	int			**texture;
