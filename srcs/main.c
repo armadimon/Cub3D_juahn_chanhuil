@@ -2,6 +2,8 @@
 #include <stdio.h>
 void	reset_data(t_game *game)
 {
+	game->p.pos.x = -1;
+	game->p.pos.y = -1;
 	game->map_data.C_blue = -1;
 	game->map_data.C_red = -1;
 	game->map_data.C_green = -1;
@@ -59,6 +61,7 @@ int user_move(int key, t_game *game)
 
 int user_stop(int key, t_game *game)
 {
+	(void)key;
 	game->key = 0;
 	return (0);
 }

@@ -46,7 +46,7 @@ t_list	*get_map_list(t_list *map_buffer, int fd)
 		line = get_next_line(fd);
 		i++;
 	}
-	print_map(map_buffer);
+	// print_map(map_buffer);
 	return (map_buffer);
 }
 

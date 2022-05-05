@@ -65,6 +65,8 @@ typedef struct s_vaild
 	int		valid_so;
 	int		valid_we;
 	int		valid_ea;
+	int		valid_c;
+	int		valid_f;
 }				t_valid;
 
 typedef struct s_game

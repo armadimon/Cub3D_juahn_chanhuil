@@ -64,6 +64,8 @@ int	check_map(t_game *game)
 			game->p.pos = vec_new(j + 0.5, i + 0.5);
 		}
 	}
+	if (game->p.pos.x < 0 || game->p.pos.y < 0)
+		return (0);
 	game->screen_height = game->map_height * TILE_SIZE;
 	game->screen_width = game->map_width * TILE_SIZE;
 	game->p.plane = vec_rot(game->p.dir, -90);

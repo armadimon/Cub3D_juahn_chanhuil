@@ -50,6 +50,20 @@ int		load_image(t_game *game, int *texture, char *path, t_img *img)
 	return (1);
 }
 
+int	check_valid_color(char *buf)
+{
+	int	i;
+
+	i = 0;
+	while (buf[i])
+	{
+		if (!ft_isdigit(buf[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 int	set_F_C_color(t_game *game, char *str, int flag)
 {
 	char	**buf;
@@ -59,6 +73,8 @@ int	set_F_C_color(t_game *game, char *str, int flag)
 	buf = ft_split(str, ',');
 	while (buf[i])
 	{
+		if (!check_valid_color(buf[i]) || i > 2)
+			return (0);
 		if (i == 0 && flag == 0)
 			game->map_data.F_red = ft_atoi(buf[i]);
 		else if (i == 1 && flag == 0)
@@ -71,27 +87,47 @@ int	set_F_C_color(t_game *game, char *str, int flag)
 			game->map_data.C_green = ft_atoi(buf[i]);
 		else if (i == 2 && flag == 1)
 			game->map_data.C_blue = ft_atoi(buf[i]);
-		if (i > 2)
-			return (0);
 		i++;
 	}
 	return (1);
 }
 
-int	check_id(t_valid *vaild, char *str)
+int	check_floor_data(t_game *game)
 {
-	if (ft_strstr(str, "NO") && vaild->valid_no == 0)
-		vaild->valid_no = 1;
-	else if (ft_strstr(str, "SO") && vaild->valid_so == 0)
-		vaild->valid_so = 1;
-	else if (ft_strstr(str, "WE") && vaild->valid_we == 0)
-		vaild->valid_we = 1;
-	else if (ft_strstr(str, "EA") && vaild->valid_ea == 0)
-		vaild->valid_ea = 1;
-	else if (ft_strstr(str, "F"))
-		;
-	else if (ft_strstr(str, "C"))
-		;
+	if (game->map_data.F_red == -1)
+		return (0);
+	if (game->map_data.F_green == -1)
+		return (0);
+	if (game->map_data.F_blue == -1)
+		return (0);
+	return (1);
+}
+
+int	check_ceiling_data(t_game *game)
+{
+	if (game->map_data.C_red == -1)
+		return (0);
+	if (game->map_data.C_green == -1)
+		return (0);
+	if (game->map_data.C_blue == -1)
+		return (0);
+	return (1);
+}
+
+int	check_id(t_valid *valid, char *str)
+{
+	if (ft_strstr(str, "NO") && valid->valid_no == 0)
+		valid->valid_no = 1;
+	else if (ft_strstr(str, "SO") && valid->valid_so == 0)
+		valid->valid_so = 1;
+	else if (ft_strstr(str, "WE") && valid->valid_we == 0)
+		valid->valid_we = 1;
+	else if (ft_strstr(str, "EA") && valid->valid_ea == 0)
+		valid->valid_ea = 1;
+	else if (ft_strstr(str, "F") && valid->valid_f == 0)
+		valid->valid_f = 1;
+	else if (ft_strstr(str, "C") && valid->valid_c == 0)
+		valid->valid_c = 1;
 	else
 		return (0);
 	return (1);
@@ -162,6 +198,8 @@ void	init_valid(t_valid *valid)
 	valid->valid_no = 0;
 	valid->valid_we = 0;
 	valid->valid_so = 0;
+	valid->valid_c = 0;
+	valid->valid_f = 0;
 }
 
 int cpy_map(t_game *game, t_list *map_list, int row, int col)
@@ -175,6 +213,8 @@ int cpy_map(t_game *game, t_list *map_list, int row, int col)
 	{
 		j = -1;
 		game->map[i] = (char *)malloc(sizeof(char) * col + 1);
+		if (!game->map[i])
+			return (0);
 		while (++j < col)
 			game->map[i][j] = ' ';
 		game->map[i][j] = '\0';
@@ -184,9 +224,11 @@ int cpy_map(t_game *game, t_list *map_list, int row, int col)
 	i = -1;
 	while (++i < row)
 	{
-		printf("map : %s\n", (char *)map_list->content);
+		// printf("map : %s\n", (char *)map_list->content);
 		j = -1;
 		buf = map_list->content;
+		if (!buf)
+			return (0);
 		while ((++j < col) && buf[j])
 			game->map[i][j] = buf[j];
 		map_list = map_list->next;
