@@ -74,6 +74,46 @@ double	get_hitpoint(t_game *game, t_vec ray)
 	return (len);
 }
 
+int		check_wall_dir(t_game *game, t_vec ray)
+{
+	int tex_num = 0;
+	if (ray.x >= 0)
+	{
+		if (ray.y >= 0)
+		{
+			if (game->side == 1) // wall x hit
+				tex_num = 0;
+			else
+				tex_num = 2;
+		}
+		else
+		{
+			if (game->side == 1) // wall x hit
+				tex_num = 1;
+			else
+				tex_num = 2;
+		}
+	}
+	else
+	{
+		if (ray.y >= 0)
+		{
+			if (game->side == 1) // wall x hit
+				tex_num = 0;
+			else
+				tex_num = 3;
+		}
+		else
+		{
+			if (game->side == 1) // wall x hit
+				tex_num = 1;
+			else
+				tex_num = 3;
+		}
+	}
+	return (tex_num);
+}
+
 void	draw_one_column(t_game *game, int x, double len, t_vec ray)
 {
 	int	wall_start;
@@ -99,26 +139,21 @@ void	draw_one_column(t_game *game, int x, double len, t_vec ray)
 
  	double step = 1.0 * texHeight / length;
       // Starting texture coordinate
-      double texPos = (wall_start - HEIGHT / 2 + length / 2) * step;
-      for(int y = wall_start; y<wall_end; y++)
-      {
-        // Cast the texture coordinate to integer, and mask with (texHeight - 1) in case of overflow
-
-      }
-
+    double texPos = (wall_start - HEIGHT / 2 + length / 2) * step;
+	int tex_num = check_wall_dir(game, ray);
 	for (int i=0;i<HEIGHT;i++)
 	{
 		if (i < wall_start)
-			game->img.data[i * WIDTH + x] = 0xaaaaff;
+			game->img.data[i * WIDTH + x] = 0x010000 * game->map_data.C_red + 0x000100 * game->map_data.C_green + 0x000001 * game->map_data.C_blue;
 		else if (i < wall_end)
 		{
 		    int texY = (int)texPos & (texHeight - 1);
 			texPos += step;
-			int color = game->texture[0][texHeight * texY + texX];
+			int color = game->texture[tex_num][texHeight * texY + texX];
 			game->img.data[i * WIDTH + x] = color;
 		}
 		else
-			game->img.data[i * WIDTH + x] = 0x000000;
+			game->img.data[i * WIDTH + x] = 0x010000 * game->map_data.F_red + 0x000100 * game->map_data.F_green + 0x000001 * game->map_data.F_blue;
 	}
 }
 

@@ -19,9 +19,9 @@ int	check_space(t_game *game, int i, int j)
 		return (0);
 	if (game->map[i][j - 1] == ' ' || game->map[i][j + 1] == ' ')
 		return (0);
-	if (strlen(game->map[i - 1]) <= j || game->map[i - 1][j] == ' ')
+	if ((int)ft_strlen(game->map[i - 1]) <= j || game->map[i - 1][j] == ' ')
 		return (0);
-	if (strlen(game->map[i + 1]) <= j || game->map[i + 1][j] == ' ')
+	if ((int)ft_strlen(game->map[i + 1]) <= j || game->map[i + 1][j] == ' ')
 		return (0);
 	return (1);
 }
