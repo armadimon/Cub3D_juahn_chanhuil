@@ -1,24 +1,64 @@
 #include "../include/game.h"
 
+t_vec	get_direction(char c)
+{
+	if (c == 'N')
+		return (vec_new(0 , -1));
+	else if (c == 'S')
+		return (vec_new(0 , 1));
+	else if (c == 'E')
+		return (vec_new(1 , 0));
+	else if (c == 'W')
+		return (vec_new(-1 , 0));
+	return (vec_new(0, 0));
+}
+
+int	check_space(t_game *game, int i, int j)
+{
+	if (i == 0 || j == 0 || !game->map[i + 1] || !game->map[i][j + 1])
+		return (0);
+	if (game->map[i][j - 1] == ' ' || game->map[i][j + 1] == ' ')
+		return (0);
+	if (strlen(game->map[i - 1]) <= j || game->map[i - 1][j] == ' ')
+		return (0);
+	if (strlen(game->map[i + 1]) <= j || game->map[i + 1][j] == ' ')
+		return (0);
+	return (1);
+}
+
+int	check_char(char c)
+{
+	if (c != 'N' && c != 'S' && c != 'E' && c != 'W'
+		&& c != ' ' && c != '0' && c != '1')
+		return (0);
+	return (1);
+}
+
 int	check_map(t_game *game)
 {
 	int i;
 	int j;
+	int isinited;
 
+	isinited = 0;
 	i = -1;
 	while (game->map[++i])
 	{
 		j = -1;
 		while (game->map[i][++j])
 		{
-			if (game->map[i][j] == 'N')
-				game->p.dir = vec_new(0 , -1);
-			else if (game->map[i][j] == 'S')
-				game->p.dir = vec_new(0 , 1);
-			else if (game->map[i][j] == 'E')
-				game->p.dir = vec_new(1 , 0);
-			else if (game->map[i][j] == 'W')
-				game->p.dir = vec_new(-1 , 0);
+			if (!check_char(game->map[i][j]))
+				return (0);
+			if (game->map[i][j] == '0' && !check_space(game, i, j))
+				return (0);
+			if (game->map[i][j] == 'N' || game->map[i][j] == 'S' ||
+				game->map[i][j] == 'E' || game->map[i][j] == 'W')
+			{
+				if (isinited)
+					return (0);
+				game->p.dir = get_direction(game->map[i][j]);
+				isinited = 1;
+			}
 			else
 				continue ;
 			game->p.pos = vec_new(j + 0.5, i + 0.5);
