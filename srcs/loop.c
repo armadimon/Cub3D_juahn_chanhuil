@@ -1,21 +1,21 @@
 #include "../include/game.h"
 
-int		draw_texture(t_game *game)
-{
-	int i = 0;
-	int j = 0;
-	while (i < texHeight)
-	{
-		j = 0;
-		while (j < texWidth)
-		{
-			game->img.data[i * texHeight * COLS  + j] = game->texture[1][i * texHeight + j];
-			j++;
-		}
-		i++;
-	}
-	return (0);
-}
+// int		draw_texture(t_game *game)
+// {
+// 	int i = 0;
+// 	int j = 0;
+// 	while (i < texHeight)
+// 	{
+// 		j = 0;
+// 		while (j < texWidth)
+// 		{
+// 			game->img.data[i * texHeight * COLS  + j] = game->texture[1][i * texHeight + j];
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// 	return (0);
+// }
 
 void	get_ray_value(t_vec *delta, t_vec *step, t_vec *side, t_vec ray)
 {
@@ -76,28 +76,28 @@ void	draw_one_column(t_game *game, int x, double len)
 	int	wall_end;
 	int length;
 
-	length = (int)((game->map_height * TILE_SIZE) / len);
-	wall_start = (game->map_height * TILE_SIZE) / 2 + (int)(-length / 2);
+	length = (int)(HEIGHT / len);
+	wall_start = HEIGHT / 2 + (int)(-length / 2);
 	// if (wall_start < 0)
 	// 	wall_start = 0;
-	wall_end = (game->map_height * TILE_SIZE) / 2 + (int)(length / 2);
+	wall_end = HEIGHT / 2 + (int)(length / 2);
 	// if (wall_end >= len)
 	// 	wall_end = len - 1;
-	for (int i=0;i<(game->map_height * TILE_SIZE);i++)
+	for (int i=0;i<HEIGHT;i++)
 	{
 		if (i < wall_start)
-			game->img.data[i * (game->map_width * TILE_SIZE) + x] = 0xaaaaff;
+			game->img.data[i * WIDTH + x] = 0xaaaaff;
 		else if (i < wall_end)
-			game->img.data[i * (game->map_width * TILE_SIZE) + x] = 0x00ff00;
+			game->img.data[i * WIDTH + x] = 0x00ff00;
 		else
-			game->img.data[i * (game->map_width * TILE_SIZE) + x] = 0x000000;
+			game->img.data[i * WIDTH + x] = 0x000000;
 	}
 }
 
 double temp(t_game *game, int i)
 {
 	char **temp_map = game->map;
-			double cameraX = 2 * i / (double)(game->map_width * TILE_SIZE) - 1;
+			double cameraX = 2 * i / (double)WIDTH - 1;
 		double rayDirX = game->p.dir.x + game->p.plane.x * cameraX;
 		double rayDirY = game->p.dir.y + game->p.plane.y * cameraX;
 		
@@ -180,9 +180,9 @@ void	draw_3D_map(t_game *game)
 	double	len;
 
 	i = -1;
-	while (++i < (game->map_width * TILE_SIZE))
+	while (++i < WIDTH)
 	{
-		ray = vec_add(game->p.dir, vec_mul(game->p.plane, 2.0 * i / (game->map_width * TILE_SIZE) - 1));
+		ray = vec_add(game->p.dir, vec_mul(game->p.plane, 2.0 * i / WIDTH - 1));
 		hp = vec_mul(vec_norm(ray), get_hitpoint(game, ray));
 		len = vec_len(hp) / vec_len(ray) - 1;
 	// printf("perp : %f\n", len);

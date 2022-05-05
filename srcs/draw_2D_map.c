@@ -5,15 +5,15 @@ void	draw_rectangle(t_game *game, int x, int y)
 	int i;
 	int j;
 
-	x *= TILE_SIZE;
-	y *= TILE_SIZE;
+	x *= TILE_SIZE / 4;
+	y *= TILE_SIZE / 4;
 	i = 0;
-	while (i < TILE_SIZE)
+	while (i < TILE_SIZE / 4)
 	{
 		j = 0;
-		while (j < TILE_SIZE)
+		while (j < TILE_SIZE / 4)
 		{
-			game->img.data[(y  + i) * (game->map_width * TILE_SIZE) + x + j] = 0xFFFFFF;
+			game->img.data[(y  + i) * (WIDTH) + x + j] = 0xFFFFFF;
 			j++;
 		}
 		i++;
@@ -45,12 +45,12 @@ void	draw_2D_map_BG(t_game *game)
 	int		j;
 
 	i = 0;
-	while (i < game->screen_height)
+	while (i < game->screen_height / 4)
 	{
 		j = 0;
-		while (j < game->screen_width)
+		while (j < game->screen_width / 4)
 		{
-			game->img.data[i * game->screen_width + j] = 0x000000;
+			game->img.data[i * WIDTH + j] = 0x000000;
 			j++;
 		}
 		i++;
@@ -84,7 +84,7 @@ void	draw_ray(t_game *game, int x)
 				break;
 			// int i = 0
 			// while (i < iX)
-			game->img.data[((int)(fTempY) * game->map_width * TILE_SIZE) + iX] = color;
+			game->img.data[(((int)fTempY / 4) * (WIDTH)) + iX / 4] = color;
 			if (rayDir.x < 0)
 				iX--;
 			else
@@ -109,7 +109,7 @@ void	draw_ray(t_game *game, int x)
 				if (game->map[iY / TILE_SIZE][(int)fTempX / TILE_SIZE] == '1' ||
 					game->map[iY / TILE_SIZE][(int)fTempX / TILE_SIZE] == ' ')
 					break;
-				game->img.data[(iY * game->map_width * TILE_SIZE) + (int)(fTempX)] = 0xFF0000;
+				game->img.data[(iY / 4) * (WIDTH) + (int)(fTempX / 4)] = 0xFF0000;
 				if (rayDir.x < 0)
 					fTempX -= fabs(fM);
 				else
@@ -131,7 +131,7 @@ void	draw_2D_map(t_game *game)
 	draw_2D_map_BG(game);
 	draw_rectangles(game);
 	x = 0;
-	while (x < game->map_width * TILE_SIZE)
+	while (x < game->screen_width) 
 	{
 		draw_ray(game, x);
 		x++;

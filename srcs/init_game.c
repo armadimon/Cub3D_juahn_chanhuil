@@ -2,12 +2,12 @@
 
 void	init_window(t_game *game)
 {
-	game->win = mlx_new_window(game->mlx, game->map_width * TILE_SIZE, game->map_height * TILE_SIZE, "mlx 42");
+	game->win = mlx_new_window(game->mlx, WIDTH, HEIGHT, "mlx 42");
 }
 
 void	init_img(t_game *game)
 {
-	game->img.img = mlx_new_image(game->mlx, game->map_width * TILE_SIZE, game->map_height * TILE_SIZE);
+	game->img.img = mlx_new_image(game->mlx, WIDTH, HEIGHT);
 	game->img.data = (int *)mlx_get_data_addr(game->img.img, &game->img.bpp, &game->img.size_l, &game->img.endian);
 }
 

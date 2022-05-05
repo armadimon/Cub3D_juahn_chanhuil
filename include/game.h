@@ -21,10 +21,8 @@
 # define texWidth 64
 # define texHeight 64
 # define TILE_SIZE 32
-# define ROWS 11
-# define COLS 15
-# define WIDTH COLS * TILE_SIZE
-# define HEIGHT ROWS * TILE_SIZE
+# define WIDTH 960
+# define HEIGHT 640
 
 typedef struct s_img
 {
