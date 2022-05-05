@@ -47,7 +47,7 @@ double	get_hitpoint(t_game *game, t_vec ray)
 
 	count[0] = (int)game->p.pos.x;
 	count[1] = (int)game->p.pos.y;
-	delta = vec_new(1 / cos(vec_angle(ray)), 1 / sin(vec_angle(ray)));
+	delta = vec_new(fabs(1 / cos(vec_angle(ray))), fabs(1 / sin(vec_angle(ray))));
 	side = vec_new(game->p.pos.x - (int)(game->p.pos.x),
 			game->p.pos.y - (int)(game->p.pos.y));
 	get_ray_value(&delta, &step, &side, ray);
@@ -186,7 +186,7 @@ void	draw_3D_map(t_game *game)
 		hp = vec_mul(vec_norm(ray), get_hitpoint(game, ray));
 		len = vec_len(hp) / vec_len(ray) - 1;
 	// printf("perp : %f\n", len);
-		len = temp(game, i);
+		// len = temp(game, i);
 		draw_one_column(game, i, len);
 	}
 }

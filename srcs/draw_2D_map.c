@@ -20,6 +20,26 @@ void	draw_rectangle(t_game *game, int x, int y)
 	}
 }
 
+void	draw_background(t_game *game, int x, int y)
+{
+	int i;
+	int j;
+
+	x *= TILE_SIZE / 4;
+	y *= TILE_SIZE / 4;
+	i = 0;
+	while (i < TILE_SIZE / 4)
+	{
+		j = 0;
+		while (j < TILE_SIZE / 4)
+		{
+			game->img.data[(y  + i) * (WIDTH) + x + j] = 0x000000;
+			j++;
+		}
+		i++;
+	}
+}
+
 void	draw_rectangles(t_game *game)
 {
 	int		i;
@@ -31,8 +51,10 @@ void	draw_rectangles(t_game *game)
 		j = 0;
 		while (j < game->map_width)
 		{
-			if (game->map[i][j] == '1' || game->map[i][j] == ' ')
+			if (game->map[i][j] == '1')
 				draw_rectangle(game, j, i);
+			if (game->map[i][j] == '0')
+				draw_background(game, j, i);
 			j++;
 		}
 		i++;
@@ -128,7 +150,7 @@ void	draw_2D_map(t_game *game)
 {
 	int x;
 
-	draw_2D_map_BG(game);
+	// draw_2D_map_BG(game);
 	draw_rectangles(game);
 	x = 0;
 	while (x < game->screen_width) 
