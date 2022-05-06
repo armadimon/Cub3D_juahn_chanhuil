@@ -1,5 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/06 16:00:22 by juahn             #+#    #+#             */
+/*   Updated: 2022/05/06 16:01:34 by juahn            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/game.h"
-#include <stdio.h>
+
 void	reset_data(t_game *game)
 {
 	game->p.pos.x = -1;
@@ -30,7 +42,7 @@ int	key_press_exit(t_game *game)
 	exit (0);
 }
 
-int user_move(int key, t_game *game)
+int	user_move(int key, t_game *game)
 {
 	if (key == K_ESC)
 		key_press_exit(game);
@@ -53,7 +65,7 @@ int user_move(int key, t_game *game)
 	return (0);
 }
 
-int user_stop(int key, t_game *game)
+int	user_stop(int key, t_game *game)
 {
 	if (key == K_W)
 		game->key.W = 0;

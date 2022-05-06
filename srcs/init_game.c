@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_game.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/06 16:36:06 by juahn             #+#    #+#             */
+/*   Updated: 2022/05/06 16:38:07 by juahn            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/game.h"
 
 void	init_window(t_game *game)
@@ -8,25 +20,33 @@ void	init_window(t_game *game)
 void	init_img(t_game *game)
 {
 	game->img.img = mlx_new_image(game->mlx, WIDTH, HEIGHT);
-	game->img.data = (int *)mlx_get_data_addr(game->img.img, &game->img.bpp, &game->img.size_l, &game->img.endian);
+	game->img.data = (int *)mlx_get_data_addr(game->img.img,
+			&game->img.bpp, &game->img.size_l, &game->img.endian);
 }
 
-int		init_texture(t_game *game)
+int	init_texture(t_game *game)
 {
+	int	i;
+	int	j;
 
-	if (!(game->texture = (int **)malloc(sizeof(int *) * 8)))
-		return (-1);
-	for (int i = 0; i < 6; i++)
+	i = 0;
+	game->texture = (int **)malloc(sizeof(int *) * 4);
+	if (!game->texture)
+		return (0);
+	while (i < 4)
 	{
-		if (!(game->texture[i] = (int *)malloc(sizeof(int) * (texHeight * texWidth))))
-			return (-1);
+		game->texture[i] = (int *)malloc(sizeof(int) * (texHeight * texWidth));
+		if (!game->texture[i])
+			return (0);
+		i++;
 	}
-	for (int i = 0; i < 6; i++)
+	i = 0;
+	while (i < 4)
 	{
-		for (int j = 0; j < texHeight * texWidth; j++)
-		{
+		j = -1;
+		while (++j < texHeight * texWidth)
 			game->texture[i][j] = 0;
-		}
+		i++;
 	}
 	return (1);
 }
@@ -47,12 +67,4 @@ void	init_valid(t_valid *valid)
 	valid->valid_so = 0;
 	valid->valid_c = 0;
 	valid->valid_f = 0;
-}
-
-int		deal_key(int key_code, t_game *game)
-{
-	(void)game;
-	if (key_code == KEY_ESC)
-		exit(0);
-	return (0);
 }

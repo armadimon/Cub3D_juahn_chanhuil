@@ -1,16 +1,18 @@
 SRCS			=	srcs/main.c \
+					srcs/loop.c \
+					srcs/init_game.c \
+					srcs/handle_key.c \
 					srcs/parser/map_parser.c \
 					srcs/parser/map_parser_2.c \
 					srcs/parser/get_map_arr.c \
 					srcs/parser/get_map_content.c \
 					srcs/parser/load_image.c \
 					srcs/parser/get_F_C_color.c \
-					srcs/loop.c \
-					srcs/init_game.c \
+					srcs/parser/check_map.c \
 					srcs/engine/draw_2D_map.c \
+					srcs/engine/draw_2D_ray.c \
 					srcs/engine/draw_3D_map.c \
 					srcs/engine/draw_one_col.c \
-					srcs/check_map.c \
 					srcs/vectors/vector.c \
 					srcs/vectors/vector2.c \
 					srcs/vectors/vector3.c \

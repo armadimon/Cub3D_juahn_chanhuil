@@ -1,4 +1,4 @@
-#include "../include/game.h"
+#include "../../include/game.h"
 
 t_vec	get_direction(char c)
 {
