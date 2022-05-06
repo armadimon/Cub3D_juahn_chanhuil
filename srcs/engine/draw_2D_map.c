@@ -1,4 +1,4 @@
-#include "../include/game.h"
+#include "../../include/game.h"
 
 void	draw_rectangle(t_game *game, int x, int y)
 {

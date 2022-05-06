@@ -113,7 +113,9 @@ void	init_img(t_game *game);
 int		init_texture(t_game *game);
 void	init_valid(t_valid *valid);
 
+void	draw_3D_map(t_game *game);
 void	draw_2D_map(t_game *game);
+void	draw_one_column(t_game *game, int x, double len, t_vec ray);
 int		main_loop(t_game *game);
 
 #endif

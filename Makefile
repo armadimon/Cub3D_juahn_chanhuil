@@ -7,7 +7,9 @@ SRCS			=	srcs/main.c \
 					srcs/parser/get_F_C_color.c \
 					srcs/loop.c \
 					srcs/init_game.c \
-					srcs/draw_2D_map.c \
+					srcs/engine/draw_2D_map.c \
+					srcs/engine/draw_3D_map.c \
+					srcs/engine/draw_one_col.c \
 					srcs/check_map.c \
 					srcs/vectors/vector.c \
 					srcs/vectors/vector2.c \
