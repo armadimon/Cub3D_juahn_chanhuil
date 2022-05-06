@@ -20,7 +20,7 @@
 
 # define texWidth 64
 # define texHeight 64
-# define TILE_SIZE 32
+# define TILE_SIZE 64
 # define WIDTH 960
 # define HEIGHT 640
 
@@ -102,7 +102,9 @@ int		read_and_parse_map(t_game *game, t_list *map_buffer, char *argv);
 int		parse_map(t_game *game, t_list *map_list);
 int		check_map(t_game *game);
 int		get_map_arr(t_game *game, t_list *map_list);
-
+int		get_map_contents(t_game *game, char **buf, t_valid *valid);
+int		set_F_C_color(t_game *game, char *str, int flag);
+int		load_image(t_game *game, int *texture, char *path, t_img *img);
 
 /* INIT */
 void	init_game(t_game *game);
