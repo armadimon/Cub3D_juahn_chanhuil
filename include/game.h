@@ -98,6 +98,8 @@ void	init_game(t_game *game);
 void	init_window(t_game *game);
 void	init_img(t_game *game);
 int		init_texture(t_game *game);
+void	init_valid(t_valid *valid);
+
 void	draw_2D_map(t_game *game);
 int		main_loop(t_game *game);
 

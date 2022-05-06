@@ -39,6 +39,16 @@ void	init_game(t_game *game)
 	game->map_height = 0;
 }
 
+void	init_valid(t_valid *valid)
+{
+	valid->valid_ea = 0;
+	valid->valid_no = 0;
+	valid->valid_we = 0;
+	valid->valid_so = 0;
+	valid->valid_c = 0;
+	valid->valid_f = 0;
+}
+
 int		deal_key(int key_code, t_game *game)
 {
 	(void)game;
