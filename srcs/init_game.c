@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:36:06 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/06 16:38:07 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/06 20:07:38 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	init_texture(t_game *game)
 		return (0);
 	while (i < 4)
 	{
-		game->texture[i] = (int *)malloc(sizeof(int) * (texHeight * texWidth));
+		game->texture[i] = (int *)malloc(sizeof(int) * (TEXHEIGHT * TEXWIDTH));
 		if (!game->texture[i])
 			return (0);
 		i++;
@@ -44,7 +44,7 @@ int	init_texture(t_game *game)
 	while (i < 4)
 	{
 		j = -1;
-		while (++j < texHeight * texWidth)
+		while (++j < TEXHEIGHT * TEXWIDTH)
 			game->texture[i][j] = 0;
 		i++;
 	}

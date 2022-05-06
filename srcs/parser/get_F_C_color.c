@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 15:24:12 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/06 15:31:00 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/06 20:09:35 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,19 @@ int	set_f_c_color(t_game *game, char *str, int flag)
 		if (!check_valid_color(buf[i]) || i > 2)
 			return (0);
 		if (i == 0 && flag == 0)
-			game->map_data.F_red = ft_atoi(buf[i]);
+			game->map_data.f_red = ft_atoi(buf[i]);
 		else if (i == 1 && flag == 0)
-			game->map_data.F_green = ft_atoi(buf[i]);
+			game->map_data.f_green = ft_atoi(buf[i]);
 		else if (i == 2 && flag == 0)
-			game->map_data.F_blue = ft_atoi(buf[i]);
+			game->map_data.f_blue = ft_atoi(buf[i]);
 		if (i == 0 && flag == 1)
-			game->map_data.C_red = ft_atoi(buf[i]);
+			game->map_data.c_red = ft_atoi(buf[i]);
 		else if (i == 1 && flag == 1)
-			game->map_data.C_green = ft_atoi(buf[i]);
+			game->map_data.c_green = ft_atoi(buf[i]);
 		else if (i == 2 && flag == 1)
-			game->map_data.C_blue = ft_atoi(buf[i]);
+			game->map_data.c_blue = ft_atoi(buf[i]);
 		i++;
 	}
+	free_strs(buf);
 	return (1);
 }

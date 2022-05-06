@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:37:47 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/06 18:16:54 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/06 20:06:43 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,33 +28,33 @@ int	user_move(int key, t_game *game)
 	else if (key == K_M && game->map_flag == 1)
 		game->map_flag = 0;
 	else if (key == K_W)
-		game->key.W = 1;
+		game->key.w = 1;
 	else if (key == K_A)
-		game->key.A = 1;
+		game->key.a = 1;
 	else if (key == K_S)
-		game->key.S = 1;
+		game->key.s = 1;
 	else if (key == K_D)
-		game->key.D = 1;
+		game->key.d = 1;
 	else if (key == K_AR_L)
-		game->key.AL = 1;
+		game->key.al = 1;
 	else if (key == K_AR_R)
-		game->key.AR = 1;
+		game->key.ar = 1;
 	return (0);
 }
 
 int	user_stop(int key, t_game *game)
 {
 	if (key == K_W)
-		game->key.W = 0;
+		game->key.w = 0;
 	else if (key == K_A)
-		game->key.A = 0;
+		game->key.a = 0;
 	else if (key == K_S)
-		game->key.S = 0;
+		game->key.s = 0;
 	else if (key == K_D)
-		game->key.D = 0;
+		game->key.d = 0;
 	else if (key == K_AR_L)
-		game->key.AL = 0;
+		game->key.al = 0;
 	else if (key == K_AR_R)
-		game->key.AR = 0;
+		game->key.ar = 0;
 	return (0);
 }

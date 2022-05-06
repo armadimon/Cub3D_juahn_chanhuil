@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:00:22 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/06 18:21:30 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/06 20:06:12 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,23 @@ void	reset_data(t_game *game)
 {
 	game->p.pos.x = -1;
 	game->p.pos.y = -1;
-	game->map_data.C_blue = -1;
-	game->map_data.C_red = -1;
-	game->map_data.C_green = -1;
-	game->map_data.F_red = -1;
-	game->map_data.F_green = -1;
-	game->map_data.F_blue = -1;
+	game->map_data.c_blue = -1;
+	game->map_data.c_red = -1;
+	game->map_data.c_green = -1;
+	game->map_data.f_red = -1;
+	game->map_data.f_green = -1;
+	game->map_data.f_blue = -1;
 	game->map = NULL;
 	game->map_flag = 0;
 	game->side = 0;
 	game->screen_height = 0;
 	game->screen_width = 0;
-	game->key.W = 0;
-	game->key.A = 0;
-	game->key.S = 0;
-	game->key.D = 0;
-	game->key.AL = 0;
-	game->key.AR = 0;
+	game->key.w = 0;
+	game->key.a = 0;
+	game->key.s = 0;
+	game->key.d = 0;
+	game->key.al = 0;
+	game->key.ar = 0;
 }
 
 void	error(char *msg)

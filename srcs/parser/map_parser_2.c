@@ -5,42 +5,29 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/06 15:06:19 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/06 15:43:02 by juahn            ###   ########.fr       */
+/*   Created: 2022/05/06 20:08:55 by juahn             #+#    #+#             */
+/*   Updated: 2022/05/06 20:08:59 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/game.h"
-
-void	free_strs(char **strs)
-{
-	int	i;
-
-	i = -1;
-	if (strs)
-	{
-		while (strs[++i])
-			free(strs[i]);
-		free(strs);
-	}
-}
 
 int	check_map_contents(t_game *game, t_valid *valid)
 {
 	if (valid->valid_ea == 0 || valid->valid_no == 0
 		|| valid->valid_so == 0 || valid->valid_we == 0)
 		return (0);
-	if (game->map_data.C_red < 0 || game->map_data.C_red > 255)
+	if (game->map_data.c_red < 0 || game->map_data.c_red > 255)
 		return (0);
-	if (game->map_data.C_green < 0 || game->map_data.C_green > 255)
+	if (game->map_data.c_green < 0 || game->map_data.c_green > 255)
 		return (0);
-	if (game->map_data.C_blue < 0 || game->map_data.C_blue > 255)
+	if (game->map_data.c_blue < 0 || game->map_data.c_blue > 255)
 		return (0);
-	if (game->map_data.F_red < 0 || game->map_data.F_red > 255)
+	if (game->map_data.f_red < 0 || game->map_data.f_red > 255)
 		return (0);
-	if (game->map_data.F_green < 0 || game->map_data.F_green > 255)
+	if (game->map_data.f_green < 0 || game->map_data.f_green > 255)
 		return (0);
-	if (game->map_data.F_blue < 0 || game->map_data.F_blue > 255)
+	if (game->map_data.f_blue < 0 || game->map_data.f_blue > 255)
 		return (0);
 	return (1);
 }

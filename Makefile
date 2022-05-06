@@ -9,6 +9,7 @@ SRCS			=	srcs/main.c \
 					srcs/parser/load_image.c \
 					srcs/parser/get_F_C_color.c \
 					srcs/parser/check_map.c \
+					srcs/parser/utils.c \
 					srcs/engine/draw_2D_map.c \
 					srcs/engine/draw_2D_ray.c \
 					srcs/engine/draw_3D_map.c \

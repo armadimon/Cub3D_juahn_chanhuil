@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   game.h                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/06 20:04:01 by juahn             #+#    #+#             */
+/*   Updated: 2022/05/06 20:07:55 by juahn            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef GAME_H
 # define GAME_H
 
@@ -12,14 +24,12 @@
 # include "./vector.h"
 # include "./key_macos.h"
 
-#define X_EVENT_KEY_PRESS		2
-#define X_EVENT_KEY_EXIT		17 //Exit program key code
+# define X_EVENT_KEY_PRESS		2
+# define X_EVENT_KEY_EXIT		17 //Exit program key code
+# define KEY_ESC			53
 
-#define KEY_ESC			53
-
-
-# define texWidth 64
-# define texHeight 64
+# define TEXWIDTH 64
+# define TEXHEIGHT 64
 # define TILE_SIZE 32
 # define WIDTH 960
 # define HEIGHT 640
@@ -37,12 +47,12 @@ typedef struct s_img
 
 typedef struct s_map_data
 {
-	int	F_red;
-	int	F_green;
-	int	F_blue;
-	int	C_red;
-	int	C_green;
-	int	C_blue;
+	int	f_red;
+	int	f_green;
+	int	f_blue;
+	int	c_red;
+	int	c_green;
+	int	c_blue;
 }				t_map_data;
 
 typedef struct s_player
@@ -71,12 +81,12 @@ typedef struct s_vaild
 
 typedef struct s_key
 {
-	int		W;
-	int		A;
-	int		S;
-	int		D;
-	int		AL;
-	int		AR;
+	int		w;
+	int		a;
+	int		s;
+	int		d;
+	int		al;
+	int		ar;
 }				t_key;
 
 typedef struct s_render
@@ -86,7 +96,6 @@ typedef struct s_render
 	int		x;
 	int		length;
 }				t_render;
-
 
 typedef struct s_game
 {
@@ -116,6 +125,7 @@ int		get_map_arr(t_game *game, t_list *map_list);
 int		get_map_contents(t_game *game, char **buf, t_valid *valid);
 int		set_f_c_color(t_game *game, char *str, int flag);
 int		load_image(t_game *game, int *texture, char *path, t_img *img);
+void	free_strs(char **strs);
 
 /* INIT */
 void	init_game(t_game *game);
@@ -128,7 +138,7 @@ void	init_valid(t_valid *valid);
 void	draw_2d_map(t_game *game);
 void	draw_ray(t_game *game, int w);
 
-void	draw_3D_map(t_game *game);
+void	draw_3d_map(t_game *game);
 void	draw_one_column(t_game *game, int x, double len, t_vec ray);
 int		fill_ceiling_color(t_game *game);
 int		fill_floor_color(t_game *game);
@@ -139,6 +149,5 @@ int		user_move(int key, t_game *game);
 int		key_press_exit(t_game *game);
 
 int		main_loop(t_game *game);
-
 
 #endif
