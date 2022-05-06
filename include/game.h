@@ -101,6 +101,7 @@ typedef struct s_game
 int		read_and_parse_map(t_game *game, t_list *map_buffer, char *argv);
 int		parse_map(t_game *game, t_list *map_list);
 int		check_map(t_game *game);
+int		get_map_arr(t_game *game, t_list *map_list);
 
 
 /* INIT */

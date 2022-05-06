@@ -1,4 +1,4 @@
-#include "../include/game.h"
+#include "../../include/game.h"
 
 void	free_strs(char **strs)
 {
@@ -11,26 +11,6 @@ void	free_strs(char **strs)
 			free(strs[i]);
 	free(strs);
 	}
-}
-
-int	ft_strcmp(char *s1, char *s2)
-{
-	int	len_s1;
-	int	len_s2;
-	int	i;
-
-	i = 0;
-	len_s1 = ft_strlen(s1);
-	len_s2 = ft_strlen(s2);
-	if (len_s1 != len_s2)
-		return (0);
-	while (i < len_s2)
-	{
-		if (s1[i] != s2[i])
-			return (0);
-		i++;
-	}
-	return (1);
 }
 
 int		load_image(t_game *game, int *texture, char *path, t_img *img)
@@ -192,63 +172,6 @@ int	check_map_contents(t_game *game, t_valid *valid)
 		return (0);
 	if (game->map_data.F_blue < 0 || game->map_data.F_blue > 255)
 		return (0);
-	return (1);
-}
-
-int cpy_map(t_game *game, t_list *map_list, int row, int col)
-{
-	int i;
-	int j;
-	char *buf;
-
-	i = 0;
-	while (i < row)
-	{
-		j = -1;
-		game->map[i] = (char *)malloc(sizeof(char) * col + 1);
-		if (!game->map[i])
-			return (0);
-		while (++j < col)
-			game->map[i][j] = ' ';
-		game->map[i][j] = '\0';
-		i++;
-	}
-	game->map[i] = NULL;
-	i = -1;
-	while (++i < row)
-	{
-		// printf("map : %s\n", (char *)map_list->content);
-		j = -1;
-		buf = map_list->content;
-		if (!buf)
-			return (0);
-		while ((++j < col) && buf[j])
-			game->map[i][j] = buf[j];
-		map_list = map_list->next;
-	}
-	return (1);
-}
-
-int	get_map_arr(t_game *game, t_list *map_list)
-{
-	t_list	*temp;
-	int		row;
-	int		col;
-
-	temp = map_list;
-	row = 0;
-	col = 0;
-	while (temp)
-	{
-		row++;
-		if (col < (int)ft_strlen((char *)temp->content))
-			col = ft_strlen((char *)temp->content);
-		temp = temp->next;
-	}
-	game->map_width = col;
-	game->map_height = row;
-	game->map = (char **)malloc(sizeof(char *) * (row + 1));
-	cpy_map(game, map_list, row, col);
 	return (1);
 }
 

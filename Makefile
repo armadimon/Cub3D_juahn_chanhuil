@@ -1,6 +1,7 @@
 SRCS			=	srcs/main.c \
-					srcs/map_parser.c \
-					srcs/map_parser_2.c \
+					srcs/parser/map_parser.c \
+					srcs/parser/map_parser_2.c \
+					srcs/parser/get_map_arr.c \
 					srcs/loop.c \
 					srcs/init_game.c \
 					srcs/draw_2D_map.c \

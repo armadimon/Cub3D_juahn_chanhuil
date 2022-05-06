@@ -6,7 +6,7 @@
 #    By: juahn <juahn@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/14 12:09:15 by juahn             #+#    #+#              #
-#    Updated: 2022/05/03 04:03:33 by juahn            ###   ########.fr        #
+#    Updated: 2022/05/06 15:02:44 by juahn            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,7 @@ SRCS =	ft_atoi.c \
 		ft_strlcpy.c \
 		ft_strncpy.c \
 		ft_strlen.c \
+		ft_strcmp.c \
 		ft_strmapi.c \
 		ft_strndup.c \
 		ft_strncmp.c \

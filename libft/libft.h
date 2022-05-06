@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/05 13:30:40 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/03 04:05:45 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/06 15:00:38 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ char			*ft_strjoin(char const *s1, char const *s2);
 char			*ft_strdup(const char *src);
 char			*ft_strnstr(const char *big, const char *little, size_t len);
 char			*ft_strchr(const char *s, int c);
+int				ft_strcmp(char *s1, char *s2);
 char			*ft_strstr(const char *big, const char *little);
 char			*ft_strrchr(const char *s, int c);
 char			*ft_substr(char const *s, unsigned int start, size_t len);

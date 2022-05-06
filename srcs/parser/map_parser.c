@@ -1,4 +1,4 @@
-#include "../include/game.h"
+#include "../../include/game.h"
 
 t_list	*get_map_list(t_list *map_buffer, int fd)
 {
