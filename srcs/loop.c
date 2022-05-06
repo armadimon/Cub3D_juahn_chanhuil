@@ -157,15 +157,25 @@ void	draw_3D_map(t_game *game)
 	}
 }
 
+int	able_to_move(t_game *game, int deg)
+{
+	t_vec	fv;
+
+	fv = vec_add(game->p.pos, vec_mul(vec_rot(game->p.dir, deg), 0.2));
+	if (game->map[(int)fv.y][(int)fv.x] != '0')
+		return (0);
+	return (1);
+}
+
 void	apply_key_input(t_game *game)
 {
-	if (game->key.W)
+	if (game->key.W && able_to_move(game, 0))
 		game->p.pos = vec_add(game->p.pos, vec_mul(vec_rot(game->p.dir, 0), 0.05));
-	if (game->key.A)
+	if (game->key.A && able_to_move(game, 90))
 		game->p.pos = vec_add(game->p.pos, vec_mul(vec_rot(game->p.dir, 90), 0.05));
-	if (game->key.S)
+	if (game->key.S && able_to_move(game, 180))
 		game->p.pos = vec_add(game->p.pos, vec_mul(vec_rot(game->p.dir, 180), 0.05));
-	if (game->key.D)
+	if (game->key.D && able_to_move(game, 270))
 		game->p.pos = vec_add(game->p.pos, vec_mul(vec_rot(game->p.dir, 270), 0.05));
 	if (game->key.AL)
 	{
