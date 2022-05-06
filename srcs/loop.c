@@ -84,25 +84,22 @@ void	draw_one_column(t_game *game, int x, double len, t_vec ray)
 
 	length = (int)((HEIGHT / 2)/ len);
 	wall_start = HEIGHT / 2 + (int)(-length / 2);
+	wall_end = HEIGHT / 2 + (int)(length / 2);
 	if (wall_start < 0)
 		wall_start = 0;
-	wall_end = HEIGHT / 2 + (int)(length / 2);
 	if (wall_end >= HEIGHT)
 		wall_end = HEIGHT - 1;
  	double wallX;
-      if (game->side == 0) wallX = game->p.pos.y + len * ray.y;
-      else           wallX = game->p.pos.x + len * ray.x;
-      wallX -= floor((wallX));
-
-      int texX = (int)(wallX * (double)(texWidth));
-      if(game->side == 0 && ray.x > 0)
-	  	texX = texWidth - texX - 1;
-      if(game->side == 1 && ray.y < 0)
-	  	texX = texWidth - texX - 1;
+    if (game->side == 0)
+		wallX = game->p.pos.y + len * ray.y;
+    else
+		wallX = game->p.pos.x + len * ray.x;
+    wallX -= floor((wallX));
+    int texX = (int)(wallX * (double)(texWidth));
+	if (game->side == 0 && ray.x > 0 || game->side == 1 && ray.y < 0)
+		texX = texWidth - texX - 1;
  	double step = 1.0 * texHeight / length;
-      // Starting texture coordinate
     double texPos = (wall_start - HEIGHT / 2 + length / 2) * step;
-	int tex_num = check_wall_dir(game, ray);
 	for (int i=0;i<HEIGHT;i++)
 	{
 		if (i < wall_start)
@@ -111,7 +108,7 @@ void	draw_one_column(t_game *game, int x, double len, t_vec ray)
 		{
 		    int texY = (int)texPos & (texHeight - 1);
 			texPos += step;
-			int color = game->texture[tex_num][texHeight * texY + texX];
+			int color = game->texture[check_wall_dir(game, ray)][texHeight * texY + texX];
 			game->img.data[i * WIDTH + x] = color;
 		}
 		else
