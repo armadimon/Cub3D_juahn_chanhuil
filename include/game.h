@@ -69,6 +69,16 @@ typedef struct s_vaild
 	int		valid_f;
 }				t_valid;
 
+typedef struct s_key
+{
+	int		W;
+	int		A;
+	int		S;
+	int		D;
+	int		AL;
+	int		AR;
+}				t_key;
+
 typedef struct s_game
 {
 	void		*mlx;
@@ -84,7 +94,7 @@ typedef struct s_game
 	t_img		img;
 	int			**texture;
 	int			map_flag;
-	int			key;
+	t_key		key;
 }				t_game;
 
 /* PARSE & CHECK */
