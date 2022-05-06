@@ -104,8 +104,6 @@ void	draw_ray(t_game *game, int x)
 			if (game->map[(int)fTempY / TILE_SIZE][iX / TILE_SIZE] == '1' ||
 				game->map[(int)fTempY / TILE_SIZE][iX / TILE_SIZE] == ' ')
 				break;
-			// int i = 0
-			// while (i < iX)
 			game->img.data[(((int)fTempY / 4) * (WIDTH)) + iX / 4] = color;
 			if (rayDir.x < 0)
 				iX--;
@@ -150,7 +148,6 @@ void	draw_2D_map(t_game *game)
 {
 	int x;
 
-	// draw_2D_map_BG(game);
 	draw_rectangles(game);
 	x = 0;
 	while (x < game->screen_width) 

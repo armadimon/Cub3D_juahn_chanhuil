@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_map_arr.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/06 15:05:41 by juahn             #+#    #+#             */
+/*   Updated: 2022/05/06 15:06:08 by juahn            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/game.h"
 
 int	cpy_map_2(t_game *game, t_list *map_list, int row, int col)
@@ -20,10 +32,10 @@ int	cpy_map_2(t_game *game, t_list *map_list, int row, int col)
 	return (1);
 }
 
-int cpy_map(t_game *game, t_list *map_list, int row, int col)
+int	cpy_map(t_game *game, t_list *map_list, int row, int col)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (i < row)
