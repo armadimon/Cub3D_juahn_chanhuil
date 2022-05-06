@@ -25,11 +25,10 @@ double	get_hitpoint(t_game *game, t_vec ray)
 	t_vec	delta;
 	t_vec	step;
 	t_vec	side;
-	int		count[2];
+	t_vec	count;
 	double	len;
 
-	count[0] = (int)game->p.pos.x;
-	count[1] = (int)game->p.pos.y;
+	count = vec_new((int)game->p.pos.x, (int)game->p.pos.y);
 	delta = vec_new(fabs(1 / cos(vec_angle(ray))), fabs(1 / sin(vec_angle(ray))));
 	side = vec_new(game->p.pos.x - (int)(game->p.pos.x),
 			game->p.pos.y - (int)(game->p.pos.y));
@@ -41,17 +40,17 @@ double	get_hitpoint(t_game *game, t_vec ray)
 		{
 			len = fabs(side.x);
 			side.x += delta.x;
-			count[0] += step.x;
+			count.x += step.x;
 			game->side = 0;
 		}
 		else
 		{
 			len = fabs(side.y);
 			side.y += delta.y;
-			count[1] += step.y;
+			count.y += step.y;
 			game->side = 1;
 		}
-		if (game->map[count[1]][count[0]] == '1')
+		if (game->map[(int)count.y][(int)count.x] == '1')
 			break ;
 	}
 	return (len);
@@ -60,39 +59,19 @@ double	get_hitpoint(t_game *game, t_vec ray)
 int		check_wall_dir(t_game *game, t_vec ray)
 {
 	int tex_num = 0;
-	if (ray.x >= 0)
+	if (game->side == 1)
 	{
 		if (ray.y >= 0)
-		{
-			if (game->side == 1) // wall x hit
-				tex_num = 0;
-			else
-				tex_num = 2;
-		}
+			tex_num = 0;
 		else
-		{
-			if (game->side == 1) // wall x hit
-				tex_num = 1;
-			else
-				tex_num = 2;
-		}
+			tex_num = 1;
 	}
 	else
 	{
-		if (ray.y >= 0)
-		{
-			if (game->side == 1) // wall x hit
-				tex_num = 0;
-			else
-				tex_num = 3;
-		}
+		if (ray.x >= 0)
+			tex_num = 2;
 		else
-		{
-			if (game->side == 1) // wall x hit
-				tex_num = 1;
-			else
-				tex_num = 3;
-		}
+			tex_num = 3;
 	}
 	return (tex_num);
 }
@@ -105,25 +84,22 @@ void	draw_one_column(t_game *game, int x, double len, t_vec ray)
 
 	length = (int)((HEIGHT / 2)/ len);
 	wall_start = HEIGHT / 2 + (int)(-length / 2);
+	wall_end = HEIGHT / 2 + (int)(length / 2);
 	if (wall_start < 0)
 		wall_start = 0;
-	wall_end = HEIGHT / 2 + (int)(length / 2);
 	if (wall_end >= HEIGHT)
 		wall_end = HEIGHT - 1;
  	double wallX;
-      if (game->side == 0) wallX = game->p.pos.y + len * ray.y;
-      else           wallX = game->p.pos.x + len * ray.x;
-      wallX -= floor((wallX));
-
-      int texX = (int)(wallX * (double)(texWidth));
-      if(game->side == 0 && ray.x > 0)
-	  	texX = texWidth - texX - 1;
-      if(game->side == 1 && ray.y < 0)
-	  	texX = texWidth - texX - 1;
+    if (game->side == 0)
+		wallX = game->p.pos.y + len * ray.y;
+    else
+		wallX = game->p.pos.x + len * ray.x;
+    wallX -= floor((wallX));
+    int texX = (int)(wallX * (double)(texWidth));
+	if (game->side == 0 && ray.x > 0 || game->side == 1 && ray.y < 0)
+		texX = texWidth - texX - 1;
  	double step = 1.0 * texHeight / length;
-      // Starting texture coordinate
     double texPos = (wall_start - HEIGHT / 2 + length / 2) * step;
-	int tex_num = check_wall_dir(game, ray);
 	for (int i=0;i<HEIGHT;i++)
 	{
 		if (i < wall_start)
@@ -132,7 +108,7 @@ void	draw_one_column(t_game *game, int x, double len, t_vec ray)
 		{
 		    int texY = (int)texPos & (texHeight - 1);
 			texPos += step;
-			int color = game->texture[tex_num][texHeight * texY + texX];
+			int color = game->texture[check_wall_dir(game, ray)][texHeight * texY + texX];
 			game->img.data[i * WIDTH + x] = color;
 		}
 		else
