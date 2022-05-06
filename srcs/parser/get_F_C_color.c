@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 15:24:12 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/06 15:24:13 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/06 15:31:00 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	check_valid_color(char *buf)
 	return (1);
 }
 
-int	set_F_C_color(t_game *game, char *str, int flag)
+int	set_f_c_color(t_game *game, char *str, int flag)
 {
 	char	**buf;
 	int		i;

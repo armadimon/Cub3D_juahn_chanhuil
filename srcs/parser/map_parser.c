@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map_parser.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/06 15:33:36 by juahn             #+#    #+#             */
+/*   Updated: 2022/05/06 15:33:43 by juahn            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/game.h"
 
 t_list	*get_map_list(t_list *map_buffer, int fd)
@@ -46,8 +58,7 @@ int	read_and_parse_map(t_game *game, t_list *map_buffer, char *argv)
 	map_buffer = read_map(map_buffer, argv);
 	if (!map_buffer)
 		return (0);
-	if (!parse_map(game, map_buffer) ||
-		!check_map(game))
+	if (!parse_map(game, map_buffer) || !check_map(game))
 	{
 		ft_lstclear(&map_buffer, free);
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 15:05:41 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/06 15:06:08 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/06 15:35:46 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ int	get_map_arr(t_game *game, t_list *map_list)
 	game->map_width = col;
 	game->map_height = row;
 	game->map = (char **)malloc(sizeof(char *) * (row + 1));
+	if (!game->map)
+		return (0);
 	cpy_map(game, map_list, row, col);
 	return (1);
 }

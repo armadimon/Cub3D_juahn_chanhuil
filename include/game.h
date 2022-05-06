@@ -103,7 +103,7 @@ int		parse_map(t_game *game, t_list *map_list);
 int		check_map(t_game *game);
 int		get_map_arr(t_game *game, t_list *map_list);
 int		get_map_contents(t_game *game, char **buf, t_valid *valid);
-int		set_F_C_color(t_game *game, char *str, int flag);
+int		set_f_c_color(t_game *game, char *str, int flag);
 int		load_image(t_game *game, int *texture, char *path, t_img *img);
 
 /* INIT */

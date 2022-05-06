@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 15:06:19 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/06 15:27:13 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/06 15:43:02 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,14 @@ void	free_strs(char **strs)
 	{
 		while (strs[++i])
 			free(strs[i]);
-	free(strs);
+		free(strs);
 	}
 }
 
 int	check_map_contents(t_game *game, t_valid *valid)
 {
-	if (valid->valid_ea == 0 ||
-		valid->valid_no == 0 ||
-		valid->valid_so == 0 ||
-		valid->valid_we == 0)
+	if (valid->valid_ea == 0 || valid->valid_no == 0
+		|| valid->valid_so == 0 || valid->valid_we == 0)
 		return (0);
 	if (game->map_data.C_red < 0 || game->map_data.C_red > 255)
 		return (0);
@@ -60,10 +58,7 @@ int	parse_map(t_game *game, t_list *map_list)
 	while (temp && ret)
 	{
 		if (temp->content == NULL)
-		{
 			temp = temp->next;
-			continue ;
-		}
 		if (check_map_contents(game, &valid))
 			return (get_map_arr(game, temp));
 		buf = ft_split((char *)temp->content, ' ');

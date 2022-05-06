@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 15:22:21 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/06 15:23:26 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/06 15:43:24 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	check_id(t_valid *valid, char *str)
 
 int	check_id_rule(char **buf)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (buf[i])
@@ -43,26 +43,41 @@ int	check_id_rule(char **buf)
 	return (0);
 }
 
+int	is_color_id(char **buf)
+{
+	if (ft_strstr(buf[0], "F") && ft_strcmp(buf[0], "F")
+		&& check_id_rule(buf))
+		return (1);
+	if (ft_strstr(buf[0], "C") && ft_strcmp(buf[0], "C")
+		&& check_id_rule(buf))
+		return (2);
+	return (0);
+}
+
 int	get_map_contents(t_game *game, char **buf, t_valid *valid)
 {
 	t_img	img;
 	int		ret;
 
 	ret = 0;
-	if	(!check_id(valid, buf[0]))
+	if (!check_id(valid, buf[0]))
 		return (ret);
-	if (ft_strstr(buf[0], "NO") && ft_strcmp(buf[0], "NO")&& check_id_rule(buf))
+	if (ft_strstr(buf[0], "NO") && ft_strcmp(buf[0], "NO")
+		&& check_id_rule(buf))
 		ret = load_image(game, game->texture[0], buf[1], &img);
-	else if (ft_strstr(buf[0], "SO") && ft_strcmp(buf[0], "SO") && check_id_rule(buf))
+	else if (ft_strstr(buf[0], "SO") && ft_strcmp(buf[0], "SO")
+		&& check_id_rule(buf))
 		ret = load_image(game, game->texture[1], buf[1], &img);
-	else if (ft_strstr(buf[0], "WE") && ft_strcmp(buf[0], "WE") && check_id_rule(buf))
+	else if (ft_strstr(buf[0], "WE") && ft_strcmp(buf[0], "WE")
+		&& check_id_rule(buf))
 		ret = load_image(game, game->texture[2], buf[1], &img);
-	else if (ft_strstr(buf[0], "EA") && ft_strcmp(buf[0], "EA") && check_id_rule(buf))
+	else if (ft_strstr(buf[0], "EA") && ft_strcmp(buf[0], "EA")
+		&& check_id_rule(buf))
 		ret = load_image(game, game->texture[3], buf[1], &img);
-	else if (ft_strstr(buf[0], "F") && ft_strcmp(buf[0], "F") && check_id_rule(buf))
-		ret = set_F_C_color(game, buf[1], 0);
-	else if (ft_strstr(buf[0], "C") && ft_strcmp(buf[0], "C") && check_id_rule(buf))
-		ret = set_F_C_color(game, buf[1], 1);
+	else if (is_color_id(buf) == 1)
+		ret = set_f_c_color(game, buf[1], 0);
+	else if (is_color_id(buf) == 2)
+		ret = set_f_c_color(game, buf[1], 1);
 	else
 		return (0);
 	return (ret);
