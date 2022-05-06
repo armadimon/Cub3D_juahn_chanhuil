@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:26:11 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/06 16:30:12 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/06 17:17:42 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	draw_ray_i_x(t_game *game, double m, t_vec ray_dir)
 {
 	float	temp_y;
-	int		color = 0xFF0000;
 	int		x;
 
 	x = game->p.pos.x * TILE_SIZE;
@@ -29,7 +28,7 @@ void	draw_ray_i_x(t_game *game, double m, t_vec ray_dir)
 		if (game->map[(int)temp_y / TILE_SIZE][x / TILE_SIZE] == '1' ||
 			game->map[(int)temp_y / TILE_SIZE][x / TILE_SIZE] == ' ')
 			break ;
-		game->img.data[(((int)temp_y / 4) * (WIDTH)) + x / 4] = color;
+		game->img.data[(((int)temp_y / 4) * (WIDTH)) + x / 4] = 0xFF0000;
 		if (ray_dir.x < 0)
 			x--;
 		else
@@ -45,7 +44,6 @@ void	draw_ray_i_y(t_game *game, double m, t_vec ray_dir)
 {
 	float	temp_x;
 	int		y;
-	int		color = 0xFF0000;
 
 	temp_x = game->p.pos.x * TILE_SIZE;
 	y = game->p.pos.y * TILE_SIZE;
@@ -58,7 +56,7 @@ void	draw_ray_i_y(t_game *game, double m, t_vec ray_dir)
 		if (game->map[y / TILE_SIZE][(int)temp_x / TILE_SIZE] == '1' ||
 			game->map[y / TILE_SIZE][(int)temp_x / TILE_SIZE] == ' ')
 			break ;
-		game->img.data[(y / 4) * (WIDTH) + (int)(temp_x / 4)] = color;
+		game->img.data[(y / 4) * (WIDTH) + (int)(temp_x / 4)] = 0xFF0000;
 		if (ray_dir.x < 0)
 			temp_x -= fabs(m);
 		else

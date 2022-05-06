@@ -26,7 +26,7 @@ void	draw_one_column(t_game *game, int x, double len, t_vec ray)
 	int	wall_end;
 	int length;
 
-	length = (int)((HEIGHT / 2)/ len);
+	length = (int)((HEIGHT / 2)/ len * 1.35);
 	wall_start = HEIGHT / 2 + (int)(-length / 2);
 	wall_end = HEIGHT / 2 + (int)(length / 2);
 	if (wall_start < 0)
