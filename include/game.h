@@ -85,8 +85,6 @@ typedef struct s_render
 	int		wall_end;
 	int		x;
 	int		length;
-	double	tex_pos;
-	double	step;
 }				t_render;
 
 
@@ -97,6 +95,7 @@ typedef struct s_game
 	t_player	p;
 	t_map_data	map_data;
 	t_render	r;
+	t_vec		ray;
 	int			map_width;
 	int			map_height;
 	int			screen_width;
@@ -131,6 +130,15 @@ void	draw_ray(t_game *game, int w);
 
 void	draw_3D_map(t_game *game);
 void	draw_one_column(t_game *game, int x, double len, t_vec ray);
+int		fill_ceiling_color(t_game *game);
+int		fill_floor_color(t_game *game);
+
+/* KEY */
+int		user_stop(int key, t_game *game);
+int		user_move(int key, t_game *game);
+int		key_press_exit(t_game *game);
+
 int		main_loop(t_game *game);
+
 
 #endif

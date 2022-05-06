@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:00:22 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/06 16:01:34 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/06 18:21:30 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,51 +35,10 @@ void	reset_data(t_game *game)
 	game->key.AR = 0;
 }
 
-int	key_press_exit(t_game *game)
+void	error(char *msg)
 {
-	if (game->win && game->mlx)
-		mlx_destroy_window(game->mlx, game->win);
+	printf("Error\n : %s\n", msg);
 	exit (0);
-}
-
-int	user_move(int key, t_game *game)
-{
-	if (key == K_ESC)
-		key_press_exit(game);
-	if (key == K_M && game->map_flag == 0)
-		game->map_flag = 1;
-	else if (key == K_M && game->map_flag == 1)
-		game->map_flag = 0;
-	else if (key == K_W)
-		game->key.W = 1;
-	else if (key == K_A)
-		game->key.A = 1;
-	else if (key == K_S)
-		game->key.S = 1;
-	else if (key == K_D)
-		game->key.D = 1;
-	else if (key == K_AR_L)
-		game->key.AL = 1;
-	else if (key == K_AR_R)
-		game->key.AR = 1;
-	return (0);
-}
-
-int	user_stop(int key, t_game *game)
-{
-	if (key == K_W)
-		game->key.W = 0;
-	else if (key == K_A)
-		game->key.A = 0;
-	else if (key == K_S)
-		game->key.S = 0;
-	else if (key == K_D)
-		game->key.D = 0;
-	else if (key == K_AR_L)
-		game->key.AL = 0;
-	else if (key == K_AR_R)
-		game->key.AR = 0;
-	return (0);
 }
 
 int	main(int argc, char **argv)
@@ -89,19 +48,13 @@ int	main(int argc, char **argv)
 
 	map_buffer = 0;
 	if (argc != 2)
-	{
-		write(2, "Error\n : ARG_ERROR\n", 20);
-		exit (0);
-	}
+		error("ARG_ERROR");
 	game.mlx = mlx_init();
 	reset_data(&game);
 	if (init_texture(&game) == -1)
-		return (0);
+		error("MALLOC_ERROR");
 	if (!read_and_parse_map(&game, map_buffer, argv[1]))
-	{
-		write(2, "Error\n : MAP_ERROR\n", 20);
-		exit (0);
-	}
+		error("MAP_ERROR");
 	init_window(&game);
 	init_img(&game);
 	mlx_loop_hook(game.mlx, &main_loop, &game);

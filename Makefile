@@ -13,6 +13,7 @@ SRCS			=	srcs/main.c \
 					srcs/engine/draw_2D_ray.c \
 					srcs/engine/draw_3D_map.c \
 					srcs/engine/draw_one_col.c \
+					srcs/engine/draw_floor_ceiling.c \
 					srcs/vectors/vector.c \
 					srcs/vectors/vector2.c \
 					srcs/vectors/vector3.c \
