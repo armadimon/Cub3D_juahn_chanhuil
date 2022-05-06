@@ -57,6 +57,7 @@ int	check_map(t_game *game)
 				if (isinited)
 					return (0);
 				game->p.dir = get_direction(game->map[i][j]);
+				game->map[i][j] = '0';
 				isinited = 1;
 			}
 			else

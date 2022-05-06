@@ -88,7 +88,6 @@ int	main(int argc, char **argv)
 	}
 	init_window(&game);
 	init_img(&game);
-	printf("%d, %d", game.screen_height, game.screen_width);
 	mlx_loop_hook(game.mlx, &main_loop, &game);
 	mlx_hook(game.win, 2, 0, user_move, &game);
 	mlx_hook(game.win, 3, 0, user_stop, &game);

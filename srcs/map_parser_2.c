@@ -35,16 +35,19 @@ int	ft_strcmp(char *s1, char *s2)
 
 int		load_image(t_game *game, int *texture, char *path, t_img *img)
 {
+	int y;
+	int x;
+
+	y = -1;
 	img->img = mlx_xpm_file_to_image(game->mlx, path, &(img->img_width), &(img->img_height));
 	if (!img->img)
 		return (0);
 	img->data = (int *)mlx_get_data_addr(img->img, &img->bpp, &img->size_l, &img->endian);
-	for (int y = 0; y < img->img_height; y++)
+	while (++y < img->img_height)
 	{
-		for (int x = 0; x < img->img_width; x++)
-		{
+		x = -1;
+		while (++x < img->img_width)
 			texture[img->img_width * y + x] = img->data[img->img_width * y + x];
-		}
 	}
 	mlx_destroy_image(game->mlx, img->img);
 	return (1);

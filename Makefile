@@ -29,7 +29,6 @@ MLX				=	$(MLXDIR)/$(MLXNAME)
 CFLAGS			=	-g -Wall -Wextra -Werror 
 LIBS			=	-L$(LIBFTDIR) $(patsubst lib%,-l%,$(basename $(LIBFTNAME))) \
 					-L$(MLXDIR) $(patsubst lib%,-l%,$(basename $(MLXNAME))) -framework OpenGL -framework AppKit
-MLX				= libmlx.a
 
 NAME			= cub3D
 

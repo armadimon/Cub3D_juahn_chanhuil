@@ -1,22 +1,5 @@
 #include "../include/game.h"
 
-// int		draw_texture(t_game *game)
-// {
-// 	int i = 0;
-// 	int j = 0;
-// 	while (i < texHeight)
-// 	{
-// 		j = 0;
-// 		while (j < texWidth)
-// 		{
-// 			game->img.data[i * texHeight * COLS  + j] = game->texture[1][i * texHeight + j];
-// 			j++;
-// 		}
-// 		i++;
-// 	}
-// 	return (0);
-// }
-
 void	get_ray_value(t_vec *delta, t_vec *step, t_vec *side, t_vec ray)
 {
 	if (ray.x >=0)
@@ -127,16 +110,16 @@ void	draw_one_column(t_game *game, int x, double len, t_vec ray)
 	wall_end = HEIGHT / 2 + (int)(length / 2);
 	if (wall_end >= HEIGHT)
 		wall_end = HEIGHT - 1;
- 	double wallX; //where exactly the wall was hit
+ 	double wallX;
       if (game->side == 0) wallX = game->p.pos.y + len * ray.y;
       else           wallX = game->p.pos.x + len * ray.x;
       wallX -= floor((wallX));
 
-      //x coordinate on the texture
       int texX = (int)(wallX * (double)(texWidth));
-      if(game->side == 0 && ray.x > 0) texX = texWidth - texX - 1;
-      if(game->side == 1 && ray.y < 0) texX = texWidth - texX - 1;
-
+      if(game->side == 0 && ray.x > 0)
+	  	texX = texWidth - texX - 1;
+      if(game->side == 1 && ray.y < 0)
+	  	texX = texWidth - texX - 1;
  	double step = 1.0 * texHeight / length;
       // Starting texture coordinate
     double texPos = (wall_start - HEIGHT / 2 + length / 2) * step;
@@ -176,7 +159,6 @@ void	draw_3D_map(t_game *game)
 
 int		main_loop(t_game *game)
 {
-	// draw_texture(game);
 	draw_3D_map(game);
 	if (game->map_flag)
 		draw_2D_map(game);
