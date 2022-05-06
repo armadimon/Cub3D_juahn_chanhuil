@@ -20,42 +20,63 @@ int		check_wall_dir(t_game *game, t_vec ray)
 	return (tex_num);
 }
 
+void	draw_texture_2(t_game *game, t_vec ray, int tex_x)
+{
+	int i;
+	int	tex_y;
+	int	color;
+
+	i = 0;
+	while (i < HEIGHT)
+	{
+			if (i < game->r.wall_start)
+				game->img.data[i * WIDTH + game->r.x] = 0x010000 * game->map_data.C_red + 0x000100 * game->map_data.C_green + 0x000001 * game->map_data.C_blue;
+			else if (i < game->r.wall_end)
+			{
+				tex_y = (int)(game->r.tex_pos) & (texHeight - 1);
+				game->r.tex_pos += game->r.step;
+				color = game->texture[check_wall_dir(game, ray)][texHeight * tex_y + tex_x];
+				game->img.data[i * WIDTH + game->r.x] = color;
+			}
+			else
+				game->img.data[i * WIDTH + game->r.x] = 0x010000 * game->map_data.F_red + 0x000100 * game->map_data.F_green + 0x000001 * game->map_data.F_blue;
+		i++;
+	}
+}
+
+double	calc_wall_x(t_game *game, double len, t_vec ray)
+{
+	double wall_x;
+
+    if (game->side == 0)
+		wall_x = game->p.pos.y + len * ray.y;
+    else
+		wall_x = game->p.pos.x + len * ray.x;
+	wall_x -= floor((wall_x));
+	return (wall_x);
+}
+
+void	draw_texture(t_game *game, t_vec ray, double len)
+{
+	int		tex_x;
+
+	tex_x =(int)(calc_wall_x(game, len, ray) * (double)(texWidth));
+	if ((game->side == 0 && ray.x > 0) || (game->side == 1 && ray.y < 0))
+		tex_x = texWidth - tex_x - 1;
+	game->r.step = 1.0 * texHeight / game->r.length;
+	game->r.tex_pos = (game->r.wall_start - HEIGHT / 2 + game->r.length / 2) * game->r.step;
+	draw_texture_2(game, ray, tex_x);
+}
+
 void	draw_one_column(t_game *game, int x, double len, t_vec ray)
 {
-	int	wall_start;
-	int	wall_end;
-	int length;
-
-	length = (int)((HEIGHT / 2)/ len * 1.35);
-	wall_start = HEIGHT / 2 + (int)(-length / 2);
-	wall_end = HEIGHT / 2 + (int)(length / 2);
-	if (wall_start < 0)
-		wall_start = 0;
-	if (wall_end >= HEIGHT)
-		wall_end = HEIGHT - 1;
- 	double wallX;
-    if (game->side == 0)
-		wallX = game->p.pos.y + len * ray.y;
-    else
-		wallX = game->p.pos.x + len * ray.x;
-    wallX -= floor((wallX));
-    int texX = (int)(wallX * (double)(texWidth));
-	if ((game->side == 0 && ray.x > 0) || (game->side == 1 && ray.y < 0))
-		texX = texWidth - texX - 1;
- 	double step = 1.0 * texHeight / length;
-    double texPos = (wall_start - HEIGHT / 2 + length / 2) * step;
-	for (int i=0;i<HEIGHT;i++)
-	{
-		if (i < wall_start)
-			game->img.data[i * WIDTH + x] = 0x010000 * game->map_data.C_red + 0x000100 * game->map_data.C_green + 0x000001 * game->map_data.C_blue;
-		else if (i < wall_end)
-		{
-		    int texY = (int)texPos & (texHeight - 1);
-			texPos += step;
-			int color = game->texture[check_wall_dir(game, ray)][texHeight * texY + texX];
-			game->img.data[i * WIDTH + x] = color;
-		}
-		else
-			game->img.data[i * WIDTH + x] = 0x010000 * game->map_data.F_red + 0x000100 * game->map_data.F_green + 0x000001 * game->map_data.F_blue;
-	}
+	game->r.length = (int)((HEIGHT / 2)/ len * 1.35);
+	game->r.wall_start = HEIGHT / 2 + (int)(-game->r.length / 2);
+	game->r.wall_end = HEIGHT / 2 + (int)(game->r.length / 2);
+	game->r.x = x;
+	if (game->r.wall_start < 0)
+		game->r.wall_start = 0;
+	if (game->r.wall_end >= HEIGHT)
+		game->r.wall_end = HEIGHT - 1;
+	draw_texture(game, ray, len);
 }

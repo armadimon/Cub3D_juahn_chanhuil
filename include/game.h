@@ -79,12 +79,24 @@ typedef struct s_key
 	int		AR;
 }				t_key;
 
+typedef struct s_render
+{
+	int		wall_start;
+	int		wall_end;
+	int		x;
+	int		length;
+	double	tex_pos;
+	double	step;
+}				t_render;
+
+
 typedef struct s_game
 {
 	void		*mlx;
 	void		*win;
 	t_player	p;
 	t_map_data	map_data;
+	t_render	r;
 	int			map_width;
 	int			map_height;
 	int			screen_width;
