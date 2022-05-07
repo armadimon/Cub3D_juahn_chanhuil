@@ -18,7 +18,8 @@ SRCS			=	srcs/main.c \
 					srcs/vectors/vector.c \
 					srcs/vectors/vector2.c \
 					srcs/vectors/vector3.c \
-					gnl/get_next_line_bonus.c \
+					srcs/gnl/get_next_line.c \
+					srcs/gnl/get_next_line_utils.c \
 
 BONUS			=	main.c \
 

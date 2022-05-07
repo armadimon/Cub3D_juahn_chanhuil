@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 20:04:01 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/06 20:07:55 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/07 11:03:23 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <stdlib.h>
 # include <math.h>
 # include <string.h>
-# include "../gnl/get_next_line_bonus.h"
+# include "./get_next_line.h"
 # include "../mlx/mlx.h"
 # include "../libft/libft.h"
 # include "./vector.h"
