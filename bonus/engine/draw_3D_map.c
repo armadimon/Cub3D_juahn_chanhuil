@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_3D_map.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chanhuil <chanhuil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 19:29:14 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/09 16:20:03 by chanhuil         ###   ########.fr       */
+/*   Updated: 2022/05/09 16:26:16 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,9 +113,9 @@ void	draw_3d_map(t_game *game)
 	double	len;
 	static int cnt;
 
-	cnt++;
-	if (cnt > 100)
-		cnt = 0;
+	// cnt++;
+	// if (cnt > 100)
+		cnt = 100;
 	i = -1;
 	while (++i < WIDTH)
 	{
