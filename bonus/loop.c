@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: chanhuil <chanhuil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:38:59 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/09 14:01:16 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/09 17:53:55 by chanhuil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,31 @@ int	able_to_move(t_game *game, int deg)
 	if (game->map[(int)fv.y][(int)fv.x] != '0')
 		return (0);
 	return (1);
+}
+
+void	apply_mouse_input(t_game *game)
+{
+	int	x;
+	int	y;
+	
+	if (game->key.m == 1)
+	{
+		mlx_mouse_hide();
+		if (game->key.m_delay < 5)
+			game->key.m_delay++;
+		else
+		{
+			mlx_mouse_get_pos(game->win, &x, &y);
+			game->p.dir = vec_rot(game->p.dir, (x * 2 / game->screen_width - 1) * 45);
+			game->p.plane = vec_rot(game->p.plane, (x * 2 / game->screen_width - 1) * 45);
+			mlx_mouse_move(game->win, game->screen_width / 2, game->screen_height / 2);
+		}
+	}
+	else
+	{
+		mlx_mouse_show();
+		game->key.m_delay = 0;
+	}
 }
 
 void	apply_key_input(t_game *game)
@@ -51,6 +76,7 @@ void	apply_key_input(t_game *game)
 int	main_loop(t_game *game)
 {
 	apply_key_input(game);
+	apply_mouse_input(game);
 	draw_3d_map(game);
 	if (game->map_flag)
 		draw_2d_map(game);

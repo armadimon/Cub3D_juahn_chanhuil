@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: chanhuil <chanhuil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:00:22 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/09 14:01:14 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/09 17:47:58 by chanhuil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	reset_data(t_game *game)
 	game->key.d = 0;
 	game->key.al = 0;
 	game->key.ar = 0;
+	game->key.m = 0;
 }
 
 void	error(char *msg)
