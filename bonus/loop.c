@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chanhuil <chanhuil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:38:59 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/09 17:53:55 by chanhuil         ###   ########.fr       */
+/*   Updated: 2022/05/09 18:18:42 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,24 @@ void	apply_mouse_input(t_game *game)
 {
 	int	x;
 	int	y;
+	int	sign;
 	
+	sign = 0;
 	if (game->key.m == 1)
 	{
 		mlx_mouse_hide();
-		if (game->key.m_delay < 5)
-			game->key.m_delay++;
+		if (game->key.m_delay++ < 5)
+			mlx_mouse_move(game->win, WIDTH / 2, HEIGHT / sign);
 		else
 		{
 			mlx_mouse_get_pos(game->win, &x, &y);
-			game->p.dir = vec_rot(game->p.dir, (x * 2 / game->screen_width - 1) * 45);
-			game->p.plane = vec_rot(game->p.plane, (x * 2 / game->screen_width - 1) * 45);
-			mlx_mouse_move(game->win, game->screen_width / 2, game->screen_height / 2);
+			if (x < WIDTH / 2)
+				sign = 1;
+			if (x > WIDTH / 2)
+				sign = -1;
+			game->p.dir = vec_rot(game->p.dir, sign);
+			game->p.plane = vec_rot(game->p.plane, sign);
+			mlx_mouse_move(game->win, WIDTH / 2, HEIGHT / sign);
 		}
 	}
 	else

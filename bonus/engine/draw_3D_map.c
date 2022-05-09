@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 19:29:14 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/09 17:43:37 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/09 17:52:48 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,8 @@ int	check_hitted(t_game *game, t_vec count, double *len, t_vec ray, int cnt)
 {
 	t_vec	delta;
 	t_vec	hp;
-	t_vec	new;
 	
-	new = vec_new(game->p.pos.x, game->p.pos.y);
-	hp = vec_add(new, vec_mul(ray, *len / vec_len(ray)));
+	hp = vec_add(game->p.pos, vec_mul(ray, *len / vec_len(ray)));
 	if (game->map[(int)count.y][(int)count.x] == '2')
 	{
 		if (game->side == 0)
@@ -115,9 +113,9 @@ void	draw_3d_map(t_game *game)
 	double	len;
 	static int cnt;
 
-	cnt++;
-	if (cnt > 100)
-		cnt = 0;
+	cnt--;
+	if (cnt < 0)
+		cnt = 100;
 	i = -1;
 	while (++i < WIDTH)
 	{

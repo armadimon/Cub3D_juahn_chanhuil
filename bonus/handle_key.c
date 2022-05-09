@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_key.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chanhuil <chanhuil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:37:47 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/09 17:46:55 by chanhuil         ###   ########.fr       */
+/*   Updated: 2022/05/09 17:55:17 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	user_move(int key, t_game *game)
 		game->key.al = 1;
 	else if (key == K_AR_R)
 		game->key.ar = 1;
-	else if (key == K_M)
+	else if (key == K_O)
 	{
 		game->key.m ^= 1;
 		game->key.m_delay = 0;
