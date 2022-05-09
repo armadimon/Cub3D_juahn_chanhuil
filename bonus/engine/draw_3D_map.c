@@ -6,7 +6,7 @@
 /*   By: chanhuil <chanhuil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 19:29:14 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/09 16:20:03 by chanhuil         ###   ########.fr       */
+/*   Updated: 2022/05/09 16:25:39 by chanhuil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	check_hitted(t_game *game, char c, double *len, t_vec ray, int cnt)
 		if (game->side == 0)
 		{
 			delta = vec_mul(ray, fabs(2 / cos(vec_angle(ray))) / vec_len(ray));
-			if (vec_add(hp, delta).y < (int)hp.y + cnt / 100)
+			if (vec_add(hp, delta).y < (int)hp.y + cnt / 100.0 && vec_add(hp, delta).y > (int)hp.y)
 			{
 				*len += vec_len(delta);
 				return (0);
@@ -64,7 +64,7 @@ int	check_hitted(t_game *game, char c, double *len, t_vec ray, int cnt)
 		else
 		{
 			delta = vec_mul(ray, fabs(2 / sin(vec_angle(ray))) / vec_len(ray));
-			if (vec_add(hp, delta).x < (int)hp.x + cnt / 100)
+			if (vec_add(hp, delta).x < (int)hp.x + cnt / 100.0 && vec_add(hp, delta).x > (int)hp.x)
 			{
 				*len += vec_len(delta);
 				return (0);
