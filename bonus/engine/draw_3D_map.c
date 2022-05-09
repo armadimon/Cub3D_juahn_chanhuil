@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 19:29:14 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/09 16:26:16 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/09 16:50:30 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ int	check_hitted(t_game *game, char c, double *len, t_vec ray, int cnt)
 	{
 		if (game->side == 0)
 		{
-			delta = vec_mul(ray, fabs(2 / cos(vec_angle(ray))) / vec_len(ray));
-			if (vec_add(hp, delta).y < (int)hp.y + cnt / 100)
+			delta = vec_mul(ray, fabs(0.5 / cos(vec_angle(ray))) / vec_len(ray));
+			if ((vec_add(hp, delta).y < hp.y + (double)cnt / 100.0) && (vec_add(hp, delta).y > hp.y))
 			{
 				*len += vec_len(delta);
 				return (0);
@@ -63,8 +63,8 @@ int	check_hitted(t_game *game, char c, double *len, t_vec ray, int cnt)
 		}
 		else
 		{
-			delta = vec_mul(ray, fabs(2 / sin(vec_angle(ray))) / vec_len(ray));
-			if (vec_add(hp, delta).x < (int)hp.x + cnt / 100)
+			delta = vec_mul(ray, fabs(0.5 / sin(vec_angle(ray))) / vec_len(ray));
+			if ((vec_add(hp, delta).x < hp.x + (double)cnt / 100.0) && (vec_add(hp, delta).x > hp.x))
 			{
 				*len += vec_len(delta);
 				return (0);
@@ -113,9 +113,9 @@ void	draw_3d_map(t_game *game)
 	double	len;
 	static int cnt;
 
-	// cnt++;
-	// if (cnt > 100)
-		cnt = 100;
+	cnt++;
+	if (cnt > 100)
+		cnt = 0;
 	i = -1;
 	while (++i < WIDTH)
 	{
