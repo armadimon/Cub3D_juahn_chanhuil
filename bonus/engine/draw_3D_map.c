@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 19:29:14 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/09 16:50:30 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/09 17:43:37 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,20 @@ t_vec	get_side(t_game *game)
 		game->p.pos.y - (int)(game->p.pos.y)));
 }
 
-int	check_hitted(t_game *game, char c, double *len, t_vec ray, int cnt)
+int	check_hitted(t_game *game, t_vec count, double *len, t_vec ray, int cnt)
 {
 	t_vec	delta;
 	t_vec	hp;
+	t_vec	new;
 	
-	hp = vec_add(vec_add(game->p.pos, ray), vec_mul(ray, *len / vec_len(ray)));
-	if (c == '2')
+	new = vec_new(game->p.pos.x, game->p.pos.y);
+	hp = vec_add(new, vec_mul(ray, *len / vec_len(ray)));
+	if (game->map[(int)count.y][(int)count.x] == '2')
 	{
 		if (game->side == 0)
 		{
 			delta = vec_mul(ray, fabs(0.5 / cos(vec_angle(ray))) / vec_len(ray));
-			if ((vec_add(hp, delta).y < hp.y + (double)cnt / 100.0) && (vec_add(hp, delta).y > hp.y))
+			if (vec_add(hp, delta).y < (count.y) + (double)cnt / 100.0 && vec_add(hp, delta).y > count.y)
 			{
 				*len += vec_len(delta);
 				return (0);
@@ -64,14 +66,14 @@ int	check_hitted(t_game *game, char c, double *len, t_vec ray, int cnt)
 		else
 		{
 			delta = vec_mul(ray, fabs(0.5 / sin(vec_angle(ray))) / vec_len(ray));
-			if ((vec_add(hp, delta).x < hp.x + (double)cnt / 100.0) && (vec_add(hp, delta).x > hp.x))
+			if (vec_add(hp, delta).x < (count.x) + (double)cnt / 100.0 && vec_add(hp, delta).x > count.x)
 			{
 				*len += vec_len(delta);
 				return (0);
 			}
 		}
 	}
-	else if (c == '1')
+	else if (game->map[(int)count.y][(int)count.x] == '1')
 		return (0);
 	return (1);
 }
@@ -85,7 +87,7 @@ double	get_hitpoint(t_game *game, t_vec ray, t_vec count, double len, int cnt)
 	delta = get_delta(ray);
 	side = get_side(game);
 	get_ray_value(&delta, &step, &side, ray);
-	while (check_hitted(game, game->map[(int)count.y][(int)count.x], &len, ray, cnt))
+	while (check_hitted(game, count, &len, ray, cnt))
 	{
 		if (side.x < side.y)
 		{
