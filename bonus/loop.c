@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:38:59 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/09 18:18:42 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/09 18:44:39 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	apply_mouse_input(t_game *game)
 	{
 		mlx_mouse_hide();
 		if (game->key.m_delay++ < 5)
-			mlx_mouse_move(game->win, WIDTH / 2, HEIGHT / sign);
+			mlx_mouse_move(game->win, WIDTH / 2, HEIGHT / 2);
 		else
 		{
 			mlx_mouse_get_pos(game->win, &x, &y);
@@ -43,7 +43,7 @@ void	apply_mouse_input(t_game *game)
 				sign = -1;
 			game->p.dir = vec_rot(game->p.dir, sign);
 			game->p.plane = vec_rot(game->p.plane, sign);
-			mlx_mouse_move(game->win, WIDTH / 2, HEIGHT / sign);
+			mlx_mouse_move(game->win, WIDTH / 2, HEIGHT / 2);
 		}
 	}
 	else
