@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw_3D_map.c                                      :+:      :+:    :+:   */
+/*   draw_3D_map copy.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: chanhuil <chanhuil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 19:29:14 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/07 15:52:03 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/09 16:19:49 by chanhuil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/game.h"
+#include "../../include/game_bonus.h"
 
 void	get_ray_value(t_vec *delta, t_vec *step, t_vec *side, t_vec ray)
 {
@@ -44,7 +44,39 @@ t_vec	get_side(t_game *game)
 		game->p.pos.y - (int)(game->p.pos.y)));
 }
 
-double	get_hitpoint(t_game *game, t_vec ray, t_vec count, double len)
+int	check_hitted(t_game *game, char c, double *len, t_vec ray, int cnt)
+{
+	t_vec	delta;
+	t_vec	hp;
+	
+	hp = vec_add(vec_add(game->p.pos, ray), vec_mul(ray, *len / vec_len(ray)));
+	if (c == '2')
+	{
+		if (game->side == 0)
+		{
+			delta = vec_mul(ray, fabs(2 / cos(vec_angle(ray))) / vec_len(ray));
+			if (vec_add(hp, delta).y < (int)hp.y + cnt / 100)
+			{
+				*len += vec_len(delta);
+				return (0);
+			}
+		}
+		else
+		{
+			delta = vec_mul(ray, fabs(2 / sin(vec_angle(ray))) / vec_len(ray));
+			if (vec_add(hp, delta).x < (int)hp.x + cnt / 100)
+			{
+				*len += vec_len(delta);
+				return (0);
+			}
+		}
+	}
+	else if (c == '1')
+		return (0);
+	return (1);
+}
+
+double	get_hitpoint(t_game *game, t_vec ray, t_vec count, double len, int cnt)
 {
 	t_vec	delta;
 	t_vec	step;
@@ -53,60 +85,22 @@ double	get_hitpoint(t_game *game, t_vec ray, t_vec count, double len)
 	delta = get_delta(ray);
 	side = get_side(game);
 	get_ray_value(&delta, &step, &side, ray);
-	while (1)
+	while (check_hitted(game, game->map[(int)count.y][(int)count.x], &len, ray, cnt))
 	{
-		if (game->map[(int)count.y][(int)count.x] == '2')
+		if (side.x < side.y)
 		{
-			// if (count.x + step.y / 2 < 1)
-			// {
-				if (side.x < side.y)
-				{
-					if (game->map[(int)count.y][(int)(count.x + step.x)] != '2')
-					{
-					game->side = 0;
-					side.x -= (delta.x / 2);
-					return (fabs(side.x));
-					}
-					if (game->map[(int)count.y][(int)(count.x + step.x/ 2)] == '2')
-					{
-						printf("check : fab [%f]\n", fabs(side.x));
-					game->side = 0;
-					side.x -= (delta.x / 2);
-					return (fabs(side.x));
-					}
-				}
-				else
-				{
-					if (game->map[(int)(count.y +step.y)][(int)(count.x)] != '2')
-					{					
-					game->side = 1;
-					side.y -= (delta.y / 2);
-					return (fabs(side.y));
-					}
-					if (game->map[(int)(count.y +step.y/ 2)][(int)(count.x)] == '2')
-					{					
-					game->side = 1;
-					side.y += (delta.y / 2);
-					return (fabs(side.y));
-					}
-				}
+			len = fabs(side.x);
+			side.x += delta.x;
+			count.x += step.x;
+			game->side = 0;
 		}
-			if (side.x < side.y)
-			{
-				len = fabs(side.x);
-				side.x += delta.x;
-				count.x += step.x;
-				game->side = 0;
-			}
-			else
-			{
-				len = fabs(side.y);
-				side.y += delta.y;
-				count.y += step.y;
-				game->side = 1;
-			}
-		if (game->map[(int)count.y][(int)count.x] == '1')
-			break ;
+		else
+		{
+			len = fabs(side.y);
+			side.y += delta.y;
+			count.y += step.y;
+			game->side = 1;
+		}
 	}
 	return (len);
 }
@@ -117,14 +111,18 @@ void	draw_3d_map(t_game *game)
 	t_vec	ray;
 	t_vec	hp;
 	double	len;
+	static int cnt;
 
+	cnt++;
+	if (cnt > 100)
+		cnt = 0;
 	i = -1;
 	while (++i < WIDTH)
 	{
 		ray = vec_add(game->p.dir, vec_mul(game->p.plane, 2 * i
 					/ (double)(WIDTH) - 1));
 		hp = vec_mul(vec_norm(ray), get_hitpoint(game, ray,
-					vec_new((int)game->p.pos.x, (int)game->p.pos.y), 1.0));
+		 			vec_new((int)game->p.pos.x, (int)game->p.pos.y), 1.0, cnt));
 		len = vec_len(hp) / vec_len(ray);
 		draw_one_column(game, i, len, ray);
 	}
