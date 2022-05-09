@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 18:13:02 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/09 14:00:47 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/09 15:45:50 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ void	draw_texture_2(t_game *game, int tex_x, double tex_pos, double step)
 			tex_pos += step;
 			color = game->texture[check_wall_dir(game, game->ray)]
 			[TEXHEIGHT * tex_y + tex_x];
-			game->img.data[i * WIDTH + game->r.x] = color;
+			if (color != 0x980088)
+				game->img.data[i * WIDTH + game->r.x] = color;
 		}
 		else
 			game->img.data[i * WIDTH + game->r.x] = fill_floor_color(game);

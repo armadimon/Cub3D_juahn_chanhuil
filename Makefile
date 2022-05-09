@@ -33,6 +33,7 @@ BONUS			=	bonus/main.c \
 					bonus/parser/get_F_C_color.c \
 					bonus/parser/check_map.c \
 					bonus/parser/utils.c \
+					bonus/engine/door.c \
 					bonus/engine/draw_2D_map.c \
 					bonus/engine/draw_2D_ray.c \
 					bonus/engine/draw_3D_map.c \

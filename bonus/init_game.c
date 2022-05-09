@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:36:06 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/09 14:01:19 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/09 15:40:23 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,24 @@ void	init_img(t_game *game)
 			&game->img.bpp, &game->img.size_l, &game->img.endian);
 }
 
+int	load_tex_enemy_and_sprite(t_game *game)
+{
+	t_img	img;
+
+	load_image(game, game->texture[4], "./images/enemy.xpm", &img);
+	return (1);
+}
+
 int	init_texture(t_game *game)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	game->texture = (int **)malloc(sizeof(int *) * 4);
+	game->texture = (int **)malloc(sizeof(int *) * 7);
 	if (!game->texture)
 		return (0);
-	while (i < 4)
+	while (i < 7)
 	{
 		game->texture[i] = (int *)malloc(sizeof(int) * (TEXHEIGHT * TEXWIDTH));
 		if (!game->texture[i])
@@ -41,13 +49,14 @@ int	init_texture(t_game *game)
 		i++;
 	}
 	i = 0;
-	while (i < 4)
+	while (i < 7)
 	{
 		j = -1;
 		while (++j < TEXHEIGHT * TEXWIDTH)
 			game->texture[i][j] = 0;
 		i++;
 	}
+	load_tex_enemy_and_sprite(game);
 	return (1);
 }
 

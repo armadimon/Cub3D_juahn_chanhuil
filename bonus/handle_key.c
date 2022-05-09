@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:37:47 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/09 14:01:22 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/09 16:52:50 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,12 @@ int	key_press_exit(t_game *game)
 	if (game->win && game->mlx)
 		mlx_destroy_window(game->mlx, game->win);
 	exit (0);
+}
+
+int	key_press_e(t_game *game)
+{
+	cast_ray_and_check_door(game);
+	return (1);
 }
 
 int	user_move(int key, t_game *game)

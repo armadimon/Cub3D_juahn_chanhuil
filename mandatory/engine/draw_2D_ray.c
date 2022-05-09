@@ -6,11 +6,23 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:26:11 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/07 11:26:08 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/09 15:13:42 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/game.h"
+#include "../../include/game_bonus.h"
+
+int	color_ch(int oriy, int y)
+{
+	int	distance;
+
+	distance = abs(y - oriy);
+	distance /= 100;
+	distance = 255 - distance / 5;
+	if (distance < 0)
+		return (0x000000);
+	return (0x010000 * (distance));
+}
 
 void	draw_ray_i_x(t_game *game, double m, t_vec ray_dir)
 {
@@ -28,7 +40,8 @@ void	draw_ray_i_x(t_game *game, double m, t_vec ray_dir)
 		if (game->map[(int)temp_y / TILE_SIZE][x / TILE_SIZE] == '1' ||
 			game->map[(int)temp_y / TILE_SIZE][x / TILE_SIZE] == ' ')
 			break ;
-		game->img.data[(((int)temp_y / 4) * (WIDTH)) + x / 4] = 0xFF0000;
+		game->img.data[(((int)temp_y / 4) * (WIDTH)) + x / 4]
+			= color_ch((int)(game->p.pos.x * TILE_SIZE * 100), x * 100);
 		if (ray_dir.x < 0)
 			x--;
 		else
@@ -56,7 +69,8 @@ void	draw_ray_i_y(t_game *game, double m, t_vec ray_dir)
 		if (game->map[y / TILE_SIZE][(int)temp_x / TILE_SIZE] == '1' ||
 			game->map[y / TILE_SIZE][(int)temp_x / TILE_SIZE] == ' ')
 			break ;
-		game->img.data[(y / 4) * (WIDTH) + (int)(temp_x / 4)] = 0xFF0000;
+		game->img.data[(y / 4) * (WIDTH) + (int)(temp_x / 4)]
+			= color_ch((int)(game->p.pos.y * TILE_SIZE * 100), y * 100);
 		if (ray_dir.x < 0)
 			temp_x -= fabs(m);
 		else
@@ -65,7 +79,7 @@ void	draw_ray_i_y(t_game *game, double m, t_vec ray_dir)
 			y--;
 		else
 			y++;
-	}	
+	}
 }
 
 void	draw_ray(t_game *game, int w)

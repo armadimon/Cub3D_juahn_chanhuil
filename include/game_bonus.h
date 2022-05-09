@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 20:04:01 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/09 14:40:09 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/09 16:11:05 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,12 @@ typedef struct s_img
 	int		img_width;
 	int		img_height;
 }				t_img;
+
+typedef struct s_door
+{
+	t_vec	pos;
+	double	open_rate;
+}				t_door;
 
 typedef struct s_map_data
 {
@@ -105,16 +111,17 @@ typedef struct s_game
 	t_map_data	map_data;
 	t_render	r;
 	t_vec		ray;
+	t_door		*door;
+	t_img		img;
+	t_key		key;
 	int			map_width;
 	int			map_height;
 	int			screen_width;
 	int			screen_height;
 	int			side;
 	char		**map;
-	t_img		img;
 	int			**texture;
 	int			map_flag;
-	t_key		key;
 }				t_game;
 
 /* PARSE & CHECK */
@@ -142,6 +149,9 @@ void	draw_3d_map(t_game *game);
 void	draw_one_column(t_game *game, int x, double len, t_vec ray);
 int		fill_ceiling_color(t_game *game);
 int		fill_floor_color(t_game *game);
+
+/* DOOR */
+void	cast_ray_and_check_door(t_game *game);
 
 /* KEY */
 int		user_stop(int key, t_game *game);

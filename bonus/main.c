@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:00:22 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/09 14:01:14 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/09 16:52:40 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int	main(int argc, char **argv)
 	mlx_loop_hook(game.mlx, &main_loop, &game);
 	mlx_hook(game.win, 2, 0, user_move, &game);
 	mlx_hook(game.win, 3, 0, user_stop, &game);
+	// mlx_hook(game.win, 2, 0, &key_press_e, &game);
 	mlx_hook(game.win, 17, 0, &key_press_exit, &game);
 	mlx_loop(game.mlx);
 	return (0);
