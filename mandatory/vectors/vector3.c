@@ -1,29 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   vector3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/16 10:12:35 by ajordan-          #+#    #+#             */
-/*   Updated: 2022/05/09 14:03:16 by juahn            ###   ########.fr       */
+/*   Created: 2022/05/03 14:23:21 by chanhuil          #+#    #+#             */
+/*   Updated: 2022/05/07 11:27:20 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "../../include/vector.h"
 
-# include <stdlib.h>
-# include <unistd.h>
-# include <fcntl.h>
-# include "../libft/libft.h"
+double	vec_angle(t_vec v)
+{
+	if (-vec_norm(v).y < 0)
+		return (-acos(vec_norm(v).x));
+	return (acos(vec_norm(v).x));
+}
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1000
-# endif
+t_vec	vec_rot(t_vec v, int degree)
+{
+	return (vec_new(cos(vec_angle(v) + (PI / 180 * degree)) * vec_len(v),
+			-sin(vec_angle(v) + (PI / 180 * degree)) * vec_len(v)));
+}
 
-char	*get_next_line(int fd);
-char	*ft_strjoin_gnl(char *left_str, char *buff);
-int		ft_strchr_gnl(char *s);
-
-#endif
+void	vec_print(t_vec v)
+{
+	printf("(%f, %f)\n", v.x, v.y);
+}

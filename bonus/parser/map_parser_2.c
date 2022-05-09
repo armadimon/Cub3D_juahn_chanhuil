@@ -6,11 +6,11 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 20:08:55 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/06 20:08:59 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/09 14:00:47 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/game.h"
+#include "../../include/game_bonus.h"
 
 int	check_map_contents(t_game *game, t_valid *valid)
 {

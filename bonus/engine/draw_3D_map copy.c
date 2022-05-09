@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 19:29:14 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/06 19:41:58 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/07 15:52:03 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,22 +53,60 @@ double	get_hitpoint(t_game *game, t_vec ray, t_vec count, double len)
 	delta = get_delta(ray);
 	side = get_side(game);
 	get_ray_value(&delta, &step, &side, ray);
-	while (game->map[(int)count.y][(int)count.x] != '1')
+	while (1)
 	{
-		if (side.x < side.y)
+		if (game->map[(int)count.y][(int)count.x] == '2')
 		{
-			len = fabs(side.x);
-			side.x += delta.x;
-			count.x += step.x;
-			game->side = 0;
+			// if (count.x + step.y / 2 < 1)
+			// {
+				if (side.x < side.y)
+				{
+					if (game->map[(int)count.y][(int)(count.x + step.x)] != '2')
+					{
+					game->side = 0;
+					side.x -= (delta.x / 2);
+					return (fabs(side.x));
+					}
+					if (game->map[(int)count.y][(int)(count.x + step.x/ 2)] == '2')
+					{
+						printf("check : fab [%f]\n", fabs(side.x));
+					game->side = 0;
+					side.x -= (delta.x / 2);
+					return (fabs(side.x));
+					}
+				}
+				else
+				{
+					if (game->map[(int)(count.y +step.y)][(int)(count.x)] != '2')
+					{					
+					game->side = 1;
+					side.y -= (delta.y / 2);
+					return (fabs(side.y));
+					}
+					if (game->map[(int)(count.y +step.y/ 2)][(int)(count.x)] == '2')
+					{					
+					game->side = 1;
+					side.y += (delta.y / 2);
+					return (fabs(side.y));
+					}
+				}
 		}
-		else
-		{
-			len = fabs(side.y);
-			side.y += delta.y;
-			count.y += step.y;
-			game->side = 1;
-		}
+			if (side.x < side.y)
+			{
+				len = fabs(side.x);
+				side.x += delta.x;
+				count.x += step.x;
+				game->side = 0;
+			}
+			else
+			{
+				len = fabs(side.y);
+				side.y += delta.y;
+				count.y += step.y;
+				game->side = 1;
+			}
+		if (game->map[(int)count.y][(int)count.x] == '1')
+			break ;
 	}
 	return (len);
 }

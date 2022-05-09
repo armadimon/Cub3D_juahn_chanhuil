@@ -6,11 +6,11 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:24:30 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/06 20:23:40 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/09 14:00:47 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/game.h"
+#include "../../include/game_bonus.h"
 
 void	draw_rectangle(t_game *game, int x, int y)
 {

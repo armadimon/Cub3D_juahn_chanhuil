@@ -1,27 +1,48 @@
-SRCS			=	srcs/main.c \
-					srcs/loop.c \
-					srcs/init_game.c \
-					srcs/handle_key.c \
-					srcs/parser/map_parser.c \
-					srcs/parser/map_parser_2.c \
-					srcs/parser/get_map_arr.c \
-					srcs/parser/get_map_content.c \
-					srcs/parser/load_image.c \
-					srcs/parser/get_F_C_color.c \
-					srcs/parser/check_map.c \
-					srcs/parser/utils.c \
-					srcs/engine/draw_2D_map.c \
-					srcs/engine/draw_2D_ray.c \
-					srcs/engine/draw_3D_map.c \
-					srcs/engine/draw_one_col.c \
-					srcs/engine/draw_floor_ceiling.c \
-					srcs/vectors/vector.c \
-					srcs/vectors/vector2.c \
-					srcs/vectors/vector3.c \
-					srcs/gnl/get_next_line.c \
-					srcs/gnl/get_next_line_utils.c \
+SRCS			=	mandatory/main.c \
+					mandatory/loop.c \
+					mandatory/init_game.c \
+					mandatory/handle_key.c \
+					mandatory/parser/map_parser.c \
+					mandatory/parser/map_parser_2.c \
+					mandatory/parser/get_map_arr.c \
+					mandatory/parser/get_map_content.c \
+					mandatory/parser/load_image.c \
+					mandatory/parser/get_F_C_color.c \
+					mandatory/parser/check_map.c \
+					mandatory/parser/utils.c \
+					mandatory/engine/draw_2D_map.c \
+					mandatory/engine/draw_2D_ray.c \
+					mandatory/engine/draw_3D_map.c \
+					mandatory/engine/draw_one_col.c \
+					mandatory/engine/draw_floor_ceiling.c \
+					mandatory/vectors/vector.c \
+					mandatory/vectors/vector2.c \
+					mandatory/vectors/vector3.c \
+					mandatory/gnl/get_next_line.c \
+					mandatory/gnl/get_next_line_utils.c \
 
-BONUS			=	main.c \
+BONUS			=	bonus/main.c \
+					bonus/loop.c \
+					bonus/init_game.c \
+					bonus/handle_key.c \
+					bonus/parser/map_parser.c \
+					bonus/parser/map_parser_2.c \
+					bonus/parser/get_map_arr.c \
+					bonus/parser/get_map_content.c \
+					bonus/parser/load_image.c \
+					bonus/parser/get_F_C_color.c \
+					bonus/parser/check_map.c \
+					bonus/parser/utils.c \
+					bonus/engine/draw_2D_map.c \
+					bonus/engine/draw_2D_ray.c \
+					bonus/engine/draw_3D_map.c \
+					bonus/engine/draw_one_col.c \
+					bonus/engine/draw_floor_ceiling.c \
+					bonus/vectors/vector.c \
+					bonus/vectors/vector2.c \
+					bonus/vectors/vector3.c \
+					bonus/gnl/get_next_line.c \
+					bonus/gnl/get_next_line_utils.c \
 
 OBJS			=	$(SRCS:.c=.o)
 BONUS_OBJS		=	$(BONUS:.c=.o)

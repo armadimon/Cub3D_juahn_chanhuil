@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/16 10:12:35 by ajordan-          #+#    #+#             */
-/*   Updated: 2022/05/09 14:03:16 by juahn            ###   ########.fr       */
+/*   Created: 2022/05/06 15:33:36 by juahn             #+#    #+#             */
+/*   Updated: 2022/05/09 14:00:47 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "../../include/game_bonus.h"
 
-# include <stdlib.h>
-# include <unistd.h>
-# include <fcntl.h>
-# include "../libft/libft.h"
+void	free_strs(char **strs)
+{
+	int	i;
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1000
-# endif
-
-char	*get_next_line(int fd);
-char	*ft_strjoin_gnl(char *left_str, char *buff);
-int		ft_strchr_gnl(char *s);
-
-#endif
+	i = -1;
+	if (strs)
+	{
+		while (strs[++i])
+			free(strs[i]);
+		free(strs);
+	}
+}

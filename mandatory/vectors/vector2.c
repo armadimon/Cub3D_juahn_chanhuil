@@ -1,26 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   vector2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/06 15:33:36 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/06 19:56:56 by juahn            ###   ########.fr       */
+/*   Created: 2022/05/03 14:23:21 by chanhuil          #+#    #+#             */
+/*   Updated: 2022/05/07 11:26:41 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/game.h"
+#include "../../include/vector.h"
 
-void	free_strs(char **strs)
+t_vec	vec_norm(t_vec v)
 {
-	int	i;
+	return (vec_mul(v, 1 / vec_len(v)));
+}
 
-	i = -1;
-	if (strs)
-	{
-		while (strs[++i])
-			free(strs[i]);
-		free(strs);
-	}
+double	vec_len(t_vec v)
+{
+	return (sqrt(v.x * v.x + v.y * v.y));
+}
+
+double	vec_dot(t_vec v1, t_vec v2)
+{
+	return (v1.x * v2.x + v1.y * v2.y);
+}
+
+int	vec_equal(t_vec v1, t_vec v2)
+{
+	if (v1.x == v2.x && v1.y == v2.y)
+		return (1);
+	return (0);
 }
