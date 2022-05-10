@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:00:22 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/09 16:52:40 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/10 12:20:29 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	reset_data(t_game *game)
 	game->key.a = 0;
 	game->key.s = 0;
 	game->key.d = 0;
+	game->key.o = 0;
+	game->key.o_delay = 0;
 	game->key.al = 0;
 	game->key.ar = 0;
 }
@@ -60,7 +62,6 @@ int	main(int argc, char **argv)
 	mlx_loop_hook(game.mlx, &main_loop, &game);
 	mlx_hook(game.win, 2, 0, user_move, &game);
 	mlx_hook(game.win, 3, 0, user_stop, &game);
-	// mlx_hook(game.win, 2, 0, &key_press_e, &game);
 	mlx_hook(game.win, 17, 0, &key_press_exit, &game);
 	mlx_loop(game.mlx);
 	return (0);

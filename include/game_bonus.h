@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 20:04:01 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/09 16:11:05 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/10 12:21:03 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ typedef struct s_img
 typedef struct s_door
 {
 	t_vec	pos;
-	double	open_rate;
+	int		open_rate;
+	int		flag;
 }				t_door;
 
 typedef struct s_map_data
@@ -91,6 +92,8 @@ typedef struct s_key
 	int		a;
 	int		s;
 	int		d;
+	int		o;
+	int		o_delay;
 	int		al;
 	int		ar;
 }				t_key;
@@ -114,6 +117,7 @@ typedef struct s_game
 	t_door		*door;
 	t_img		img;
 	t_key		key;
+	int			dr_cnt;
 	int			map_width;
 	int			map_height;
 	int			screen_width;

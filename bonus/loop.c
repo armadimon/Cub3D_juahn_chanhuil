@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:38:59 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/09 14:01:16 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/10 12:21:59 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,37 @@ int	able_to_move(t_game *game, int deg)
 	if (game->map[(int)fv.y][(int)fv.x] != '0')
 		return (0);
 	return (1);
+}
+
+void	apply_mouse_input(t_game *game)
+{
+	int	x;
+	int	y;
+	int	sign;
+	
+	sign = 0;
+	if (game->key.o == 1)
+	{
+		mlx_mouse_hide();
+		if (game->key.o_delay++ < 5)
+			mlx_mouse_move(game->win, WIDTH / 2, HEIGHT / 2);
+		else
+		{
+			mlx_mouse_get_pos(game->win, &x, &y);
+			if (x < WIDTH / 2)
+				sign = 1;
+			if (x > WIDTH / 2)
+				sign = -1;
+			game->p.dir = vec_rot(game->p.dir, sign);
+			game->p.plane = vec_rot(game->p.plane, sign);
+			mlx_mouse_move(game->win, WIDTH / 2, HEIGHT / 2);
+		}
+	}
+	else
+	{
+		mlx_mouse_show();
+		game->key.o_delay = 0;
+	}
 }
 
 void	apply_key_input(t_game *game)
@@ -48,9 +79,40 @@ void	apply_key_input(t_game *game)
 	}
 }
 
+void	door_status_check(t_game *game)
+{
+	int i;
+
+	i = 0;
+	while (i < game->dr_cnt)
+	{
+		if (game->door[i].flag == 1)
+		{
+			game->door[i].open_rate++;
+			if (game->door[i].open_rate > 100)
+			{
+				game->door[i].open_rate = 100;
+				game->door[i].flag = 2;
+			}
+		}
+		if (game->door[i].flag == 3)
+		{
+			game->door[i].open_rate--;
+			if (game->door[i].open_rate <= 0)
+			{
+				game->door[i].open_rate = 0;
+				game->door[i].flag = 0;
+			}
+		}
+		i++;
+	}
+}
+
 int	main_loop(t_game *game)
 {
+	door_status_check(game);
 	apply_key_input(game);
+	apply_mouse_input(game);
 	draw_3d_map(game);
 	if (game->map_flag)
 		draw_2d_map(game);

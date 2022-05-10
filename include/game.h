@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 20:04:01 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/07 11:03:23 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/10 02:18:43 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ typedef struct s_game
 	t_map_data	map_data;
 	t_render	r;
 	t_vec		ray;
+	int			door_cnt;
 	int			map_width;
 	int			map_height;
 	int			screen_width;
