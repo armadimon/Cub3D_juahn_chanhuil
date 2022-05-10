@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 19:29:14 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/10 12:25:03 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/10 12:53:15 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ double	get_door_cnt(t_game *game, t_vec count)
 	{
 		if ((int)count.x == (int)game->door[i].pos.x && (int)count.y == (int)game->door[i].pos.y)
 		{
+			game->r.door_flag = i + 1;
 			return ((double)game->door[i].open_rate);
 		}
 		i++;
@@ -88,6 +89,7 @@ int	check_hitted(t_game *game, t_vec count, double *len, t_vec ray)
 				return (0);
 			}
 		}
+		game->r.door_flag = 0;
 	}
 	else if (game->map[(int)count.y][(int)count.x] == '1')
 		return (0);
@@ -100,6 +102,7 @@ double	get_hitpoint(t_game *game, t_vec ray, t_vec count, double len)
 	t_vec	step;
 	t_vec	side;
 
+	game->r.door_flag = 0;
 	delta = get_delta(ray);
 	side = get_side(game);
 	get_ray_value(&delta, &step, &side, ray);

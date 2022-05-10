@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 18:13:02 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/09 15:45:50 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/10 13:08:05 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	check_wall_dir(t_game *game, t_vec ray)
 {
 	int	tex_num;
 
+	if (game->r.door_flag >= 1)
+		return (7);
 	tex_num = 0;
 	if (game->side == 1)
 	{
@@ -47,7 +49,7 @@ void	draw_texture_2(t_game *game, int tex_x, double tex_pos, double step)
 			game->img.data[i * WIDTH + game->r.x] = fill_ceiling_color(game);
 		else if (i < game->r.wall_end)
 		{
-			tex_y = (int)tex_pos;
+			tex_y = (int)tex_pos & (TEXHEIGHT - 1);
 			tex_pos += step;
 			color = game->texture[check_wall_dir(game, game->ray)]
 			[TEXHEIGHT * tex_y + tex_x];
@@ -69,6 +71,8 @@ double	calc_wall_x(t_game *game, double len, t_vec ray)
 	else
 		wall_x = game->p.pos.x + len * ray.x;
 	wall_x -= floor((wall_x));
+	if (game->r.door_flag > 0)
+		wall_x = wall_x - ((double)(game->door[game->r.door_flag - 1].open_rate) / 100);
 	return (wall_x);
 }
 

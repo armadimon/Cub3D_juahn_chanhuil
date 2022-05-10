@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:24:30 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/10 12:21:41 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/10 13:08:24 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void	cast_ray_i_x(t_game *game, double m, t_vec ray_dir)
 		else
 			temp_y += fabs(m);
 	}
-	printf("x : %d\ny : %d\nc : %c\n", x / TILE_SIZE, (int)temp_y / TILE_SIZE, game->map[(int)temp_y / TILE_SIZE][x / TILE_SIZE]);
 }
 
 void	cast_ray_i_y(t_game *game, double m, t_vec ray_dir)
@@ -82,7 +81,6 @@ void	cast_ray_i_y(t_game *game, double m, t_vec ray_dir)
 		else
 			y++;
 	}
-	printf("x : %d\ny : %d\nc : %c\n", y / TILE_SIZE, (int)temp_x / TILE_SIZE, game->map[y / TILE_SIZE][(int)temp_x / TILE_SIZE]);
 }
 
 void	cast_ray_and_check_door(t_game *game)
