@@ -6,7 +6,11 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:38:59 by juahn             #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/05/10 12:21:59 by juahn            ###   ########.fr       */
+=======
+/*   Updated: 2022/05/09 18:44:39 by juahn            ###   ########.fr       */
+>>>>>>> 4e81942d7905bbcea4bb9997d3a8e3aecce0134d
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +33,17 @@ void	apply_mouse_input(t_game *game)
 	int	sign;
 	
 	sign = 0;
+<<<<<<< HEAD
 	if (game->key.o == 1)
 	{
 		mlx_mouse_hide();
 		if (game->key.o_delay++ < 5)
+=======
+	if (game->key.m == 1)
+	{
+		mlx_mouse_hide();
+		if (game->key.m_delay++ < 5)
+>>>>>>> 4e81942d7905bbcea4bb9997d3a8e3aecce0134d
 			mlx_mouse_move(game->win, WIDTH / 2, HEIGHT / 2);
 		else
 		{
@@ -49,7 +60,11 @@ void	apply_mouse_input(t_game *game)
 	else
 	{
 		mlx_mouse_show();
+<<<<<<< HEAD
 		game->key.o_delay = 0;
+=======
+		game->key.m_delay = 0;
+>>>>>>> 4e81942d7905bbcea4bb9997d3a8e3aecce0134d
 	}
 }
 

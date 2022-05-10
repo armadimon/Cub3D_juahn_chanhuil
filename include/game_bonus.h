@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   game_bonus.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: chanhuil <chanhuil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 20:04:01 by juahn             #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/05/10 12:21:03 by juahn            ###   ########.fr       */
+=======
+/*   Updated: 2022/05/09 17:46:19 by chanhuil         ###   ########.fr       */
+>>>>>>> 4e81942d7905bbcea4bb9997d3a8e3aecce0134d
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +100,8 @@ typedef struct s_key
 	int		o_delay;
 	int		al;
 	int		ar;
+	int		m;
+	int		m_delay;
 }				t_key;
 
 typedef struct s_render
