@@ -92,32 +92,22 @@ int	 draw_sprite(t_game *game)
     {
 		t_vec	sprite = vec_sub(game->sp[spriteOrder[i]].pos, game->p.pos);
 		double	len = vec_dot(sprite, game->p.dir);
-		double	invDet = 1.0 / (game->p.plane.x * game->p.dir.y - game->p.dir.x * game->p.plane.y);
-		double	transformX = invDet * (game->p.dir.y * sprite.x - game->p.dir.x * sprite.y);
-		int		screenx = (int)((WIDTH / 2) * (1 + transformX / len));
+		int		screenx = (int)((WIDTH / 2) * (1 + vec_dot(sprite, vec_norm(game->p.plane)) / len));
 
-		if (vec_dot(vec_norm(sprite), game->p.dir) <= vec_dot(game->p.dir, vec_rot(game->p.dir, 45)))
+		if (vec_dot(vec_norm(sprite), game->p.dir) < vec_dot(game->p.dir, vec_rot(game->p.dir, 45)))
 			continue ;
-		//calculate height of the sprite on screen
-		int spritesize = abs((int)(HEIGHT / len)); //using 'transformY' instead of the real distance prevents fisheye
-		//calculate lowest and highest pixel to fill in current stripe
-		int drawStartY = -spritesize / 2 + HEIGHT / 2;
-		if(drawStartY < 0) drawStartY = 0;
-		int drawEndY = spritesize / 2 + HEIGHT / 2;
-		if(drawEndY >= HEIGHT) drawEndY = HEIGHT - 1;
+		int spritesize = abs((int)(HEIGHT / len));
 
-		int drawStartX = -spritesize / 2 + screenx;
-		if(drawStartX < 0) drawStartX = 0;
-		int drawEndX = spritesize / 2 + screenx;
-		if(drawEndX >= WIDTH) drawEndX = WIDTH - 1;
-
-		//loop through every vertical stripe of the sprite on screen
-		for(int col = drawStartX; col < drawEndX; col++)
+		for(int col = -spritesize / 2 + screenx; col < spritesize / 2 + screenx; col++)
 		{
+			if (col < 0 || col >= WIDTH)
+				continue ;
 			int texX = (int)(256 * (col - (-spritesize / 2 + screenx)) * TEXWIDTH / spritesize) / 256;
-        	if (len > 0 && col > 0 && col < WIDTH 	&& len < game->r.z_buffer[col])
-				for (int y = drawStartY; y < drawEndY; y++) //for every pixel of the current stripe
+        	if (len > 0 && col > 0 && col < WIDTH && len < game->r.z_buffer[col])
+				for (int y = -spritesize / 2 + HEIGHT / 2; y < spritesize / 2 + HEIGHT / 2; y++) //for every pixel of the current stripe
 				{
+					if (y < 0 || y >= HEIGHT)
+						continue ;
 					int d = (y) * 256 - HEIGHT * 128 + spritesize * 128; //256 and 128 factors to avoid floats
 					int texY = ((d * TEXHEIGHT) / spritesize) / 256;
 					int color = game->texture[5][TEXWIDTH * texY + texX]; //get current color from the texture
