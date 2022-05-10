@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 18:13:02 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/10 13:08:05 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/10 13:21:38 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	draw_texture_2(t_game *game, int tex_x, double tex_pos, double step)
 			game->img.data[i * WIDTH + game->r.x] = fill_ceiling_color(game);
 		else if (i < game->r.wall_end)
 		{
-			tex_y = (int)tex_pos & (TEXHEIGHT - 1);
+			tex_y = (int)tex_pos;
 			tex_pos += step;
 			color = game->texture[check_wall_dir(game, game->ray)]
 			[TEXHEIGHT * tex_y + tex_x];
@@ -72,7 +72,10 @@ double	calc_wall_x(t_game *game, double len, t_vec ray)
 		wall_x = game->p.pos.x + len * ray.x;
 	wall_x -= floor((wall_x));
 	if (game->r.door_flag > 0)
+	{
 		wall_x = wall_x - ((double)(game->door[game->r.door_flag - 1].open_rate) / 100);
+		wall_x = fabs(wall_x);
+	}
 	return (wall_x);
 }
 
@@ -83,8 +86,6 @@ void	draw_texture(t_game *game, t_vec ray, double len)
 	double	step;
 
 	tex_x = (int)(calc_wall_x(game, len, ray) * (double)(TEXWIDTH));
-	if ((game->side == 0 && ray.x > 0) || (game->side == 1 && ray.y < 0))
-		tex_x = TEXWIDTH - tex_x - 1;
 	step = 1.0 * TEXHEIGHT / game->r.length;
 	tex_pos = (game->r.wall_start - HEIGHT / 2 + game->r.length / 2) * step;
 	draw_texture_2(game, tex_x, tex_pos, step);
