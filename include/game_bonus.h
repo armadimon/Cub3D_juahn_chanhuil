@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 20:04:01 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/10 14:52:51 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/10 15:04:21 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ typedef struct s_game
 	int			screen_width;
 	int			screen_height;
 	int			side;
+	int			cnt;
 	char		**map;
 	int			**texture;
 	int			map_flag;

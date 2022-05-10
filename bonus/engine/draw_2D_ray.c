@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:26:11 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/09 14:47:42 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/10 15:22:38 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@ int	color_ch(int oriy, int y)
 		return (0x000000);
 	return (0x010000 * (distance));
 }
+
+// int		check_tile()
+// {
+	
+// }
 
 void	draw_ray_i_x(t_game *game, double m, t_vec ray_dir)
 {
