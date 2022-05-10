@@ -88,9 +88,11 @@ int	 draw_sprite(t_game *game)
     {
 		t_vec	sprite = vec_sub(game->sp[spriteOrder[i]].pos, game->p.pos);
 		double	len = vec_dot(sprite, game->p.dir);
-		int		screenx = (int)((vec_angle(sprite) - vec_angle(game->p.dir) - PI / 4) * -2 / PI * (WIDTH - 1));
+		double	invDet = 1.0 / (game->p.plane.x * game->p.dir.y - game->p.dir.x * game->p.plane.y);
+		double	transformX = invDet * (game->p.dir.y * sprite.x - game->p.dir.x * sprite.y);
+		int		screenx = (int)((WIDTH / 2) * (1 + transformX / len));
 
-		if (len <= vec_dot(game->p.dir, vec_rot(game->p.dir, 45)))
+		if (vec_dot(vec_norm(sprite), game->p.dir) <= vec_dot(game->p.dir, vec_rot(game->p.dir, 45)))
 			continue ;
 		//calculate height of the sprite on screen
 		int spritesize = abs((int)(HEIGHT / len)); //using 'transformY' instead of the real distance prevents fisheye
