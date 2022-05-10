@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_sprite.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: chanhuil <chanhuil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 19:29:14 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/10 14:57:44 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/10 15:22:43 by chanhuil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,70 +62,50 @@ void	sortSprites(int *order, double *dist, int amount)
 
 int	 draw_sprite(t_game *game)
 {
-int		spriteOrder[game->r.sp_cnt];
-double	spriteDistance[game->r.sp_cnt];
+	int		spriteOrder[game->r.sp_cnt];
+	double	spriteDistance[game->r.sp_cnt];
 	//SPRITE CASTING
     //sort sprites from far to close
     for(int i = 0; i < game->r.sp_cnt; i++)
     {
-      spriteOrder[i] = i;
-      spriteDistance[i] = (( game->p.pos.x - game->sp[i].pos.x) * ( game->p.pos.x - game->sp[i].pos.x) + (game->p.pos.y - game->sp[i].pos.y) * (game->p.pos.y - game->sp[i].pos.y)); //sqrt not taken, unneeded
-    }
+		spriteOrder[i] = i;
+		spriteDistance[i] = vec_len(vec_sub(game->p.pos, game->sp[i].pos));
+	}
     sortSprites(spriteOrder, spriteDistance, game->r.sp_cnt);
 
-    //after sorting the sprites, do the projection and draw them
     for(int i = 0; i < game->r.sp_cnt; i++)
     {
-      //translate sprite position to relative to camera
-      double spriteX = game->sp[spriteOrder[i]].pos.x -  game->p.pos.x;
-      double spriteY = game->sp[spriteOrder[i]].pos.y - game->p.pos.y;
+		t_vec	sprite = vec_sub(game->sp[spriteOrder[i]].pos, game->p.pos);
+		double	len = vec_dot(sprite, game->p.dir);
+		int		screenx = (int)((vec_angle(sprite) - vec_angle(game->p.dir) - PI / 4) * -2 / PI * (WIDTH - 1));
 
-      //transform sprite with the inverse camera matrix
-      // [ planeX   dirX ] -1                                       [ dirY      -dirX ]
-      // [               ]       =  1/(planeX*dirY-dirX*planeY) *   [                 ]
-      // [ planeY   dirY ]                                          [ -planeY  planeX ]
+		//calculate height of the sprite on screen
+		int spritesize = abs((int)(HEIGHT / len)); //using 'transformY' instead of the real distance prevents fisheye
+		//calculate lowest and highest pixel to fill in current stripe
+		int drawStartY = -spritesize / 2 + HEIGHT / 2;
+		if(drawStartY < 0) drawStartY = 0;
+		int drawEndY = spritesize / 2 + HEIGHT / 2;
+		if(drawEndY >= HEIGHT) drawEndY = HEIGHT - 1;
 
-      double invDet = 1.0 / (game->p.plane.x * game->p.dir.y - game->p.dir.x * game->p.plane.y); //required for correct matrix multiplication
+		int drawStartX = -spritesize / 2 + screenx;
+		if(drawStartX < 0) drawStartX = 0;
+		int drawEndX = spritesize / 2 + screenx;
+		if(drawEndX >= WIDTH) drawEndX = WIDTH - 1;
 
-      double transformX = invDet * (game->p.dir.y * spriteX - game->p.dir.x * spriteY);
-      double transformY = invDet * (-game->p.plane.y * spriteX + game->p.plane.x * spriteY); //this is actually the depth inside the screen, that what Z is in 3D
-
-      int spriteScreenX = (int)((WIDTH / 2) * (1 + transformX / transformY));
-
-      //calculate height of the sprite on screen
-      int spriteHeight = abs((int)(HEIGHT / (transformY))); //using 'transformY' instead of the real distance prevents fisheye
-      //calculate lowest and highest pixel to fill in current stripe
-      int drawStartY = -spriteHeight / 2 + HEIGHT / 2;
-      if(drawStartY < 0) drawStartY = 0;
-      int drawEndY = spriteHeight / 2 + HEIGHT / 2;
-      if(drawEndY >= HEIGHT) drawEndY = HEIGHT - 1;
-
-      //calculate width of the sprite
-      int spriteWidth = abs( (int)(HEIGHT / (transformY)));
-      int drawStartX = -spriteWidth / 2 + spriteScreenX;
-      if(drawStartX < 0) drawStartX = 0;
-      int drawEndX = spriteWidth / 2 + spriteScreenX;
-      if(drawEndX >= WIDTH) drawEndX = WIDTH - 1;
-
-      //loop through every vertical stripe of the sprite on screen
-      for(int stripe = drawStartX; stripe < drawEndX; stripe++)
-      {
-        int texX = (int)(256 * (stripe - (-spriteWidth / 2 + spriteScreenX)) * TEXWIDTH / spriteWidth) / 256;
-        //the conditions in the if are:
-        //1) it's in front of camera plane so you don't see things behind you
-        //2) it's on the screen (left)
-        //3) it's on the screen (right)
-        //4) ZBuffer, with perpendicular distance
-        if(transformY > 0 && stripe > 0 && stripe < WIDTH && transformY < game->r.z_buffer[stripe])
-        for(int y = drawStartY; y < drawEndY; y++) //for every pixel of the current stripe
-        {
-          int d = (y) * 256 - HEIGHT * 128 + spriteHeight * 128; //256 and 128 factors to avoid floats
-          int texY = ((d * TEXHEIGHT) / spriteHeight) / 256;
-          int color = game->texture[5][TEXWIDTH * texY + texX]; //get current color from the texture
-			if (color != 0x980088)
-		  	game->img.data[y * WIDTH + stripe] = color; //paint pixel if it isn't black, black is the invisible color
-        }
-      }
+		//loop through every vertical stripe of the sprite on screen
+		for(int col = drawStartX; col < drawEndX; col++)
+		{
+			int texX = (int)(256 * (col - (-spritesize / 2 + screenx)) * TEXWIDTH / spritesize) / 256;
+        	if (len > 0 && col > 0 && col < WIDTH 	&& len < game->r.z_buffer[col])
+				for (int y = drawStartY; y < drawEndY; y++) //for every pixel of the current stripe
+				{
+					int d = (y) * 256 - HEIGHT * 128 + spritesize * 128; //256 and 128 factors to avoid floats
+					int texY = ((d * TEXHEIGHT) / spritesize) / 256;
+					int color = game->texture[5][TEXWIDTH * texY + texX]; //get current color from the texture
+						if (color != 0x980088)
+						game->img.data[y * WIDTH + col] = color; //paint pixel if it isn't black, black is the invisible color
+				}
+		}
     }
 	return (1);
 }
