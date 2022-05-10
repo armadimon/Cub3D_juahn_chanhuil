@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:26:11 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/10 15:22:38 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/10 15:27:56 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,13 @@ int	color_ch(int oriy, int y)
 	return (0x010000 * (distance));
 }
 
-// int		check_tile()
-// {
-	
-// }
+int		check_tile(int y, int x)
+{
+	if (game->map[y][x] == '1' || game->map[y][x] == ' '
+		||  game->map[y][x] == '2' || game->map[y][x] == '3')
+			return (0);
+	return (1);
+}
 
 void	draw_ray_i_x(t_game *game, double m, t_vec ray_dir)
 {
@@ -42,8 +45,7 @@ void	draw_ray_i_x(t_game *game, double m, t_vec ray_dir)
 			return ;
 		if (x / TILE_SIZE < 0 || x / TILE_SIZE > game->map_width)
 			return ;
-		if (game->map[(int)temp_y / TILE_SIZE][x / TILE_SIZE] == '1' ||
-			game->map[(int)temp_y / TILE_SIZE][x / TILE_SIZE] == ' ')
+		if (!check_tile((int)temp_y / TILE_SIZE, x / TILE_SIZE))
 			break ;
 		game->img.data[(((int)temp_y / 4) * (WIDTH)) + x / 4]
 			= color_ch((int)(game->p.pos.x * TILE_SIZE * 100), x * 100);
