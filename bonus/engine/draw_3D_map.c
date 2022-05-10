@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 19:29:14 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/10 12:53:15 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/10 13:50:07 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ void	draw_3d_map(t_game *game)
 		hp = vec_mul(vec_norm(ray), get_hitpoint(game, ray,
 		 			vec_new((int)game->p.pos.x, (int)game->p.pos.y), 1.0));
 		len = vec_len(hp) / vec_len(ray);
+		game->r.z_buffer[i] = len;
 		draw_one_column(game, i, len, ray);
 	}
 }

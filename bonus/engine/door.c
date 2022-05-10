@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:24:30 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/10 13:08:24 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/10 13:47:58 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,9 @@ void	cast_ray_and_check_door(t_game *game)
 	t_vec	ray_dir;
 	double	m;
 
+
+	if (game->map[(int)game->p.pos.y][(int)game->p.pos.x] == '2')
+		return ;
 	camera_x = 2 * (WIDTH / 2) / (double)(game->map_width * TILE_SIZE) - 1;
 	ray_dir = vec_add(game->p.dir, vec_mul(game->p.plane, camera_x));
 	m = tan(vec_angle(ray_dir));

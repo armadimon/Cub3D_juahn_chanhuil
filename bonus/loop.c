@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chanhuil <chanhuil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:38:59 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/10 13:26:09 by chanhuil         ###   ########.fr       */
+/*   Updated: 2022/05/10 13:31:13 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ int	able_to_move(t_game *game, int deg)
 
 	i = -1;
 	fv = vec_add(game->p.pos, vec_mul(vec_rot(game->p.dir, deg), 0.2));
-	if (game->map[(int)fv.y][(int)fv.x] == '1')
+	if (game->map[(int)fv.y][(int)fv.x] == '0')
 		return (1);
 	if (game->map[(int)fv.y][(int)fv.x] == '2')
 	{
 		while (++i < game->dr_cnt)
 		{
 			if (vec_equal(game->door[i].pos, vec_new((int)fv.x, (int)fv.y))
-				&& game->door[i].flag == 2)
+				&& game->door[i].flag == 0)
 				return (1);
 		}
 	}

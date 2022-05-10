@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 18:13:02 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/10 13:21:38 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/10 13:35:28 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	draw_texture_2(t_game *game, int tex_x, double tex_pos, double step)
 			game->img.data[i * WIDTH + game->r.x] = fill_ceiling_color(game);
 		else if (i < game->r.wall_end)
 		{
-			tex_y = (int)tex_pos;
+			tex_y = (int)tex_pos & (TEXHEIGHT - 1);
 			tex_pos += step;
 			color = game->texture[check_wall_dir(game, game->ray)]
 			[TEXHEIGHT * tex_y + tex_x];
@@ -86,6 +86,11 @@ void	draw_texture(t_game *game, t_vec ray, double len)
 	double	step;
 
 	tex_x = (int)(calc_wall_x(game, len, ray) * (double)(TEXWIDTH));
+	if (game->r.door_flag == 0)
+	{
+		if ((game->side == 0 && ray.x > 0) || (game->side == 1 && ray.y < 0))
+			tex_x = TEXWIDTH - tex_x - 1;
+	}
 	step = 1.0 * TEXHEIGHT / game->r.length;
 	tex_pos = (game->r.wall_start - HEIGHT / 2 + game->r.length / 2) * step;
 	draw_texture_2(game, tex_x, tex_pos, step);

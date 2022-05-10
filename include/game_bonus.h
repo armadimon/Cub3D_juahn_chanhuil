@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 20:04:01 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/10 12:29:35 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/10 13:49:36 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ typedef struct s_render
 	int		x;
 	int		length;
 	int		door_flag;
+	double	z_buffer[WIDTH];
 }				t_render;
 
 typedef struct s_game
