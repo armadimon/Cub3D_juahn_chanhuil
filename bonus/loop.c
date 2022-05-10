@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: chanhuil <chanhuil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:38:59 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/10 12:24:40 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/10 13:26:09 by chanhuil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,23 @@
 
 int	able_to_move(t_game *game, int deg)
 {
+	int		i;
 	t_vec	fv;
 
+	i = -1;
 	fv = vec_add(game->p.pos, vec_mul(vec_rot(game->p.dir, deg), 0.2));
-	if (game->map[(int)fv.y][(int)fv.x] != '0')
-		return (0);
-	return (1);
+	if (game->map[(int)fv.y][(int)fv.x] == '1')
+		return (1);
+	if (game->map[(int)fv.y][(int)fv.x] == '2')
+	{
+		while (++i < game->dr_cnt)
+		{
+			if (vec_equal(game->door[i].pos, vec_new((int)fv.x, (int)fv.y))
+				&& game->door[i].flag == 2)
+				return (1);
+		}
+	}
+	return (0);
 }
 
 void	apply_mouse_input(t_game *game)
