@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 19:29:14 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/10 15:24:33 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/10 16:08:46 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	sortSprites(int *order, double *dist, int amount)
 	free(sprites);
 }
 
-int	choose_tex(t_game *game)
+int	get_texnum(t_game *game)
 {
 	if (game->cnt >= 0 && game->cnt < 33)
 		return (4);
@@ -90,23 +90,21 @@ int	 draw_sprite(t_game *game)
 		double	len = vec_dot(sprite, game->p.dir);
 		int		screenx = (int)((WIDTH / 2) * (1 + vec_dot(sprite, vec_norm(game->p.plane)) / len));
 
-		if (vec_dot(vec_norm(sprite), game->p.dir) < vec_dot(game->p.dir, vec_rot(game->p.dir, 45)))
+		if (vec_dot(vec_norm(sprite), game->p.dir) < vec_dot(game->p.dir, vec_rot(game->p.dir, 60)))
 			continue ;
 		int spritesize = abs((int)(HEIGHT / len));
 
 		for(int col = -spritesize / 2 + screenx; col < spritesize / 2 + screenx; col++)
 		{
-			if (col < 0 || col >= WIDTH)
-				continue ;
 			int texX = (int)(256 * (col - (-spritesize / 2 + screenx)) * TEXWIDTH / spritesize) / 256;
-        	if (len > 0 && col > 0 && col < WIDTH && len < game->r.z_buffer[col])
+        	if (col >= 0 && col < WIDTH && len < game->r.z_buffer[col])
 				for (int y = -spritesize / 2 + HEIGHT / 2; y < spritesize / 2 + HEIGHT / 2; y++) //for every pixel of the current stripe
 				{
 					if (y < 0 || y >= HEIGHT)
 						continue ;
 					int d = (y) * 256 - HEIGHT * 128 + spritesize * 128; //256 and 128 factors to avoid floats
 					int texY = ((d * TEXHEIGHT) / spritesize) / 256;
-					int color = game->texture[5][TEXWIDTH * texY + texX]; //get current color from the texture
+					int color = game->texture[get_texnum(game)][TEXWIDTH * texY + texX]; //get current color from the texture
 						if (color != 0x980088)
 						game->img.data[y * WIDTH + col] = color; //paint pixel if it isn't black, black is the invisible color
 				}
