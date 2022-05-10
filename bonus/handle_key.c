@@ -6,11 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:37:47 by juahn             #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/05/10 02:46:19 by juahn            ###   ########.fr       */
-=======
-/*   Updated: 2022/05/09 17:55:17 by juahn            ###   ########.fr       */
->>>>>>> 4e81942d7905bbcea4bb9997d3a8e3aecce0134d
+/*   Updated: 2022/05/10 12:24:51 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +43,8 @@ int	user_move(int key, t_game *game)
 		game->key.ar = 1;
 	else if (key == K_O)
 	{
-<<<<<<< HEAD
 		game->key.o ^= 1;
 		game->key.o_delay = 0;
-=======
-		game->key.m ^= 1;
-		game->key.m_delay = 0;
->>>>>>> 4e81942d7905bbcea4bb9997d3a8e3aecce0134d
 	}
 	return (0);
 }
