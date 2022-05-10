@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:38:59 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/10 13:31:13 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/10 14:53:30 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	able_to_move(t_game *game, int deg)
 		return (1);
 	if (game->map[(int)fv.y][(int)fv.x] == '2')
 	{
-		while (++i < game->dr_cnt)
+		while (++i < game->r.dr_cnt)
 		{
 			if (vec_equal(game->door[i].pos, vec_new((int)fv.x, (int)fv.y))
 				&& game->door[i].flag == 0)
@@ -95,7 +95,7 @@ void	door_status_check(t_game *game)
 	int i;
 
 	i = 0;
-	while (i < game->dr_cnt)
+	while (i < game->r.dr_cnt)
 	{
 		if (game->door[i].flag == 1)
 		{
@@ -125,6 +125,7 @@ int	main_loop(t_game *game)
 	apply_key_input(game);
 	apply_mouse_input(game);
 	draw_3d_map(game);
+	draw_sprite(game);
 	if (game->map_flag)
 		draw_2d_map(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->img.img, 0, 0);

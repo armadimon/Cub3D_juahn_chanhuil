@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 19:23:40 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/10 12:21:20 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/10 14:58:11 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	check_space(t_game *game, int i, int j)
 int	check_char(char c)
 {
 	if (c != 'N' && c != 'S' && c != 'E' && c != 'W'
-		&& c != ' ' && c != '0' && c != '1' && c!= '2')
+		&& c != ' ' && c != '0' && c != '1' && c != '2' && c != '3')
 		return (0);
 	return (1);
 }
@@ -87,12 +87,14 @@ int	check_door_and_sprite(t_game *game)
 		{
 			if (game->map[i][j] == '2')
 				dr_cnt++;
-			if (game->map[i][j] == 'P')
+			if (game->map[i][j] == '3')
 				sp_cnt++;
 		}
 	}
-	game->door = malloc(sizeof(t_door) * dr_cnt);
-	game->dr_cnt = dr_cnt;
+	game->door = (t_door *)malloc(sizeof(t_door) * dr_cnt);
+	game->sp = (t_sprite *)malloc(sizeof(t_sprite) * sp_cnt);
+	game->r.dr_cnt = dr_cnt;
+	game->r.sp_cnt = sp_cnt;
 	i = -1;
 	sp_cnt = 0;
 	dr_cnt = 0;
@@ -108,8 +110,11 @@ int	check_door_and_sprite(t_game *game)
 				game->door[dr_cnt].flag = 2;
 				dr_cnt++;
 			}
-			if (game->map[i][j] == 'P')
+			if (game->map[i][j] == '3')
+			{
+				game->sp[sp_cnt].pos = vec_new(j + 0.5, i + 0.5);
 				sp_cnt++;
+			}
 		}
 	}
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 20:04:01 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/10 13:49:36 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/10 14:52:51 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,16 @@ typedef struct s_render
 	int		x;
 	int		length;
 	int		door_flag;
+	int		dr_cnt;
+	int		sp_cnt;
 	double	z_buffer[WIDTH];
 }				t_render;
+
+typedef struct s_sprite
+{
+	t_vec	pos;
+	// int		index;
+}				t_sprite;
 
 typedef struct s_game
 {
@@ -121,7 +129,7 @@ typedef struct s_game
 	t_door		*door;
 	t_img		img;
 	t_key		key;
-	int			dr_cnt;
+	t_sprite	*sp;
 	int			map_width;
 	int			map_height;
 	int			screen_width;
@@ -157,6 +165,7 @@ void	draw_3d_map(t_game *game);
 void	draw_one_column(t_game *game, int x, double len, t_vec ray);
 int		fill_ceiling_color(t_game *game);
 int		fill_floor_color(t_game *game);
+int		draw_sprite(t_game *game);
 
 /* DOOR */
 void	cast_ray_and_check_door(t_game *game);

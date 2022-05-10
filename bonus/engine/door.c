@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:24:30 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/10 13:47:58 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/10 14:21:11 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	open_and_close_door(t_game *game, int y, int x)
 	int i;
 
 	i = 0;
-	while (i < game->dr_cnt)
+	while (i < game->r.dr_cnt)
 	{
 		if (game->door[i].pos.x == x && game->door[i].pos.y == y && game->door[i].flag == 0)
 			game->door[i].flag = 1;

@@ -38,6 +38,7 @@ BONUS			=	bonus/main.c \
 					bonus/engine/draw_2D_ray.c \
 					bonus/engine/draw_3D_map.c \
 					bonus/engine/draw_one_col.c \
+					bonus/engine/draw_sprite.c \
 					bonus/engine/draw_floor_ceiling.c \
 					bonus/vectors/vector.c \
 					bonus/vectors/vector2.c \
