@@ -36,6 +36,7 @@ int		vec_equal(t_vec v1, t_vec v2);
 
 double	vec_angle(t_vec v);
 t_vec	vec_rot(t_vec v, int degree);
+t_vec	vec_mrot(t_vec v, int degree);
 
 void	vec_print(t_vec v);
 

@@ -37,9 +37,6 @@ void	apply_mouse_input(t_game *game)
 {
 	int	x;
 	int	y;
-	int	sign;
-	
-	sign = 0;
 	if (game->key.o == 1)
 	{
 		mlx_mouse_hide();
@@ -48,12 +45,8 @@ void	apply_mouse_input(t_game *game)
 		else
 		{
 			mlx_mouse_get_pos(game->win, &x, &y);
-			if (x < WIDTH / 2)
-				sign = 1;
-			if (x > WIDTH / 2)
-				sign = -1;
-			game->p.dir = vec_rot(game->p.dir, sign);
-			game->p.plane = vec_rot(game->p.plane, sign);
+			game->p.dir = vec_mrot(game->p.dir, -(2.0 * x / WIDTH - 1) * 160);
+			game->p.plane = vec_mrot(game->p.plane, -(2.0 * x / WIDTH - 1) * 160);
 			mlx_mouse_move(game->win, WIDTH / 2, HEIGHT / 2);
 		}
 	}

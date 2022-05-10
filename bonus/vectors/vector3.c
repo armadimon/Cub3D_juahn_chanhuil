@@ -25,6 +25,12 @@ t_vec	vec_rot(t_vec v, int degree)
 			-sin(vec_angle(v) + (PI / 180 * degree)) * vec_len(v)));
 }
 
+t_vec	vec_mrot(t_vec v, int degree)
+{
+	return (vec_new(cos(vec_angle(v) + (PI / 1800 * degree)) * vec_len(v),
+			-sin(vec_angle(v) + (PI / 1800 * degree)) * vec_len(v)));
+}
+
 void	vec_print(t_vec v)
 {
 	printf("(%f, %f)\n", v.x, v.y);
