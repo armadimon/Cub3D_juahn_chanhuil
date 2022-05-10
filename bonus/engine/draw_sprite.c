@@ -90,6 +90,8 @@ int	 draw_sprite(t_game *game)
 		double	len = vec_dot(sprite, game->p.dir);
 		int		screenx = (int)((vec_angle(sprite) - vec_angle(game->p.dir) - PI / 4) * -2 / PI * (WIDTH - 1));
 
+		if (len <= vec_dot(game->p.dir, vec_rot(game->p.dir, 45)))
+			continue ;
 		//calculate height of the sprite on screen
 		int spritesize = abs((int)(HEIGHT / len)); //using 'transformY' instead of the real distance prevents fisheye
 		//calculate lowest and highest pixel to fill in current stripe
