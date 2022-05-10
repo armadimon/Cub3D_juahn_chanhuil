@@ -6,13 +6,13 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:24:30 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/09 14:00:47 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/10 15:21:11 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/game_bonus.h"
 
-void	draw_rectangle(t_game *game, int x, int y)
+void	draw_rectangle(t_game *game, int x, int y, int type)
 {
 	int	i;
 	int	j;
@@ -25,7 +25,12 @@ void	draw_rectangle(t_game *game, int x, int y)
 		j = 0;
 		while (j < TILE_SIZE / 4)
 		{
-			game->img.data[(y + i) * (WIDTH) + x + j] = 0xFFFFFF;
+			if (type == 1)
+				game->img.data[(y + i) * (WIDTH) + x + j] = 0xFFFFFF;
+			else if (type == 2)
+				game->img.data[(y + i) * (WIDTH) + x + j] = 0x0000FF;
+			else if (type == 3)
+				game->img.data[(y + i) * (WIDTH) + x + j] = 0x00FF00;
 			j++;
 		}
 		i++;
@@ -64,7 +69,11 @@ void	draw_rectangles(t_game *game)
 		while (j < game->map_width)
 		{
 			if (game->map[i][j] == '1')
-				draw_rectangle(game, j, i);
+				draw_rectangle(game, j, i, 1);
+			if (game->map[i][j] == '2')
+				draw_rectangle(game, j, i, 2);
+			if (game->map[i][j] == '3')
+				draw_rectangle(game, j, i, 3);
 			if (game->map[i][j] == '0')
 				draw_background(game, j, i);
 			j++;

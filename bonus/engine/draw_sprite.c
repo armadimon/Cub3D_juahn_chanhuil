@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 19:29:14 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/10 14:57:44 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/10 15:10:12 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,17 @@ void	sortSprites(int *order, double *dist, int amount)
 		order[i] = sprites[amount - i - 1].second;
 	}
 	free(sprites);
+}
+
+int	choose_tex(t_game *game)
+{
+	if (game->cnt >= 0 && game->cnt < 33)
+		return (4);
+	if (game->cnt >= 33 && game->cnt < 66)
+		return (5);
+	if (game->cnt >= 66 && game->cnt < 100)
+		return (6);
+	return (4);
 }
 
 int	 draw_sprite(t_game *game)
@@ -121,7 +132,7 @@ double	spriteDistance[game->r.sp_cnt];
         {
           int d = (y) * 256 - HEIGHT * 128 + spriteHeight * 128; //256 and 128 factors to avoid floats
           int texY = ((d * TEXHEIGHT) / spriteHeight) / 256;
-          int color = game->texture[5][TEXWIDTH * texY + texX]; //get current color from the texture
+          int color = game->texture[choose_tex(game)][TEXWIDTH * texY + texX]; //get current color from the texture
 			if (color != 0x980088)
 		  	game->img.data[y * WIDTH + stripe] = color; //paint pixel if it isn't black, black is the invisible color
         }

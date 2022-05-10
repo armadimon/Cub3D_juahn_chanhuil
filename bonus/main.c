@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:00:22 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/10 13:11:00 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/10 15:04:35 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	reset_data(t_game *game)
 	game->key.al = 0;
 	game->key.ar = 0;
 	game->key.m = 0;
+	game->cnt = 0;
 }
 
 void	error(char *msg)

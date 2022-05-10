@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:38:59 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/10 14:53:30 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/10 15:09:03 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,9 @@ void	door_status_check(t_game *game)
 
 int	main_loop(t_game *game)
 {
+	game->cnt++;
+	if (game->cnt > 100)
+		game->cnt = 0;
 	door_status_check(game);
 	apply_key_input(game);
 	apply_mouse_input(game);
