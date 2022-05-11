@@ -6,11 +6,11 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:26:11 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/09 15:13:42 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/11 23:11:33 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/game_bonus.h"
+#include "../../include/game.h"
 
 int	color_ch(int oriy, int y)
 {

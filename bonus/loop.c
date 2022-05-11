@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:38:59 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/11 16:51:04 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/11 23:12:44 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,8 @@ void	apply_mouse_input(t_game *game)
 	int	x;
 	int	y;
 	int	sign;
-	
+
 	sign = 0;
-	// game->key.o_delay = 0;
 	if (game->key.o == 1)
 	{
 		mlx_mouse_hide();
@@ -50,7 +49,8 @@ void	apply_mouse_input(t_game *game)
 		{
 			mlx_mouse_get_pos(game->win, &x, &y);
 			game->p.dir = vec_mrot(game->p.dir, -(2.0 * x / WIDTH - 1) * 160);
-			game->p.plane = vec_mrot(game->p.plane, -(2.0 * x / WIDTH - 1) * 160);
+			game->p.plane = vec_mrot(game->p.plane,
+					-(2.0 * x / WIDTH - 1) * 160);
 			mlx_mouse_move(game->win, WIDTH / 2, HEIGHT / 2);
 		}
 	}
@@ -89,7 +89,7 @@ void	apply_key_input(t_game *game)
 
 void	door_status_check(t_game *game)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < game->r.dr_cnt)
