@@ -6,13 +6,13 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 19:29:14 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/11 23:14:55 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/12 01:14:12 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/game_bonus.h"
 
-void	sortSprites(t_game *game)
+void	sort_sprites(t_game *game)
 {
 	int			i;
 	int			sorted;
@@ -25,8 +25,8 @@ void	sortSprites(t_game *game)
 		sorted = 1;
 		while (++i < game->r.sp_cnt - 1)
 		{
-			if (vec_len(vec_sub(game->sp[i].pos, game->p.pos)) <
-				vec_len(vec_sub(game->sp[i + 1].pos, game->p.pos)))
+			if (vec_len(vec_sub(game->sp[i].pos, game->p.pos))
+				< vec_len(vec_sub(game->sp[i + 1].pos, game->p.pos)))
 			{
 				temp = game->sp[i];
 				game->sp[i] = game->sp[i + 1];
@@ -52,7 +52,7 @@ void	render_sprite(t_game *game, double len, int sp_x)
 {
 	int	size;
 	int	tex_x;
-	int tex_y;
+	int	tex_y;
 	int	i;
 	int	j;
 
@@ -68,33 +68,35 @@ void	render_sprite(t_game *game, double len, int sp_x)
 		{
 			if (j < 0 || j >= HEIGHT)
 				continue ;
-			tex_y = (int)(j * 256 - HEIGHT * 128 + size * 128) * TEXHEIGHT / size / 256;
-			if (game->texture[get_texnum(game)][TEXWIDTH * tex_y + tex_x] != 0x980088)
-				game->img.data[j * WIDTH + i] =
-				game->texture[get_texnum(game)][TEXWIDTH * tex_y + tex_x];
+			tex_y = ((int)(j * 256 - HEIGHT * 128 + size * 128))
+				* TEXHEIGHT / size / 256;
+			if (game->texture[get_texnum(game)]
+				[TEXWIDTH * tex_y + tex_x] != 0x980088)
+				game->img.data[j * WIDTH + i]
+					= game->texture[get_texnum(game)][TEXWIDTH * tex_y + tex_x];
 		}
 	}
 }
 
-int	 draw_sprite(t_game *game)
+int	draw_sprite(t_game *game)
 {
 	int		i;
 	t_vec	sprite;
 	double	len;
 	int		sp_x;
 
-    sortSprites(game);
+	sort_sprites(game);
 	i = -1;
-    while (++i < game->r.sp_cnt)
-    {
-		sprite = vec_sub(game->sp[spriteOrder[i]].pos, game->p.pos);
+	while (++i < game->r.sp_cnt)
+	{
+		sprite = vec_sub(game->sp[i].pos, game->p.pos);
 		len = vec_dot(sprite, game->p.dir);
 		sp_x = (int)((WIDTH / 2) * (1 + vec_dot(sprite,
-				vec_norm(game->p.plane)) / len));
-		if (vec_dot(vec_norm(sprite), game->p.dir) <
-			vec_dot(game->p.dir, vec_rot(game->p.dir, 60)))
+						vec_norm(game->p.plane)) / len));
+		if (vec_dot(vec_norm(sprite), game->p.dir)
+			< vec_dot(game->p.dir, vec_rot(game->p.dir, 60)))
 			continue ;
 		render_sprite(game, len, sp_x);
-    }
+	}
 	return (1);
 }

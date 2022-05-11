@@ -1,0 +1,16 @@
+NO ./images/NO.xpm
+SO ./images/SO.xpm
+WE ./images/WE.xpm
+EA ./images/EA.xpm
+
+F 0,153,15
+C 255,255,255
+
+11111
+10301
+10001
+10001
+10N01
+10001
+11211
+11111
