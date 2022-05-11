@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 18:13:02 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/10 13:35:28 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/10 21:24:15 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,9 @@ double	calc_wall_x(t_game *game, double len, t_vec ray)
 	wall_x -= floor((wall_x));
 	if (game->r.door_flag > 0)
 	{
-		wall_x = wall_x - ((double)(game->door[game->r.door_flag - 1].open_rate) / 100);
+		wall_x = wall_x
+			- ((double)(game->door[game->r.door_flag - 1].open_rate)
+				/ 100);
 		wall_x = fabs(wall_x);
 	}
 	return (wall_x);

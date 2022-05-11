@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:38:59 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/10 15:09:03 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/10 22:15:16 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	apply_mouse_input(t_game *game)
 	int	sign;
 	
 	sign = 0;
+	game->key.o_delay = 0;
 	if (game->key.o == 1)
 	{
 		mlx_mouse_hide();

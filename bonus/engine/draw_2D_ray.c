@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:26:11 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/10 15:36:02 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/10 22:19:58 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,11 @@ int	color_ch(int oriy, int y)
 
 int	check_tile(t_game *game, int y, int x)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	if (game->map[y][x] == '1' || game->map[y][x] == ' ' || game->map[y][x] == '3')
+	if (game->map[y][x] == '1' || game->map[y][x] == ' '
+		|| game->map[y][x] == '3')
 		return (0);
 	if (game->map[y][x] == '2')
 	{

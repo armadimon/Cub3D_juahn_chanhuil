@@ -24,6 +24,7 @@ SRCS			=	mandatory/main.c \
 BONUS			=	bonus/main.c \
 					bonus/loop.c \
 					bonus/init_game.c \
+					bonus/init_texture.c \
 					bonus/handle_key.c \
 					bonus/parser/map_parser.c \
 					bonus/parser/map_parser_2.c \
@@ -32,11 +33,13 @@ BONUS			=	bonus/main.c \
 					bonus/parser/load_image.c \
 					bonus/parser/get_F_C_color.c \
 					bonus/parser/check_map.c \
+					bonus/parser/check_map_2.c \
 					bonus/parser/utils.c \
 					bonus/engine/door.c \
 					bonus/engine/draw_2D_map.c \
 					bonus/engine/draw_2D_ray.c \
 					bonus/engine/draw_3D_map.c \
+					bonus/engine/draw_3D_map_2.c \
 					bonus/engine/draw_one_col.c \
 					bonus/engine/draw_sprite.c \
 					bonus/engine/draw_floor_ceiling.c \
@@ -91,7 +94,10 @@ clean:
 				@$(MAKE) -C mlx clean
 				$(RM) $(OBJS) $(BONUS_OBJS) $(MLX)
 
-fclean:			clean
+fclean:
+				@$(MAKE) -C libft fclean
+				@$(MAKE) -C mlx clean
+				$(RM) $(OBJS) $(BONUS_OBJS) $(MLX)
 				$(RM) $(NAME)
 
 re:				fclean $(NAME)

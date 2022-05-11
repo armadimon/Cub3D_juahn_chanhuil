@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:37:47 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/10 12:24:51 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/10 22:12:48 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,7 @@ int	user_move(int key, t_game *game)
 	else if (key == K_AR_R)
 		game->key.ar = 1;
 	else if (key == K_O)
-	{
 		game->key.o ^= 1;
-		game->key.o_delay = 0;
-	}
 	return (0);
 }
 

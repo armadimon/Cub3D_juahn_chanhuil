@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 20:04:01 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/10 15:04:21 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/10 22:20:50 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 # include "./key_macos.h"
 
 # define X_EVENT_KEY_PRESS		2
-# define X_EVENT_KEY_EXIT		17 //Exit program key code
-# define KEY_ESC			53
+# define X_EVENT_KEY_EXIT		17
+# define KEY_ESC				53
 
 # define TEXWIDTH 64
 # define TEXHEIGHT 64
@@ -115,7 +115,6 @@ typedef struct s_render
 typedef struct s_sprite
 {
 	t_vec	pos;
-	// int		index;
 }				t_sprite;
 
 typedef struct s_game
@@ -150,6 +149,8 @@ int		get_map_contents(t_game *game, char **buf, t_valid *valid);
 int		set_f_c_color(t_game *game, char *str, int flag);
 int		load_image(t_game *game, int *texture, char *path, t_img *img);
 void	free_strs(char **strs);
+int		check_door_and_sprite(t_game *game, int dr_cnt, int sp_cnt);
+int		check_hitted(t_game *game, t_vec count, double *len, t_vec ray);
 
 /* INIT */
 void	init_game(t_game *game);

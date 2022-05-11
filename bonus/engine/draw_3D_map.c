@@ -6,7 +6,7 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 19:29:14 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/10 13:50:07 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/10 22:08:10 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,65 +44,12 @@ t_vec	get_side(t_game *game)
 		game->p.pos.y - (int)(game->p.pos.y)));
 }
 
-double	get_door_cnt(t_game *game, t_vec count)
-{
-	int i;
-
-	i = 0;
-	while (game->door[i].pos.x)
-	{
-		if ((int)count.x == (int)game->door[i].pos.x && (int)count.y == (int)game->door[i].pos.y)
-		{
-			game->r.door_flag = i + 1;
-			return ((double)game->door[i].open_rate);
-		}
-		i++;
-	}
-	return (0.0);
-}
-
-int	check_hitted(t_game *game, t_vec count, double *len, t_vec ray)
-{
-	t_vec	delta;
-	t_vec	hp;
-	t_vec	new;
-	
-	new = vec_new(game->p.pos.x, game->p.pos.y);
-	hp = vec_add(new, vec_mul(ray, *len / vec_len(ray)));
-	if (game->map[(int)count.y][(int)count.x] == '2')
-	{
-		if (game->side == 0)
-		{
-			delta = vec_mul(ray, fabs(0.5 / cos(vec_angle(ray))) / vec_len(ray));
-			if (vec_add(hp, delta).y < (count.y) + get_door_cnt(game, count) / 100.0 && vec_add(hp, delta).y > count.y)
-			{
-				*len += vec_len(delta);
-				return (0);
-			}
-		}
-		else
-		{
-			delta = vec_mul(ray, fabs(0.5 / sin(vec_angle(ray))) / vec_len(ray));
-			if (vec_add(hp, delta).x < (count.x) + get_door_cnt(game, count) / 100.0 && vec_add(hp, delta).x > count.x)
-			{
-				*len += vec_len(delta);
-				return (0);
-			}
-		}
-		game->r.door_flag = 0;
-	}
-	else if (game->map[(int)count.y][(int)count.x] == '1')
-		return (0);
-	return (1);
-}
-
 double	get_hitpoint(t_game *game, t_vec ray, t_vec count, double len)
 {
 	t_vec	delta;
 	t_vec	step;
 	t_vec	side;
 
-	game->r.door_flag = 0;
 	delta = get_delta(ray);
 	side = get_side(game);
 	get_ray_value(&delta, &step, &side, ray);
@@ -128,22 +75,19 @@ double	get_hitpoint(t_game *game, t_vec ray, t_vec count, double len)
 
 void	draw_3d_map(t_game *game)
 {
-	int		i;
-	t_vec	ray;
-	t_vec	hp;
-	double	len;
-	static int cnt;
+	int			i;
+	t_vec		ray;
+	t_vec		hp;
+	double		len;
 
-	cnt--;
-	if (cnt < 0)
-		cnt = 100;
 	i = -1;
 	while (++i < WIDTH)
 	{
+		game->r.door_flag = 0;
 		ray = vec_add(game->p.dir, vec_mul(game->p.plane, 2 * i
 					/ (double)(WIDTH) - 1));
 		hp = vec_mul(vec_norm(ray), get_hitpoint(game, ray,
-		 			vec_new((int)game->p.pos.x, (int)game->p.pos.y), 1.0));
+					vec_new((int)game->p.pos.x, (int)game->p.pos.y), 1.0));
 		len = vec_len(hp) / vec_len(ray);
 		game->r.z_buffer[i] = len;
 		draw_one_column(game, i, len, ray);

@@ -6,22 +6,24 @@
 /*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:24:30 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/10 14:21:11 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/10 21:12:24 by juahn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/game_bonus.h"
 
-void	open_and_close_door(t_game *game, int y, int x)
+void	open_close_door(t_game *game, int y, int x)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < game->r.dr_cnt)
 	{
-		if (game->door[i].pos.x == x && game->door[i].pos.y == y && game->door[i].flag == 0)
+		if (game->door[i].pos.x == x && game->door[i].pos.y == y
+			&& game->door[i].flag == 0)
 			game->door[i].flag = 1;
-		if (game->door[i].pos.x == x && game->door[i].pos.y == y && game->door[i].flag == 2)
+		if (game->door[i].pos.x == x && game->door[i].pos.y == y
+			&& game->door[i].flag == 2)
 			game->door[i].flag = 3;
 		i++;
 	}
@@ -43,7 +45,7 @@ void	cast_ray_i_x(t_game *game, double m, t_vec ray_dir)
 		if (x / TILE_SIZE < 0 || x / TILE_SIZE > game->map_width)
 			return ;
 		if (game->map[(int)temp_y / TILE_SIZE][x / TILE_SIZE] == '2')
-			open_and_close_door(game, (int)temp_y / TILE_SIZE, x / TILE_SIZE);
+			open_close_door(game, (int)temp_y / TILE_SIZE, x / TILE_SIZE);
 		if (ray_dir.x < 0)
 			x--;
 		else
@@ -71,7 +73,7 @@ void	cast_ray_i_y(t_game *game, double m, t_vec ray_dir)
 		if (y / TILE_SIZE < 0 || y / TILE_SIZE > game->map_height)
 			return ;
 		if (game->map[y / TILE_SIZE][(int)temp_x / TILE_SIZE] == '2')
-			open_and_close_door(game, y / TILE_SIZE, (int)temp_x / TILE_SIZE);
+			open_close_door(game, y / TILE_SIZE, (int)temp_x / TILE_SIZE);
 		if (ray_dir.x < 0)
 			temp_x -= fabs(m);
 		else
@@ -88,7 +90,6 @@ void	cast_ray_and_check_door(t_game *game)
 	double	camera_x;
 	t_vec	ray_dir;
 	double	m;
-
 
 	if (game->map[(int)game->p.pos.y][(int)game->p.pos.x] == '2')
 		return ;
