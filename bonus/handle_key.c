@@ -16,6 +16,8 @@ int	key_press_exit(t_game *game)
 {
 	if (game->win && game->mlx)
 		mlx_destroy_window(game->mlx, game->win);
+	free(game->door);
+	free(game->sp);
 	exit (0);
 }
 

@@ -12,52 +12,29 @@
 
 #include "../../include/game_bonus.h"
 
-typedef struct		s_pair
+void	sortSprites(t_game *game)
 {
-	double	first;
-	int		second;
-}					t_pair;
+	int			i;
+	int			sorted;
+	t_sprite	temp;
 
-void	sort_order(t_pair *orders, int amount)
-{
-	t_pair	tmp;
-
-	for (int i = 0; i < amount; i++)
+	i = -1;
+	sorted = 0;
+	while (!sorted)
 	{
-		for (int j = 0; j < amount - 1; j++)
+		sorted = 1;
+		while (++i < game->r.sp_cnt - 1)
 		{
-			if (orders[j].first > orders[j + 1].first)
+			if (vec_len(vec_sub(game->sp[i].pos, game->p.pos)) <
+				vec_len(vec_sub(game->sp[i + 1].pos, game->p.pos)))
 			{
-				tmp.first = orders[j].first;
-				tmp.second = orders[j].second;
-				orders[j].first = orders[j + 1].first;
-				orders[j].second = orders[j + 1].second;
-				orders[j + 1].first = tmp.first;
-				orders[j + 1].second = tmp.second;
+				temp = game->sp[i];
+				game->sp[i] = game->sp[i + 1];
+				game->sp[i + 1] = temp;
+				sorted = 0;
 			}
 		}
 	}
-}
-
-void	sortSprites(int *order, double *dist, int amount)
-{
-	t_pair	*sprites;
-
-	//std::vector<std::pair<double, int>> sprites(amount);
-	sprites = (t_pair*)malloc(sizeof(t_pair) * amount);
-	for (int i = 0; i < amount; i++)
-	{
-		sprites[i].first = dist[i];
-		sprites[i].second = order[i];
-	}
-	sort_order(sprites, amount);
-	//std::sort(sprites.begin(), sprites.end());
-	for (int i = 0; i < amount; i++)
-	{
-		dist[i] = sprites[amount - i - 1].first;
-		order[i] = sprites[amount - i - 1].second;
-	}
-	free(sprites);
 }
 
 int	get_texnum(t_game *game)
@@ -71,44 +48,53 @@ int	get_texnum(t_game *game)
 	return (4);
 }
 
+void	render_sprite(t_game *game, double len, int sp_x)
+{
+	int	size;
+	int	tex_x;
+	int tex_y;
+	int	i;
+	int	j;
+
+	size = (int)(HEIGHT / len);
+	i = -size / 2 + sp_x - 1;
+	while (++i < size / 2 + sp_x)
+	{
+		if (i < 0 || i >= WIDTH || len >= game->r.z_buffer[i])
+			continue ;
+		tex_x = (int)(256 * (i - (-size / 2 + sp_x)) * TEXWIDTH / size) / 256;
+		j = -size / 2 + HEIGHT / 2 - 1;
+		while (++j < size / 2 + HEIGHT / 2)
+		{
+			if (j < 0 || j >= HEIGHT)
+				continue ;
+			tex_y = (int)(j * 256 - HEIGHT * 128 + size * 128) * TEXHEIGHT / size / 256;
+			if (game->texture[get_texnum(game)][TEXWIDTH * tex_y + tex_x] != 0x980088)
+				game->img.data[j * WIDTH + i] =
+				game->texture[get_texnum(game)][TEXWIDTH * tex_y + tex_x];
+		}
+	}
+}
+
 int	 draw_sprite(t_game *game)
 {
-	int		spriteOrder[game->r.sp_cnt];
-	double	spriteDistance[game->r.sp_cnt];
-	//SPRITE CASTING
-    //sort sprites from far to close
-    for(int i = 0; i < game->r.sp_cnt; i++)
-    {
-		spriteOrder[i] = i;
-		spriteDistance[i] = vec_len(vec_sub(game->p.pos, game->sp[i].pos));
-	}
-    sortSprites(spriteOrder, spriteDistance, game->r.sp_cnt);
+	int		i;
+	t_vec	sprite;
+	double	len;
+	int		sp_x;
 
-    for(int i = 0; i < game->r.sp_cnt; i++)
+    sortSprites(game);
+	i = -1;
+    while (++i < game->r.sp_cnt)
     {
-		t_vec	sprite = vec_sub(game->sp[spriteOrder[i]].pos, game->p.pos);
-		double	len = vec_dot(sprite, game->p.dir);
-		int		screenx = (int)((WIDTH / 2) * (1 + vec_dot(sprite, vec_norm(game->p.plane)) / len));
-
-		if (vec_dot(vec_norm(sprite), game->p.dir) < vec_dot(game->p.dir, vec_rot(game->p.dir, 60)))
+		sprite = vec_sub(game->sp[spriteOrder[i]].pos, game->p.pos);
+		len = vec_dot(sprite, game->p.dir);
+		sp_x = (int)((WIDTH / 2) * (1 + vec_dot(sprite,
+				vec_norm(game->p.plane)) / len));
+		if (vec_dot(vec_norm(sprite), game->p.dir) <
+			vec_dot(game->p.dir, vec_rot(game->p.dir, 60)))
 			continue ;
-		int spritesize = abs((int)(HEIGHT / len));
-
-		for(int col = -spritesize / 2 + screenx; col < spritesize / 2 + screenx; col++)
-		{
-			int texX = (int)(256 * (col - (-spritesize / 2 + screenx)) * TEXWIDTH / spritesize) / 256;
-        	if (col >= 0 && col < WIDTH && len < game->r.z_buffer[col])
-				for (int y = -spritesize / 2 + HEIGHT / 2; y < spritesize / 2 + HEIGHT / 2; y++) //for every pixel of the current stripe
-				{
-					if (y < 0 || y >= HEIGHT)
-						continue ;
-					int d = (y) * 256 - HEIGHT * 128 + spritesize * 128; //256 and 128 factors to avoid floats
-					int texY = ((d * TEXHEIGHT) / spritesize) / 256;
-					int color = game->texture[get_texnum(game)][TEXWIDTH * texY + texX]; //get current color from the texture
-						if (color != 0x980088)
-						game->img.data[y * WIDTH + col] = color; //paint pixel if it isn't black, black is the invisible color
-				}
-		}
+		render_sprite(game, len, sp_x);
     }
 	return (1);
 }
