@@ -45,6 +45,8 @@ t_list	*read_map(t_list *map_buffer, char *argv)
 
 	if (ft_strstr(argv, ".cub") == 0)
 		return (0);
+	if (argv[ft_strstr(argv, ".cub") - argv + 4] != '\0')
+		return (0);
 	fd = open(argv, O_RDONLY);
 	if (fd < 0)
 		return (0);

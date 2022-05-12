@@ -16,10 +16,14 @@ int	load_tex_door_and_sprite(t_game *game)
 {
 	t_img	img;
 
-	load_image(game, game->texture[4], "./images/enemy1.xpm", &img);
-	load_image(game, game->texture[5], "./images/enemy2.xpm", &img);
-	load_image(game, game->texture[6], "./images/enemy3.xpm", &img);
-	load_image(game, game->texture[7], "./images/Door.xpm", &img);
+	if (!load_image(game, game->texture[4], "./images/enemy1.xpm", &img))
+		return (0);
+	if (!load_image(game, game->texture[5], "./images/enemy2.xpm", &img))
+		return (0);
+	if (!load_image(game, game->texture[6], "./images/enemy3.xpm", &img))
+		return (0);
+	if (!load_image(game, game->texture[7], "./images/Door.xpm", &img))
+		return (0);
 	return (1);
 }
 
@@ -45,7 +49,7 @@ int	init_texture(t_game *game)
 		while (++j < TEXHEIGHT * TEXWIDTH)
 			game->texture[i][j] = 0;
 	}
-	if (load_tex_door_and_sprite(game))
+	if (!load_tex_door_and_sprite(game))
 		return (0);
 	return (1);
 }
