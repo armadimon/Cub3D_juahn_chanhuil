@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_key.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: chanhuil <chanhuil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:37:47 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/10 22:12:48 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/12 10:02:01 by chanhuil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ int	key_press_exit(t_game *game)
 {
 	if (game->win && game->mlx)
 		mlx_destroy_window(game->mlx, game->win);
-	free(game->door);
-	free(game->sp);
 	exit (0);
 }
 
