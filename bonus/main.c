@@ -55,7 +55,7 @@ int	main(int argc, char **argv)
 		error("ARG_ERROR");
 	game.mlx = mlx_init();
 	reset_data(&game);
-	if (init_texture(&game) == -1)
+	if (!init_texture(&game))
 		error("MALLOC_ERROR");
 	if (!read_and_parse_map(&game, map_buffer, argv[1]))
 		error("MAP_ERROR");

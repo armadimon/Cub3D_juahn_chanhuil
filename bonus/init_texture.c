@@ -28,25 +28,24 @@ int	init_texture(t_game *game)
 	int	i;
 	int	j;
 
-	i = 0;
 	game->texture = (int **)malloc(sizeof(int *) * 7);
 	if (!game->texture)
 		return (0);
-	while (i < 8)
+	i = -1;
+	while (++i < 8)
 	{
 		game->texture[i] = (int *)malloc(sizeof(int) * (TEXHEIGHT * TEXWIDTH));
 		if (!game->texture[i])
 			return (0);
-		i++;
 	}
-	i = 0;
-	while (i < 8)
+	i = -1;
+	while (++i < 8)
 	{
 		j = -1;
 		while (++j < TEXHEIGHT * TEXWIDTH)
 			game->texture[i][j] = 0;
-		i++;
 	}
-	load_tex_door_and_sprite(game);
+	if (load_tex_door_and_sprite(game))
+		return (0);
 	return (1);
 }
