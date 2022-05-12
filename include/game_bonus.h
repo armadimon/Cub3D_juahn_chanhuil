@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_bonus.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: chanhuil <chanhuil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 20:04:01 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/10 22:20:50 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/12 10:19:42 by chanhuil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@
 # define TILE_SIZE 64
 # define WIDTH 960
 # define HEIGHT 640
+
+# define DPI 36
 
 typedef struct s_img
 {

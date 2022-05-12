@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: chanhuil <chanhuil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:38:59 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/11 23:12:44 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/12 10:20:24 by chanhuil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,10 @@ void	apply_mouse_input(t_game *game)
 		else
 		{
 			mlx_mouse_get_pos(game->win, &x, &y);
-			game->p.dir = vec_mrot(game->p.dir, -(2.0 * x / WIDTH - 1) * 160);
+			game->p.dir = vec_mrot(game->p.dir,
+					-(2.0 * x / WIDTH - 1) * DPI * 10);
 			game->p.plane = vec_mrot(game->p.plane,
-					-(2.0 * x / WIDTH - 1) * 160);
+					-(2.0 * x / WIDTH - 1) * DPI * 10);
 			mlx_mouse_move(game->win, WIDTH / 2, HEIGHT / 2);
 		}
 	}
