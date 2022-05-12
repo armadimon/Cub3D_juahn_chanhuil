@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_sprite.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juahn <juahn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: chanhuil <chanhuil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 19:29:14 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/12 01:14:12 by juahn            ###   ########.fr       */
+/*   Updated: 2022/05/12 09:50:28 by chanhuil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,8 @@ int	get_texnum(t_game *game)
 	return (4);
 }
 
-void	render_sprite(t_game *game, double len, int sp_x)
+void	render_sprite(t_game *game, double len, int sp_x, int size)
 {
-	int	size;
 	int	tex_x;
 	int	tex_y;
 	int	i;
@@ -96,7 +95,7 @@ int	draw_sprite(t_game *game)
 		if (vec_dot(vec_norm(sprite), game->p.dir)
 			< vec_dot(game->p.dir, vec_rot(game->p.dir, 60)))
 			continue ;
-		render_sprite(game, len, sp_x);
+		render_sprite(game, len, sp_x, 0);
 	}
 	return (1);
 }
