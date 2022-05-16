@@ -6,7 +6,7 @@
 /*   By: chanhuil <chanhuil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 20:04:01 by juahn             #+#    #+#             */
-/*   Updated: 2022/05/12 10:19:42 by chanhuil         ###   ########.fr       */
+/*   Updated: 2022/05/16 13:01:55 by chanhuil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 
 # define TEXWIDTH 64
 # define TEXHEIGHT 64
-# define TILE_SIZE 64
+# define TILE_SIZE 32
 # define WIDTH 960
 # define HEIGHT 640
 
